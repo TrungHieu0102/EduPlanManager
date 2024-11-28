@@ -34,7 +34,11 @@
                         <i class="mdi mdi-cached me-2 text-success"></i> Thông tin cá nhân
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">
+                    <form id="logoutForm" action="@Url.Action("Logout", "Auth")" method="post" style="display: none;">
+                        @Html.AntiForgeryToken()  <!-- CSRF protection -->
+                    </form>
+
+                    <a class="dropdown-item" href="javascript:void(0);" onclick="document.getElementById('logoutForm').submit();">
                         <i class="mdi mdi-logout me-2 text-primary"></i> Đăng xuất
                     </a>
                 </div>

@@ -18,19 +18,35 @@
 </head>
 <body>
     <div class="container-scroller">
-        <!-- Render Navbar -->
-        @Html.Partial("_Navbar")
+        @await Html.PartialAsync("_Navbar")
 
         <div class="container-fluid page-body-wrapper">
-            <!-- Render Sidebar -->
-            @Html.Partial("_Sidebar")
+            @{
+                var role = Context.Request.Cookies["UserRole"] ?? Context.Session.GetString("UserRole");
+            }
 
+            @if (role == "Admin")
+            {
+                @await Html.PartialAsync("_AdminSidebar")
+            }
+            else if (role == "Teacher")
+            {
+                @await Html.PartialAsync("_AdminSidebar")
+            }
+            else if (role == "Student")
+            {
+                @await Html.PartialAsync("_AdminSidebar")
+            }
+            else
+            {
+                @await Html.PartialAsync("_abc")
+            }
             <div class="main-panel">
                 <div class="content-wrapper">
                     @RenderBody()
                 </div>
                 <!-- Render Footer -->
-                @Html.Partial("_Footer")
+                @await Html.PartialAsync("_Footer")
             </div>
         </div>
     </div>
@@ -47,5 +63,7 @@
     <!-- endinject -->
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->
+    @RenderSection("Scripts", required: false)
+
 </body>
 </html>

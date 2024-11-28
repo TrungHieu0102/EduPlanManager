@@ -1,12 +1,15 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var access = Context.Session.GetString("AccessToken");
-    var refresh = Context.Session.GetString("RefreshToken");
+    var access = Context.Request.Cookies["AccessToken"];  // Lấy AccessToken từ cookie
+    var refresh = Context.Request.Cookies["RefreshToken"];  // Lấy RefreshToken từ cookie
+    var ss = Context.Session.GetString("AccessToken");
+    var rSs = Context.Session.GetString("RefreshToken");
 }
 
 <h1>Admin</h1>
 <p>Access Token: @access</p>
-<p>Refresh Token : @refresh</p>
-    
+<p>Refresh Token: @refresh</p>
+<p>ss: @ss</p>
+<p>ssR: @rSs</p>
+

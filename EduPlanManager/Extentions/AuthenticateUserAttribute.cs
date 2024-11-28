@@ -7,9 +7,10 @@ namespace EduPlanManager.Extentions
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            var accessToken = context.HttpContext.Session.GetString("AccessToken");
+            var accessTokenCookies = context.HttpContext.Request.Cookies["AccessToken"];
+            var accessTokenSession = context.HttpContext.Session.GetString("AccessToken");
 
-            if (string.IsNullOrEmpty(accessToken))
+            if (string.IsNullOrEmpty(accessTokenCookies) && string.IsNullOrEmpty(accessTokenSession))
             {
                 context.Result = new RedirectToActionResult("Login", "Auth", null);
             }

@@ -1,4 +1,4 @@
-﻿namespace EduPlanManager.Models.DTOs
+﻿namespace EduPlanManager.Models.DTOs.Auth
 {
     public class RefreshTokenRequest
     {
