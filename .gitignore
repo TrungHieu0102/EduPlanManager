@@ -1,5 +1,4 @@
-# Ignore appsettings.json after the first commit
-appsettings.json
+
 
 # File:
 bin/
