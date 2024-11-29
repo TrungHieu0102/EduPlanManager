@@ -3,28 +3,148 @@
   "WorkspaceRootPath": "D:\\Project\\EduPlanManager\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\viewcomponent\\userinfoviewcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\viewcomponent\\userinfoviewcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\views\\shared\\components\\userinfo\\default.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\views\\shared\\components\\userinfo\\default.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\views\\shared\\_navbar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\views\\shared\\_navbar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\models\\dtos\\user\\userinfodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\models\\dtos\\user\\userinfodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\views\\shared\\_sidebar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\views\\shared\\_sidebar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\views\\user\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\views\\user\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\views\\user\\update.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\views\\user\\update.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\mappings\\mapperprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\mappings\\mapperprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\views\\user\\profileupdated.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\views\\user\\profileupdated.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\models\\dtos\\user\\updateuserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\models\\dtos\\user\\updateuserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\wwwroot\\css\\customstyle.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\wwwroot\\css\\customstyle.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\services\\interface\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\services\\interface\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\extentions\\photoextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\extentions\\photoextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\models\\dtos\\respone\\result.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\models\\dtos\\respone\\result.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\services\\photoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\services\\photoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\services\\interface\\iphotoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\services\\interface\\iphotoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Project\\EduPlanManager\\EduPlanManager\\Migrations\\20241129053842_UpdateUser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:EduPlanManager\\Migrations\\20241129053842_UpdateUser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\models\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\models\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\settings\\cloudinarysettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\settings\\cloudinarysettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\views\\auth\\forgotpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\views\\auth\\forgotpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\views\\auth\\resetpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\views\\auth\\resetpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\views\\auth\\changepassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\views\\auth\\changepassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\views\\shared\\_adminsidebar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\views\\shared\\_adminsidebar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\views\\auth\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\views\\auth\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\common\\templateemail\\confirmlink.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\common\\templateemail\\confirmlink.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\filters\\myauthenfilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\filters\\myauthenfilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\models\\dtos\\auth\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\models\\dtos\\auth\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\common\\templateemail\\confirmlink.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\common\\templateemail\\confirmlink.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\models\\dtos\\auth\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\models\\dtos\\auth\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\common\\templateemail\\generateemailbody.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -39,16 +159,8 @@
       "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\services\\interface\\iemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\views\\auth\\resetpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\views\\auth\\resetpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\models\\dtos\\auth\\resetpassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\models\\dtos\\auth\\resetpassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\views\\auth\\forgotpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|solutionrelative:eduplanmanager\\views\\auth\\forgotpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{98E16C8A-A06A-41B7-A918-8767276886FF}|EduPlanManager\\EduPlanManager.csproj|d:\\project\\eduplanmanager\\eduplanmanager\\models\\dtos\\auth\\forgotpassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -62,24 +174,466 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Default.cshtml",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Shared\\Components\\UserInfo\\Default.cshtml",
+              "RelativeDocumentMoniker": "EduPlanManager\\Views\\Shared\\Components\\UserInfo\\Default.cshtml",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Shared\\Components\\UserInfo\\Default.cshtml",
+              "RelativeToolTip": "EduPlanManager\\Views\\Shared\\Components\\UserInfo\\Default.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-29T07:30:26.683Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserInfoViewComponent.cs",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\ViewComponent\\UserInfoViewComponent.cs",
+              "RelativeDocumentMoniker": "EduPlanManager\\ViewComponent\\UserInfoViewComponent.cs",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\ViewComponent\\UserInfoViewComponent.cs",
+              "RelativeToolTip": "EduPlanManager\\ViewComponent\\UserInfoViewComponent.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-29T07:26:42.087Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UserInfoDto.cs",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Models\\DTOs\\User\\UserInfoDto.cs",
+              "RelativeDocumentMoniker": "EduPlanManager\\Models\\DTOs\\User\\UserInfoDto.cs",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Models\\DTOs\\User\\UserInfoDto.cs",
+              "RelativeToolTip": "EduPlanManager\\Models\\DTOs\\User\\UserInfoDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-29T07:25:26.623Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "EduPlanManager\\Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "EduPlanManager\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-28T18:39:03.975Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "_Sidebar.cshtml",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Shared\\_Sidebar.cshtml",
+              "RelativeDocumentMoniker": "EduPlanManager\\Views\\Shared\\_Sidebar.cshtml",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Shared\\_Sidebar.cshtml",
+              "RelativeToolTip": "EduPlanManager\\Views\\Shared\\_Sidebar.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-29T04:42:24.562Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "EduPlanManager\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "EduPlanManager\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-29T02:17:14.534Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\User\\Index.cshtml",
+              "RelativeDocumentMoniker": "EduPlanManager\\Views\\User\\Index.cshtml",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\User\\Index.cshtml",
+              "RelativeToolTip": "EduPlanManager\\Views\\User\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-29T05:18:59.877Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "_Navbar.cshtml",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Shared\\_Navbar.cshtml",
+              "RelativeDocumentMoniker": "EduPlanManager\\Views\\Shared\\_Navbar.cshtml",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Shared\\_Navbar.cshtml",
+              "RelativeToolTip": "EduPlanManager\\Views\\Shared\\_Navbar.cshtml",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABYAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-29T03:41:15.067Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Update.cshtml",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\User\\Update.cshtml",
+              "RelativeDocumentMoniker": "EduPlanManager\\Views\\User\\Update.cshtml",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\User\\Update.cshtml",
+              "RelativeToolTip": "EduPlanManager\\Views\\User\\Update.cshtml",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAAAE0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-29T05:59:11.059Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "EduPlanManager\\Controllers\\UserController.cs",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Controllers\\UserController.cs",
+              "RelativeToolTip": "EduPlanManager\\Controllers\\UserController.cs",
+              "ViewState": "AgIAADsAAAAAAAAAAAAgwEAAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-29T05:16:06.559Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "EduPlanManager\\Services\\UserService.cs",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Services\\UserService.cs",
+              "RelativeToolTip": "EduPlanManager\\Services\\UserService.cs",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAAAF8AAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-29T05:48:26.124Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "UpdateUserDto.cs",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Models\\DTOs\\User\\UpdateUserDto.cs",
+              "RelativeDocumentMoniker": "EduPlanManager\\Models\\DTOs\\User\\UpdateUserDto.cs",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Models\\DTOs\\User\\UpdateUserDto.cs",
+              "RelativeToolTip": "EduPlanManager\\Models\\DTOs\\User\\UpdateUserDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAsAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-29T05:44:35.323Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "customstyle.css",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\wwwroot\\css\\customstyle.css",
+              "RelativeDocumentMoniker": "EduPlanManager\\wwwroot\\css\\customstyle.css",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\wwwroot\\css\\customstyle.css",
+              "RelativeToolTip": "EduPlanManager\\wwwroot\\css\\customstyle.css",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAiwH8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2024-11-29T06:16:47.891Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ProfileUpdated.cshtml",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\User\\ProfileUpdated.cshtml",
+              "RelativeDocumentMoniker": "EduPlanManager\\Views\\User\\ProfileUpdated.cshtml",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\User\\ProfileUpdated.cshtml",
+              "RelativeToolTip": "EduPlanManager\\Views\\User\\ProfileUpdated.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-29T06:00:39.487Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "MapperProfile.cs",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Mappings\\MapperProfile.cs",
+              "RelativeDocumentMoniker": "EduPlanManager\\Mappings\\MapperProfile.cs",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Mappings\\MapperProfile.cs",
+              "RelativeToolTip": "EduPlanManager\\Mappings\\MapperProfile.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-29T07:09:12.525Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "site.css",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\wwwroot\\css\\site.css",
+              "RelativeDocumentMoniker": "EduPlanManager\\wwwroot\\css\\site.css",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\wwwroot\\css\\site.css",
+              "RelativeToolTip": "EduPlanManager\\wwwroot\\css\\site.css",
+              "ViewState": "AgIAABcAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2024-11-29T06:50:01.458Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "IUserService.cs",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Services\\Interface\\IUserService.cs",
+              "RelativeDocumentMoniker": "EduPlanManager\\Services\\Interface\\IUserService.cs",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Services\\Interface\\IUserService.cs",
+              "RelativeToolTip": "EduPlanManager\\Services\\Interface\\IUserService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-29T05:48:07.353Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "PhotoExtensions.cs",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Extentions\\PhotoExtensions.cs",
+              "RelativeDocumentMoniker": "EduPlanManager\\Extentions\\PhotoExtensions.cs",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Extentions\\PhotoExtensions.cs",
+              "RelativeToolTip": "EduPlanManager\\Extentions\\PhotoExtensions.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAxwAIAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-29T05:53:51.387Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Result.cs",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Models\\DTOs\\Respone\\Result.cs",
+              "RelativeDocumentMoniker": "EduPlanManager\\Models\\DTOs\\Respone\\Result.cs",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Models\\DTOs\\Respone\\Result.cs",
+              "RelativeToolTip": "EduPlanManager\\Models\\DTOs\\Respone\\Result.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-29T05:47:30.899Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "IPhotoService.cs",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Services\\Interface\\IPhotoService.cs",
+              "RelativeDocumentMoniker": "EduPlanManager\\Services\\Interface\\IPhotoService.cs",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Services\\Interface\\IPhotoService.cs",
+              "RelativeToolTip": "EduPlanManager\\Services\\Interface\\IPhotoService.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAwAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-29T05:40:45.235Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "PhotoService.cs",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Services\\PhotoService.cs",
+              "RelativeDocumentMoniker": "EduPlanManager\\Services\\PhotoService.cs",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Services\\PhotoService.cs",
+              "RelativeToolTip": "EduPlanManager\\Services\\PhotoService.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAowCgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-29T05:40:35.502Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Program.cs",
+              "RelativeDocumentMoniker": "EduPlanManager\\Program.cs",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Program.cs",
+              "RelativeToolTip": "EduPlanManager\\Program.cs",
+              "ViewState": "AgIAADsAAAAAAAAAAAAAAEQAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-29T02:02:26.69Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "20241129053842_UpdateUser.cs",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Migrations\\20241129053842_UpdateUser.cs",
+              "RelativeDocumentMoniker": "EduPlanManager\\Migrations\\20241129053842_UpdateUser.cs",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Migrations\\20241129053842_UpdateUser.cs",
+              "RelativeToolTip": "EduPlanManager\\Migrations\\20241129053842_UpdateUser.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAAQwEgAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-29T05:38:42.652Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Models\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "EduPlanManager\\Models\\Entities\\User.cs",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Models\\Entities\\User.cs",
+              "RelativeToolTip": "EduPlanManager\\Models\\Entities\\User.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAgwB8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-29T05:36:20.602Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "CloudinarySettings.cs",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Settings\\CloudinarySettings.cs",
+              "RelativeDocumentMoniker": "EduPlanManager\\Settings\\CloudinarySettings.cs",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Settings\\CloudinarySettings.cs",
+              "RelativeToolTip": "EduPlanManager\\Settings\\CloudinarySettings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-29T05:35:09.493Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "ChangePassword.cshtml",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Auth\\ChangePassword.cshtml",
+              "RelativeDocumentMoniker": "EduPlanManager\\Views\\Auth\\ChangePassword.cshtml",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Auth\\ChangePassword.cshtml",
+              "RelativeToolTip": "EduPlanManager\\Views\\Auth\\ChangePassword.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC0AAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-28T19:14:26.925Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\appsettings.json",
+              "RelativeDocumentMoniker": "EduPlanManager\\appsettings.json",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\appsettings.json",
+              "RelativeToolTip": "EduPlanManager\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-11-29T02:31:33.469Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "ForgotPassword.cshtml",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Auth\\ForgotPassword.cshtml",
+              "RelativeDocumentMoniker": "EduPlanManager\\Views\\Auth\\ForgotPassword.cshtml",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Auth\\ForgotPassword.cshtml",
+              "RelativeToolTip": "EduPlanManager\\Views\\Auth\\ForgotPassword.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-28T18:25:41.003Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "ResetPassword.cshtml",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Auth\\ResetPassword.cshtml",
+              "RelativeDocumentMoniker": "EduPlanManager\\Views\\Auth\\ResetPassword.cshtml",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Auth\\ResetPassword.cshtml",
+              "RelativeToolTip": "EduPlanManager\\Views\\Auth\\ResetPassword.cshtml",
+              "ViewState": "AgIAAAgAAAAAAAAAAADwvxwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-28T18:27:24.13Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "_AdminSidebar.cshtml",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Shared\\_AdminSidebar.cshtml",
+              "RelativeDocumentMoniker": "EduPlanManager\\Views\\Shared\\_AdminSidebar.cshtml",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Shared\\_AdminSidebar.cshtml",
+              "RelativeToolTip": "EduPlanManager\\Views\\Shared\\_AdminSidebar.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-29T04:42:36.815Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "EduPlanManager\\Controllers\\HomeController.cs",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "EduPlanManager\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-29T03:34:34.886Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "EduPlanManager\\Controllers\\AuthController.cs",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "EduPlanManager\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAIMAAAAAAAAAAAAlwJAAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-28T18:17:15.033Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "MyAuthenFilter.cs",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Filters\\MyAuthenFilter.cs",
+              "RelativeDocumentMoniker": "EduPlanManager\\Filters\\MyAuthenFilter.cs",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Filters\\MyAuthenFilter.cs",
+              "RelativeToolTip": "EduPlanManager\\Filters\\MyAuthenFilter.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-29T03:09:22.619Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
               "Title": "AdminController.cs",
               "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Controllers\\AdminController.cs",
               "RelativeDocumentMoniker": "EduPlanManager\\Controllers\\AdminController.cs",
               "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Controllers\\AdminController.cs",
               "RelativeToolTip": "EduPlanManager\\Controllers\\AdminController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAYwDYAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-28T18:51:17.877Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 34,
+              "Title": "ConfirmLink.html",
+              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Common\\TemplateEmail\\ConfirmLink.html",
+              "RelativeDocumentMoniker": "EduPlanManager\\Common\\TemplateEmail\\ConfirmLink.html",
+              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Common\\TemplateEmail\\ConfirmLink.html",
+              "RelativeToolTip": "EduPlanManager\\Common\\TemplateEmail\\ConfirmLink.html",
+              "ViewState": "AgIAAEsAAAAAAAAAAIBJwFcAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-11-28T18:34:38.604Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
               "Title": "LoginRequest.cs",
               "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Models\\DTOs\\Auth\\LoginRequest.cs",
               "RelativeDocumentMoniker": "EduPlanManager\\Models\\DTOs\\Auth\\LoginRequest.cs",
@@ -92,59 +646,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "EduPlanManager\\Views\\Home\\Index.cshtml",
-              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "EduPlanManager\\Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-28T18:39:03.975Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ConfirmLink.html",
-              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Common\\TemplateEmail\\ConfirmLink.html",
-              "RelativeDocumentMoniker": "EduPlanManager\\Common\\TemplateEmail\\ConfirmLink.html",
-              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Common\\TemplateEmail\\ConfirmLink.html",
-              "RelativeToolTip": "EduPlanManager\\Common\\TemplateEmail\\ConfirmLink.html",
-              "ViewState": "AgIAAE4AAAAAAAAAAAAAAFcAAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2024-11-28T18:34:38.604Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Login.cshtml",
-              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Auth\\Login.cshtml",
-              "RelativeDocumentMoniker": "EduPlanManager\\Views\\Auth\\Login.cshtml",
-              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Auth\\Login.cshtml",
-              "RelativeToolTip": "EduPlanManager\\Views\\Auth\\Login.cshtml",
-              "ViewState": "AgIAACYAAAAAAAAAAAAqwDYAAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-28T18:28:30.01Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "EduPlanManager\\Controllers\\AuthController.cs",
-              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "EduPlanManager\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAAEwAAAAAAAAAAAAAwFYAAAA1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-28T18:17:15.033Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 36,
               "Title": "GenerateEmailBody.cs",
               "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Common\\TemplateEmail\\GenerateEmailBody.cs",
               "RelativeDocumentMoniker": "EduPlanManager\\Common\\TemplateEmail\\GenerateEmailBody.cs",
@@ -157,7 +659,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 39,
               "Title": "ResetPasswordDto.cs",
               "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Models\\DTOs\\Auth\\ResetPasswordDto.cs",
               "RelativeDocumentMoniker": "EduPlanManager\\Models\\DTOs\\Auth\\ResetPasswordDto.cs",
@@ -170,33 +672,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "ResetPassword.cshtml",
-              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Auth\\ResetPassword.cshtml",
-              "RelativeDocumentMoniker": "EduPlanManager\\Views\\Auth\\ResetPassword.cshtml",
-              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Auth\\ResetPassword.cshtml",
-              "RelativeToolTip": "EduPlanManager\\Views\\Auth\\ResetPassword.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-28T18:27:24.13Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "ForgotPassword.cshtml",
-              "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Auth\\ForgotPassword.cshtml",
-              "RelativeDocumentMoniker": "EduPlanManager\\Views\\Auth\\ForgotPassword.cshtml",
-              "ToolTip": "D:\\Project\\EduPlanManager\\EduPlanManager\\Views\\Auth\\ForgotPassword.cshtml",
-              "RelativeToolTip": "EduPlanManager\\Views\\Auth\\ForgotPassword.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-28T18:25:41.003Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 38,
               "Title": "IEmailService.cs",
               "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Services\\Interface\\IEmailService.cs",
               "RelativeDocumentMoniker": "EduPlanManager\\Services\\Interface\\IEmailService.cs",
@@ -209,7 +685,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 40,
               "Title": "ForgotPasswordDto.cs",
               "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Models\\DTOs\\Auth\\ForgotPasswordDto.cs",
               "RelativeDocumentMoniker": "EduPlanManager\\Models\\DTOs\\Auth\\ForgotPasswordDto.cs",
@@ -222,7 +698,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 37,
               "Title": "EmailService.cs",
               "DocumentMoniker": "D:\\Project\\EduPlanManager\\EduPlanManager\\Services\\EmailService.cs",
               "RelativeDocumentMoniker": "EduPlanManager\\Services\\EmailService.cs",

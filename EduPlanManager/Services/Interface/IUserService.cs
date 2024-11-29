@@ -9,5 +9,6 @@ namespace EduPlanManager.Services.Interface
         Task<User> GetByEmailAsync(string email);
         Task<Result<UserDto>> CreateAsync(CreateUserDto request);
         Task<List<User>> GetAllUser();
+        Task<Result<bool>> UpdateUserAsync(UpdateUserDto userUpdateDto, string userId);
     }
 }

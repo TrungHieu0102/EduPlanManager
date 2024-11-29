@@ -1,23 +1,25 @@
 ﻿using EduPlanManager.Models.DTOs.Auth;
 using EduPlanManager.Models.Entities;
 using EduPlanManager.Services.Interface;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using EduPlanManager.Filters;
 
 namespace EduPlanManager.Controllers
 {
     [Route("/auth")]
     public class AuthController : Controller
     {
-        private readonly ITokenService _tokenService;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IEmailService _emailService;
 
-        public AuthController(ITokenService tokenService, UserManager<User> userManager, SignInManager<User> signInManager, IEmailService emailService)
+        public AuthController( UserManager<User> userManager, SignInManager<User> signInManager, IEmailService emailService)
         {
-            _tokenService = tokenService;
             _userManager = userManager;
             _signInManager = signInManager;
             _emailService = emailService;
@@ -36,36 +38,27 @@ namespace EduPlanManager.Controllers
                 var user = await _userManager.FindByEmailAsync(model.Email);
                 if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
                 {
-                    var accessToken = _tokenService.GenerateAccessToken(user);
-                    var refreshToken = _tokenService.GenerateRefreshToken();
-
-                    user.RefreshToken = refreshToken;
-                    user.RefreshTokenExpiryTime = DateTime.Now.AddDays(7);
-                    await _userManager.UpdateAsync(user);
-                                        var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
-
-                    if (model.RememberMe)
+                    var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
+                    if (result.Succeeded)
                     {
+
+
                         var cookieOptions = new CookieOptions
                         {
                             HttpOnly = true,
                             Secure = true,
-                            Expires = DateTime.Now.AddDays(30) 
+                            Expires = DateTime.Now.AddDays(30)
                         };
 
-                        Response.Cookies.Append("AccessToken", accessToken, cookieOptions);
-                        Response.Cookies.Append("RefreshToken", refreshToken, cookieOptions);
-                        Response.Cookies.Append("UserRole", role!, cookieOptions);
-
+                        Response.Cookies.Append("UserRole", (await _userManager.GetRolesAsync(user)).FirstOrDefault()!, cookieOptions);
+                        var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault()!;
+                        Console.WriteLine(role);
+                        return RedirectToAction("Index", "Home");
                     }
                     else
                     {
-                        HttpContext.Session.SetString("AccessToken", accessToken);
-                        HttpContext.Session.SetString("RefreshToken", refreshToken);
-                        HttpContext.Session.SetString("UserRole", role!);
+                        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     }
-
-                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
@@ -80,25 +73,8 @@ namespace EduPlanManager.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            HttpContext.Session.Remove("AccessToken");
-            HttpContext.Session.Remove("RefreshToken");
-            Response.Cookies.Delete("AccessToken");
-            Response.Cookies.Delete("RefreshToken");
             return RedirectToAction("Login", "Auth");
-        }
-        [HttpPost]
-        public async Task<IActionResult> RefreshToken()
-        {
-            var refreshToken = HttpContext.Session.GetString("RefreshToken");
-            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
-            if (user != null && user.RefreshTokenExpiryTime > DateTime.Now)
-            {
-                var newAccessToken = _tokenService.GenerateAccessToken(user);
-                HttpContext.Session.SetString("AccessToken", newAccessToken);
-                return Ok(new { AccessToken = newAccessToken });
-            }
-            return Unauthorized();
-        }
+        }  
         [HttpGet("forgot-password")]
         public IActionResult ForgotPassword()
         {
@@ -151,12 +127,50 @@ namespace EduPlanManager.Controllers
                 if (result.Succeeded)
                 {
                     TempData["SuccessMessage"] = "Mật khẩu của bạn đã được thay đổi thành công.";
-                    return RedirectToAction("Login");
+                    return RedirectToAction("Index", "Home");
                 }
 
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+
+            return View(model);
+        }
+        [Authorize]
+        [HttpGet("change-password")]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+        [Authorize]
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordRequest model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                if (user != null)
+                {
+                    var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+
+                    if (result.Succeeded)
+                    {
+                        TempData["SuccessMessage"] = "Mật khẩu đã được thay đổi thành công.";
+                        await _signInManager.SignOutAsync();
+                    }
+                    else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Người dùng không tồn tại.");
                 }
             }
 

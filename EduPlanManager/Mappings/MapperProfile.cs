@@ -10,6 +10,7 @@ namespace EduPlanManager.Mappings
         {
             CreateMap<User, CreateUserDto>().ReverseMap();
             CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<User,UpdateUserDto>().ReverseMap();
         }
     }
 }

@@ -8,11 +8,28 @@ namespace EduPlanManager.Models.Entities
         [Required]
         [MaxLength(100)]
         public required string FirstName { get; set; }
+
         [Required]
         [MaxLength(100)]
         public required string LastName { get; set; }
-        public string? RefreshToken { get; set; }
-        public DateTime RefreshTokenExpiryTime { get; set; }
+
+        [MaxLength(500)]
+        public string? Address { get; set; }
+
+        public DateTime? DateOfBirth { get; set; }
+
+        public string? ProfilePicture { get; set; }
+
+        [MaxLength(100)]
+        public string? Title { get; set; }
+
+        [MaxLength(50)]
+        public string? AccountStatus { get; set; }
+
+        public string? Gender { get; set; }
+
+        public string? AdditionalInfo { get; set; }
+
         public string GetFullName()
         {
             return this.FirstName + " " + this.LastName;

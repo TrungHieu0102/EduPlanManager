@@ -1,10 +1,9 @@
-﻿using EduPlanManager.Extentions;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EduPlanManager.Controllers
 {
-    [AuthenticateUser]
-
+    [Authorize]
     public class HomeController : Controller
     {
         public IActionResult Index()
