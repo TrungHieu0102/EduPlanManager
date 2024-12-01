@@ -12,7 +12,9 @@ namespace EduPlanManager.Services.Interface
         Task<Result<SubjectDetailDTO>> GetSubjectWithDetailsAsync(Guid id);
         Task<Result<bool>> DeleteSubjectById(Guid id);
         Task<Result<Subject>> UpdateSubject(Subject subject);
-        //CCCC
         Task<Result<Subject>> GetSubject(Guid id);
+        Task DeleteSubjectsAsync(List<Guid> ids);
+        Task<Result<SubjectDTO>> CreateSubjectAsync(SubjectCreateDTO subjectCreateDTO);
+
     }
 }

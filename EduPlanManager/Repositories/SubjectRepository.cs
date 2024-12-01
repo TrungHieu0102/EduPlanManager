@@ -7,28 +7,7 @@ namespace EduPlanManager.Repositories
 {
     public class SubjectRepository(ApplicationDbContext context) : RepositoryBase<Subject, Guid>(context), ISubjectRepository
     {
-        public async Task<IEnumerable<Subject>> GetSubjectsAsync(string searchTerm, int? semester, int? year, int pageNumber, int pageSize)
-        {
-            IQueryable<Subject> query = _context.Subjects.Include(s => s.Category).Include(s => s.AcademicTerm);
-
-            if (!string.IsNullOrEmpty(searchTerm))
-            {
-                query = query.Where(s => s.Code.Contains(searchTerm) || s.Name.Contains(searchTerm));
-            }
-
-            if (semester.HasValue)
-            {
-                query = query.Where(s => s.Semester == semester);
-            }
-
-            if (year.HasValue)
-            {
-                query = query.Where(s => s.Year == year);
-            }
-
-            return await query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
-        }
-
+       
 
         public async Task<Subject> GetSubjectWithDetailsAsync(Guid id)
         {
@@ -40,7 +19,7 @@ namespace EduPlanManager.Repositories
         }
         public async Task<int> GetTotalSubjectsAsync(string searchTerm, int? semester, int? year)
         {
-            IQueryable<Subject> query = _context.Subjects;
+            IQueryable<Subject> query = _context.Subjects.Include(s => s.Category).Include(s => s.AcademicTerm);
 
             if (!string.IsNullOrEmpty(searchTerm))
             {
@@ -49,19 +28,32 @@ namespace EduPlanManager.Repositories
 
             if (semester.HasValue)
             {
-                query = query.Where(s => s.Semester == semester);
+                query = query.Where(s => s.AcademicTerm.Semester == semester);
             }
 
             if (year.HasValue)
             {
-                query = query.Where(s => s.Year == year);
+                query = query.Where(s => s.AcademicTerm.Year == year);
             }
 
             return await query.CountAsync();
         }
         public IQueryable<Subject> GetQueryable()
         {
-            return _context.Subjects.AsQueryable(); 
+            return _context.Subjects
+                  .Include(s => s.Category)        
+                  .Include(s => s.AcademicTerm)     
+                  .AsQueryable();
+        }
+        public async Task<List<Subject>> GetSubjectsByIdsAsync(List<Guid> ids)
+        {
+            return await _context.Subjects.Where(s => ids.Contains(s.Id)).ToListAsync();
+        }
+
+        public async Task DeleteSubjectsAsync(List<Subject> subjects)
+        {
+            _context.Subjects.RemoveRange(subjects);
+            await _context.SaveChangesAsync();
         }
 
     }

@@ -1,0 +1,76 @@
+﻿@model EduPlanManager.Models.DTOs.AcademicTerm.CreateUpdateAcademicTermDTO
+
+@{
+    ViewData["Title"] = "Tạo Mới Học Kỳ";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h5 class="card-title mb-0">@ViewData["Title"]</h5>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" method="post"> 
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <label for="Year" class="form-label">Năm học</label>
+                    <input type="number" class="form-control" id="Year" name="Year" value="@Model.Year != 0 ? Model.Year.ToString() : 2024" required onchange="updateDateLimits()" />
+                    <span asp-validation-for="Year" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="Semester" class="form-label">Học kỳ</label>
+                    <select asp-for="Semester" class="form-select">
+                        <option value="1">Học kỳ 1</option>
+                        <option value="2">Học kỳ 2</option>
+                        <option value="3">Học kỳ 3</option>
+                    </select>
+                    <span asp-validation-for="Semester" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="StartDate" class="form-label">Ngày bắt đầu</label>
+                    <input type="date" class="form-control" id="StartDate" name="StartDate" value="@Model.StartDate.ToString("yyyy-MM-dd")" required />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="EndDate" class="form-label">Ngày kết thúc</label>
+                    <input type="date" class="form-control" id="EndDate" name="EndDate" value="@Model.EndDate.ToString("yyyy-MM-dd")" required />
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-3">Tạo Học Kỳ</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+        <script>
+            function updateDateLimits() {
+                var year = document.getElementById('Year').value;
+                var startDateInput = document.getElementById('StartDate');
+                var endDateInput = document.getElementById('EndDate');
+
+                if (year) {
+                    // Set min and max for StartDate
+                    startDateInput.min = year + "-01-01";  // January 1st of the selected year
+                    startDateInput.max = year + "-12-31"; // December 31st of the selected year
+
+                    // Set min and max for EndDate
+                    endDateInput.min = year + "-01-01";  // January 1st of the selected year
+                    endDateInput.max = (parseInt(year) + 1) + "-12-31"; // December 31st of the next year
+                }
+            }
+
+            // Run the function initially to set the limits based on the initial value in the model
+            window.onload = function () {
+                updateDateLimits();
+            };
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation/1.19.5/jquery.validate.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js"></script>
+}

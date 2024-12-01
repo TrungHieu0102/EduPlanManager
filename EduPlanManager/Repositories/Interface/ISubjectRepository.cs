@@ -6,9 +6,10 @@ namespace EduPlanManager.Repositories.Interface
 {
     public interface ISubjectRepository : IRepositoryBase<Subject, Guid>
     {
-        Task<IEnumerable<Subject>> GetSubjectsAsync(string searchTerm, int? semester, int? year, int pageNumber, int pageSize);
         Task<int> GetTotalSubjectsAsync(string searchTerm, int? semester, int? year);
         Task<Subject> GetSubjectWithDetailsAsync(Guid id);
         IQueryable<Subject> GetQueryable();
+        Task<List<Subject>> GetSubjectsByIdsAsync(List<Guid> ids);
+        Task DeleteSubjectsAsync(List<Subject> subjects);
     }
 }

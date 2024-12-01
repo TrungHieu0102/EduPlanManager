@@ -16,12 +16,6 @@ namespace EduPlanManager.Models.Entities
         [StringLength(200)] // Giới hạn tên đầy đủ môn học
         public string Name { get; set; }
 
-        [Range(1, 12)] // Giới hạn học kỳ từ 1 đến 12
-        public int Semester { get; set; }
-
-        [Range(1, 9999)] // Giới hạn năm học
-        public int Year { get; set; }
-
         [Required]
         public DateTime StartDate { get; set; }
 
@@ -38,12 +32,14 @@ namespace EduPlanManager.Models.Entities
 
         [Required]
         public Guid AcademicTermId { get; set; }
-        [ForeignKey("AcademicTermId")] // Chỉ định rõ khóa ngoại
+        [ForeignKey("AcademicTermId")] 
         public virtual AcademicTerm AcademicTerm { get; set; }
 
         // Navigation Properties
         public ICollection<Grade> Grades { get; set; }
         public ICollection<StudentSchedule> StudentSchedules { get; set; }
         public ICollection<Enrollment> Enrollments { get; set; }
+        public ICollection<Class> Classes { get; set; }
+
     }
 }

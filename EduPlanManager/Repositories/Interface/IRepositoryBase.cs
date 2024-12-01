@@ -15,5 +15,6 @@ namespace EduPlanManager.Repositories.Interface
         void RemoveRange(IEnumerable<T> entities);
         void Update(T entity);
         IQueryable<T> FindAsync(Expression<Func<T, bool>> expression);
+        Task AddAsync(T entity);
     }
 }

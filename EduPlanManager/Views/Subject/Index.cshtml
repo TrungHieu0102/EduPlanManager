@@ -26,12 +26,17 @@
     <div class="mb-3">
         <input type="number" name="year" placeholder="Năm học" value="@ViewData["Year"]" class="form-control shadow-sm" />
     </div>
-    <button type="submit" class="btn text-success-emphasis bg-success-subtle btn-success border border-success align-items-center">Tìm kiếm</button>
+    <button type="submit" class="btn text-success-emphasis bg-success-subtle ">Tìm kiếm</button>
+    <a href="@Url.Action("CreateSubject")" class="btn text-primary-emphasis bg-primary-subtle">Thêm mới môn học</a>
+
 </form>
 
 <table class="table table-striped table-hover table-bordered">
     <thead class="table-light">
         <tr>
+            <th>
+                <input type="checkbox" id="selectAll" onclick="toggleSelectAll()" />
+            </th>
             <th>Mã môn học</th>
             <th>Tên môn học</th>
             <th>Kỳ học</th>
@@ -43,7 +48,7 @@
         @if (!Model.Any())
         {
             <tr>
-                <td colspan="5" class="text-center">Không có dữ liệu</td>
+                <td colspan="6" class="text-center">Không có dữ liệu</td>
             </tr>
         }
         else
@@ -51,16 +56,18 @@
             @foreach (var subject in Model)
             {
                 <tr class="align-middle">
+                    <td>
+                        <input type="checkbox" class="selectRow" data-id="@subject.Id" onclick="toggleDeleteButton()" />
+                    </td>
                     <td>@subject.Code</td>
                     <td>@subject.Name</td>
-                    <td>@subject.Semester</td>
-                    <td>@subject.Year</td>
+                    <td>@subject.AcademicTermSemester</td>
+                    <td>@subject.AcademicTermYear</td>
                     <td class="d-flex justify-content-center align-items-center">
                         <div class="d-flex align-items-center">
                             <a href="@Url.Action("Details", new { id = subject.Id })" class="badge rounded-pill text-primary-emphasis bg-primary-subtle border border-primary align-items-center me-2">Xem chi tiết</a>
                             <div class="dropdown">
-                                <button class="btn btn-light btn-sm shadow-none dropdown-toggle border-0 bg-transparent" type="button" id="dropdownMenuButton-@subject.Id" data-bs-toggle="dropdown" aria-expanded="false">
-                                </button>
+                                <button class="btn btn-light btn-sm shadow-none dropdown-toggle border-0 bg-transparent" type="button" id="dropdownMenuButton-@subject.Id" data-bs-toggle="dropdown" aria-expanded="false"></button>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton-@subject.Id">
                                     <li>
                                         <a class="dropdown-item badge rounded-pill text-primary-emphasis align-items-center" href="@Url.Action("Update", new { id = subject.Id })">
@@ -79,41 +86,98 @@
                             </div>
                         </div>
                     </td>
-            
                 </tr>
             }
         }
     </tbody>
 </table>
 
+
 <nav>
-    <ul class="pagination justify-content-center">
-        @for (int i = 1; i <= (int)ViewBag.TotalPages; i++)
-        {
-            <li class="page-item  @(i == ViewBag.CurrentPage ? "active" : "")">
-                <a class="page-link" href="@Url.Action("Index", new { searchTerm = ViewData["SearchTerm"], semester = ViewData["Semester"], year = ViewData["Year"], pageNumber = i })">
-                    @i
-                </a>
-            </li>
-        } 
-    </ul>
+    <div class="d-flex justify-content-between align-items-center">
+        <!-- Phân trang -->
+        <ul class="pagination pagination-circle">
+            @for (int i = 1; i <= (int)ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { searchTerm = ViewData["SearchTerm"], semester = ViewData["Semester"], year = ViewData["Year"], pageNumber = i })">
+                        @i
+                    </a>
+                </li>
+            }
+        </ul>
+
+        <!-- Nút Xóa Range -->
+        <button type="button" id="deleteRangeBtn" class="btn btn-danger" style="display: none;" onclick="deleteSelected()">Xóa</button>
+    </div>
 </nav>
+
 
 <script>
     var subjects = @Html.Raw(Json.Serialize(Model.Select(s => s.Name).ToList()))
 
-    function updateDatalist() {
-        const searchTerm = document.getElementById('searchTerm').value;
-        const subjectList = document.getElementById('subjectList');
+        function updateDatalist() {
+            const searchTerm = document.getElementById('searchTerm').value;
+            const subjectList = document.getElementById('subjectList');
 
-        subjectList.innerHTML = "";
+            subjectList.innerHTML = "";
 
-        if (searchTerm) {
-            var filteredSubjects = subjects.filter(subject => subject.toLowerCase().includes(searchTerm.toLowerCase()));
+            if (searchTerm) {
+                var filteredSubjects = subjects.filter(subject => subject.toLowerCase().includes(searchTerm.toLowerCase()));
 
-            filteredSubjects.forEach(subject => {
-                subjectList.innerHTML += `<option value="${subject}"></option>`;
-            });
+                filteredSubjects.forEach(subject => {
+                    subjectList.innerHTML += `<option value="${subject}"></option>`;
+                });
+            }
+        }
+    function toggleSelectAll() {
+        var selectAllCheckbox = document.getElementById("selectAll");
+        var checkboxes = document.querySelectorAll(".selectRow");
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = selectAllCheckbox.checked;
+        });
+        toggleDeleteButton();
+    }
+    function toggleDeleteButton() {
+        var checkboxes = document.querySelectorAll(".selectRow");
+        var selected = Array.from(checkboxes).some(checkbox => checkbox.checked);
+        var deleteButton = document.getElementById("deleteRangeBtn");
+        if (selected) {
+            deleteButton.style.display = "inline-block";
+        } else {
+            deleteButton.style.display = "none";
         }
     }
+    function deleteSelected() {
+        // Lấy danh sách các ID môn học được chọn
+        var selectedIds = [];
+        var checkboxes = document.querySelectorAll(".selectRow:checked");
+        checkboxes.forEach(function (checkbox) {
+            selectedIds.push(checkbox.getAttribute("data-id"));
+        });
+
+        // Nếu có môn học được chọn, gửi yêu cầu xóa
+        if (selectedIds.length > 0) {
+            // Gửi danh sách ID qua một yêu cầu AJAX hoặc submit form
+            var form = document.createElement("form");
+            form.method = "POST";
+            form.action = "@Url.Action("DeleteRange")"; // Chỉ định phương thức trong controller
+
+            // Tạo input ẩn để chứa danh sách ID
+            var input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "selectedIds";  // Tên parameter trong phương thức controller
+            input.value = selectedIds.join(',');  // Chuyển danh sách ID thành chuỗi
+            form.appendChild(input);
+
+            // Thêm form vào body và gửi
+            document.body.appendChild(form);
+            form.submit();
+        } else {
+            alert("Vui lòng chọn ít nhất một môn học để xóa!");
+        }
+    }
+
+
+
 </script>

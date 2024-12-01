@@ -20,7 +20,7 @@ namespace EduPlanManager.Models.Entities
         [Required]
         public DateTime CreatedAt { get; set; } = DateTime.Now; // Thời gian tạo
 
-        public DateTime? CancelledAt { get; set; } // Thời gian hủy (nếu có)
+        public DateTime? CancelledAt { get; set; } // Thời gian hủy 
 
         // Navigation Properties
         [Required]

@@ -4,6 +4,7 @@ using EduPlanManager.Models.Entities;
 using EduPlanManager.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace EduPlanManager.Controllers
 {
@@ -13,7 +14,7 @@ namespace EduPlanManager.Controllers
         private readonly ISubjectCategoryService _subjectCategoryService;
         private readonly IAcademicTermService _academicTermService;
         private readonly IMapper _mapper;
-        public SubjectController(ISubjectService subjectService , IMapper mapper, ISubjectCategoryService subjectCategoryService, IAcademicTermService academicTermService)
+        public SubjectController(ISubjectService subjectService, IMapper mapper, ISubjectCategoryService subjectCategoryService, IAcademicTermService academicTermService)
         {
             _subjectService = subjectService;
             _subjectCategoryService = subjectCategoryService;
@@ -24,7 +25,6 @@ namespace EduPlanManager.Controllers
         public async Task<IActionResult> Index(string searchTerm, int? semester, int? year, int pageNumber = 1, int pageSize = 10)
         {
             var result = await _subjectService.SearchSubjectsAsync(searchTerm, semester, year, pageNumber, pageSize);
-            Console.WriteLine(result.Message);
             if (result.IsSuccess)
             {
                 ViewBag.TotalPages = result.TotalPages;
@@ -32,7 +32,7 @@ namespace EduPlanManager.Controllers
                 ViewData["SearchTerm"] = searchTerm;
                 ViewData["Semester"] = semester;
                 ViewData["Year"] = year;
-               
+
 
                 return View(result.Data);
             }
@@ -71,8 +71,7 @@ namespace EduPlanManager.Controllers
             TempData["SuccessMessage"] = "Xóa thành công";
             return RedirectToAction("Index");
         }
-        // GET: Subject/Update/{id}
-        [HttpGet]
+        [HttpGet("Subject/Update/{id}")]
         public async Task<IActionResult> Update(Guid id)
         {
             var subject = await _subjectService.GetSubject(id);
@@ -127,6 +126,70 @@ namespace EduPlanManager.Controllers
 
             TempData["SuccessMessage"] = "Cập nhật môn học thành công";
             return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteRange(string selectedIds)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(selectedIds))
+                {
+                    throw new Exception("Chưa có môn học nào được chọn");
+                }
+
+                var ids = selectedIds.Split(',').Select(id => Guid.Parse(id)).ToList();
+                await _subjectService.DeleteSubjectsAsync(ids);
+                TempData["SuccessMessage"] = "Xóa thành công";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("Index");
+            }
+        }
+        [HttpGet("create-subject")]
+        public async Task<IActionResult> CreateSubject()
+        {
+            var categories = await _subjectCategoryService.GetAllCategoriesAsync();
+            var academicTerms = await _academicTermService.GetAllAcademicTermsAsync();
+            ViewBag.CategoryName = categories.Select(c => new { c.Id, c.FullName });
+            ViewBag.AcademicTerm = academicTerms.Select(at => new { at.Id, at.Year , at.Semester ,
+                StartDate = at.StartDate.ToString("yyyy-MM-dd"),
+                EndDate = at.EndDate.ToString("yyyy-MM-dd")
+            });
+            return View();
+        }
+        [HttpPost("create-subject")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateSubject(SubjectCreateDTO subject)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _subjectService.CreateSubjectAsync(subject);
+                if (result.IsSuccess)
+                {
+                    TempData["SuccessMessage"] = "Môn học đã được tạo thành công.";
+                    return RedirectToAction("Index"); 
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = result.Message;
+                }
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Vui lòng kiểm tra lại thông tin nhập vào.";
+            }
+            var categories = await _subjectCategoryService.GetAllCategoriesAsync();
+            var academicTerms = await _academicTermService.GetAllAcademicTermsAsync();
+            ViewBag.CategoryName = categories.Select(c => new { c.Id, c.FullName });
+            ViewBag.AcademicTerm = academicTerms.Select(at => new { at.Id, at.Year, at.Semester,
+                StartDate = at.StartDate.ToString("yyyy-MM-dd"),
+                EndDate = at.EndDate.ToString("yyyy-MM-dd")
+            });
+
+            return View(subject);
         }
     }
 }

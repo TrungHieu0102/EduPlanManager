@@ -14,6 +14,7 @@ namespace EduPlanManager.Data
         public DbSet<AcademicTerm> AcademicTerms { get; set; }
         public DbSet<EnrollmentRequest> EnrollmentRequests { get; set; }
         public DbSet<SubjectCategory> SubjectCategories { get; set; }
+        public DbSet<Class> Classes { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -56,6 +57,20 @@ namespace EduPlanManager.Data
                 .WithMany(s => s.Enrollments)
                 .HasForeignKey(e => e.SubjectId)
                 .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<AcademicTerm>()
+            .HasIndex(a => new { a.Year, a.Semester, a.StartDate, a.EndDate })
+            .IsUnique();
+            // Xác định mối quan hệ nhiều-nhiều giữa User và Class
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Classes)
+                .WithMany(c => c.Users)
+                .UsingEntity(j => j.ToTable("UserClasses"));  // Tên bảng trung gian, EF tự tạo bảng này
+
+            // Xác định mối quan hệ nhiều-nhiều giữa Class và Subject
+            modelBuilder.Entity<Class>()
+                .HasMany(c => c.Subjects)
+                .WithMany(s => s.Classes)
+                .UsingEntity(j => j.ToTable("ClassSubjects"));  // Tên bảng trung gian, EF tự tạo bảng này
         }
 
 

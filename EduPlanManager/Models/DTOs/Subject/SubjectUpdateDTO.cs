@@ -8,8 +8,6 @@
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int LessonsPerDay { get; set; }
-
-        // Các trường khóa ngoại
         public Guid CategoryId { get; set; }
         public Guid AcademicTermId { get; set; }
         public string? CategoryName { get; set; }

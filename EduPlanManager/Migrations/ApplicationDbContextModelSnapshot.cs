@@ -22,6 +22,36 @@ namespace EduPlanManager.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ClassSubject", b =>
+                {
+                    b.Property<Guid>("ClassesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SubjectsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ClassesId", "SubjectsId");
+
+                    b.HasIndex("SubjectsId");
+
+                    b.ToTable("ClassSubjects", (string)null);
+                });
+
+            modelBuilder.Entity("ClassUser", b =>
+                {
+                    b.Property<Guid>("ClassesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ClassesId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("UserClasses", (string)null);
+                });
+
             modelBuilder.Entity("EduPlanManager.Models.Entities.AcademicTerm", b =>
                 {
                     b.Property<Guid>("Id")
@@ -42,7 +72,35 @@ namespace EduPlanManager.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Year", "Semester", "StartDate", "EndDate")
+                        .IsUnique();
+
                     b.ToTable("AcademicTerms");
+                });
+
+            modelBuilder.Entity("EduPlanManager.Models.Entities.Class", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ClassName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StudentCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeacherCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Classes");
                 });
 
             modelBuilder.Entity("EduPlanManager.Models.Entities.Enrollment", b =>
@@ -243,14 +301,8 @@ namespace EduPlanManager.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("Semester")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -483,6 +535,36 @@ namespace EduPlanManager.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("ClassSubject", b =>
+                {
+                    b.HasOne("EduPlanManager.Models.Entities.Class", null)
+                        .WithMany()
+                        .HasForeignKey("ClassesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EduPlanManager.Models.Entities.Subject", null)
+                        .WithMany()
+                        .HasForeignKey("SubjectsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ClassUser", b =>
+                {
+                    b.HasOne("EduPlanManager.Models.Entities.Class", null)
+                        .WithMany()
+                        .HasForeignKey("ClassesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EduPlanManager.Models.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EduPlanManager.Models.Entities.Enrollment", b =>

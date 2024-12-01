@@ -1,6 +1,5 @@
 ﻿using EduPlanManager.Data;
 using EduPlanManager.Repositories.Interface;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -51,6 +50,10 @@ namespace EduPlanManager.Repositories
         public IQueryable<T> FindAsync(Expression<Func<T, bool>> expression)
         {
             return _context.Set<T>().Where(expression);
+        }
+        public async Task AddAsync(T entity)
+        {
+            await _dbSet.AddAsync(entity);
         }
     }
 }

@@ -2,15 +2,10 @@
 using EduPlanManager.Extensions;
 using EduPlanManager.Mappings;
 using EduPlanManager.Models.Entities;
-using EduPlanManager.Repositories.Interface;
-using EduPlanManager.Repositories;
 using EduPlanManager.Services;
 using EduPlanManager.Services.Interface;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using EduPlanManager.UnitOfWork;
 using EduPlanManager.Filters;
 using CloudinaryDotNet;
@@ -68,6 +63,7 @@ builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.AddScoped<ISubjectService, SubjectService>();
 builder.Services.AddScoped<ISubjectCategoryService, SubjectCategoryService>();
 builder.Services.AddScoped<IAcademicTermService, AcademicTermService>();
+builder.Services.AddScoped<IClassService, ClassService>();
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 builder.Services.AddScoped<MyAuthenFilter>();
 var app = builder.Build();
@@ -85,6 +81,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+);
 
 app.Run();

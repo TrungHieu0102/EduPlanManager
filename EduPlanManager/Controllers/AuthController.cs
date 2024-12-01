@@ -73,6 +73,7 @@ namespace EduPlanManager.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+            Response.Cookies.Delete("UserRole");
             return RedirectToAction("Login", "Auth");
         }  
         [HttpGet("forgot-password")]

@@ -5,7 +5,6 @@ using EduPlanManager.Models.Entities;
 using EduPlanManager.Services.Interface;
 using EduPlanManager.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 
 namespace EduPlanManager.Services
 {
@@ -29,11 +28,11 @@ namespace EduPlanManager.Services
                 }
                 if (semester.HasValue)
                 {
-                    query = query.Where(s => s.Semester == semester);
+                    query = query.Where(s => s.AcademicTerm.Semester == semester);
                 }
                 if (year.HasValue)
                 {
-                    query = query.Where(s => s.Year == year);
+                    query = query.Where(s => s.AcademicTerm.Year == year);
                 }
 
                 int totalSubjects = await query.CountAsync();
@@ -89,8 +88,6 @@ namespace EduPlanManager.Services
                 };
             }
         }
-        //CCCC
-
         public async Task<Result<Subject>> GetSubject(Guid id)
         {
             try
@@ -139,7 +136,6 @@ namespace EduPlanManager.Services
             }
 
         }
-
         public async Task<Result<bool>> DeleteSubjectById(Guid id)
         {
             try
@@ -166,7 +162,7 @@ namespace EduPlanManager.Services
         {
             try
             {
-                var existingSubject = await _unitOfWork.Subjects.GetByIdAsync(subject.Id) ?? throw new Exception("Không tìm thấy môn học");            
+                var existingSubject = await _unitOfWork.Subjects.GetByIdAsync(subject.Id) ?? throw new Exception("Không tìm thấy môn học");
 
                 existingSubject.Code = subject.Code;
                 existingSubject.Name = subject.Name;
@@ -175,23 +171,54 @@ namespace EduPlanManager.Services
                 existingSubject.LessonsPerDay = subject.LessonsPerDay;
                 existingSubject.CategoryId = subject.CategoryId;
                 existingSubject.AcademicTermId = subject.AcademicTermId;
-
                 _unitOfWork.Subjects.Update(existingSubject);
                 var result = await _unitOfWork.CompleteAsync();
-
-               return new Result<Subject>
-               {
-                   IsSuccess = true,
-                   Data = existingSubject
-               };
+                return new Result<Subject>
+                {
+                    IsSuccess = true,
+                    Data = existingSubject
+                };
             }
             catch (Exception ex)
             {
-               return new Result<Subject>
-               {
-                   IsSuccess = false,
-                   Message = ex.Message
-               };
+                return new Result<Subject>
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
+        }
+        public async Task DeleteSubjectsAsync(List<Guid> ids)
+        {
+            var subjects = await _unitOfWork.Subjects.GetSubjectsByIdsAsync(ids);
+            if (subjects.Count != 0)
+            {
+                await _unitOfWork.Subjects.DeleteSubjectsAsync(subjects);
+            }
+        }
+        public async Task<Result<SubjectDTO>> CreateSubjectAsync(SubjectCreateDTO subjectCreateDTO)
+        {
+            try
+            {
+                subjectCreateDTO.Id = Guid.NewGuid();
+                var subject = _mapper.Map<Subject>(subjectCreateDTO);
+                subject.Code = subject.Code.ToUpper();
+                _unitOfWork.Subjects.Add(subject);
+                await _unitOfWork.CompleteAsync();
+                var result = _mapper.Map<SubjectDTO>(subject);
+                return new Result<SubjectDTO>
+                {
+                    IsSuccess = true,
+                    Data = result
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Result<SubjectDTO>
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
             }
         }
     }

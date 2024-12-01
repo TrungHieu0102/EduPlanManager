@@ -1,0 +1,80 @@
+﻿using AutoMapper;
+using EduPlanManager.Models.DTOs.AcademicTerm;
+using EduPlanManager.Services.Interface;
+using EduPlanManager.UnitOfWork;
+using Microsoft.AspNetCore.Mvc;
+
+namespace EduPlanManager.Controllers
+{
+    [ValidateModelState]
+    public class AcademicTermController : Controller
+    {
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IAcademicTermService _academicTermService;
+        private readonly IMapper _mapper;
+
+        public AcademicTermController(IUnitOfWork unitOfWork, IAcademicTermService academicTermService, IMapper mapper)
+        {
+            _unitOfWork = unitOfWork;
+            _academicTermService = academicTermService;
+            _mapper = mapper;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var academicTerms = await _unitOfWork.AcademicTerms.GetAllAsync();
+
+            return View(academicTerms);
+        }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View(new CreateUpdateAcademicTermDTO());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateUpdateAcademicTermDTO request)
+        {
+            var result = await _academicTermService.CreateAcademicTermsAsync(request);
+            if (!result.IsSuccess)
+            {
+                TempData["ErrorMessage"] = result.Message;
+                return RedirectToAction("Create");
+
+            }
+            TempData["SuccessMessage"] = "Cập nhật thành công";
+            return RedirectToAction("Index");
+        }
+        [HttpDelete]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var result = await _academicTermService.DeleteAcademicAsync(id);
+            if (!result.IsSuccess)
+            {
+                TempData["ErrorMessage"] = result.Message;
+            }
+            TempData["SuccessMessage"] = "Xóa thành công";
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public async Task<IActionResult> Update(Guid id)
+        {
+            var academicTerm = await _unitOfWork.AcademicTerms.GetByIdAsync(id);
+            var response = _mapper.Map<CreateUpdateAcademicTermDTO>(academicTerm);
+            return View(response);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(CreateUpdateAcademicTermDTO request)
+        {
+            var result = await _academicTermService.UpdateAcademic(request);
+            if(!result.IsSuccess)
+            {
+                TempData["ErrorMessage"] = result.Message;
+                return View(request);
+            }
+            TempData["SuccessMessage"] = "Cập nhật thành công";
+            return RedirectToAction("Index");
+        }
+
+
+    }
+}
