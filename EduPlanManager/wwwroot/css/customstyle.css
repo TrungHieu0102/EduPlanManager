@@ -1,4 +1,8 @@
-﻿.card-custom {
+﻿.content-wrapper {
+    background-color: white !important;
+}
+
+.card-custom {
     position: relative;
 }
 

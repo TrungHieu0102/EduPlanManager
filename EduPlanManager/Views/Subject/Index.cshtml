@@ -1,0 +1,98 @@
+﻿@model IEnumerable<EduPlanManager.Models.DTOs.Subject.SubjectDTO>
+
+@{
+    ViewData["Title"] = "Danh sách Môn học";
+}
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+}
+<h1 class="text-center text-primary my-4">@ViewData["Title"]</h1>
+<form method="get" class="mb-4">
+    <div class="mb-3">
+        <input type="text" id="searchTerm" name="searchTerm" placeholder="Tìm theo mã hoặc tên môn học" value="@ViewData["SearchTerm"]" class="form-control shadow-sm" list="subjectList" oninput="updateDatalist()" />
+
+        <datalist id="subjectList">
+        </datalist>
+    </div>
+    <div class="mb-3">
+        <select name="semester" class="form-select shadow-sm">
+            <option value="">Chọn kỳ học</option>
+            <option value="1" selected="@(ViewData["Semester"]?.ToString() == "1" ? "selected" : null)">Kỳ 1</option>
+            <option value="2" selected="@(ViewData["Semester"]?.ToString() == "2" ? "selected" : null)">Kỳ 2</option>
+            <option value="3" selected="@(ViewData["Semester"]?.ToString() == "3" ? "selected" : null)">Kỳ 3</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <input type="number" name="year" placeholder="Năm học" value="@ViewData["Year"]" class="form-control shadow-sm" />
+    </div>
+    <button type="submit" class="btn text-success-emphasis bg-success-subtle btn-success border border-success align-items-center">Tìm kiếm</button>
+</form>
+
+<table class="table table-striped table-hover table-bordered">
+    <thead class="table-light">
+        <tr>
+            <th>Mã môn học</th>
+            <th>Tên môn học</th>
+            <th>Kỳ học</th>
+            <th>Năm học</th>
+            <th>Chức năng</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="5" class="text-center">Không có dữ liệu</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var subject in Model)
+            {
+                <tr class="align-middle">
+                    <td>@subject.Code</td>
+                    <td>@subject.Name</td>
+                    <td>@subject.Semester</td>
+                    <td>@subject.Year</td>
+                    <td>
+                        <a href="@Url.Action("Details", new { id = subject.Id })" class="badge rounded-pill text-primary-emphasis bg-primary-subtle border border-primary align-items-center">Xem chi tiết</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<!-- Phân trang với responsive pagination -->
+<nav>
+    <ul class="pagination justify-content-center">
+        @for (int i = 1; i <= (int)ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { searchTerm = ViewData["SearchTerm"], semester = ViewData["Semester"], year = ViewData["Year"], pageNumber = i })">
+                    @i
+                </a>
+            </li>
+        }
+    </ul>
+</nav>
+
+<script>
+    var subjects = @Html.Raw(Json.Serialize(Model.Select(s => s.Name).ToList()))
+
+    function updateDatalist() {
+        const searchTerm = document.getElementById('searchTerm').value;
+        const subjectList = document.getElementById('subjectList');
+
+        subjectList.innerHTML = "";
+
+        if (searchTerm) {
+            var filteredSubjects = subjects.filter(subject => subject.toLowerCase().includes(searchTerm.toLowerCase()));
+
+            filteredSubjects.forEach(subject => {
+                subjectList.innerHTML += `<option value="${subject}"></option>`;
+            });
+        }
+    }
+</script>

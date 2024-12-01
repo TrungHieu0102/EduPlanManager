@@ -12,57 +12,125 @@
         @TempData["ErrorMessage"]
     </div>
 }
-<h2>Tạo mới người dùng</h2>
-<form asp-action="CreateUser" method="post">
-    @Html.AntiForgeryToken()
-    <div class="form-group">
-        <label asp-for="Email" class="control-label"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
+<h2>Tạo mới tài khoản</h2>
+<div>
+    <section class="py-3 py-md-5 py-xl-8">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-10 col-lg-8">
+                    <h1 class="fs-5 mb-2 text-secondary text-uppercase">Đăng ký thông tin</h1>
+                </div>
+            </div>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="UserName" class="control-label"></label>
-        <input asp-for="UserName" class="form-control" />
-        <span asp-validation-for="UserName" class="text-danger"></span>
-    </div>
+        <div class="container">
+            <div class="row gy-4 gy-md-5 gy-lg-0 align-items-md-center">
+                <div class="col-12 col-lg-6">
+                    <div class="border overflow-hidden">
+                        <form asp-action ="CreateUser" method="post">
+                            @Html.AntiForgeryToken()
+                            <div class="row gy-4 gy-xl-5 p-4 p-xl-5">
+                                <!-- Trường Email -->
+                                <div class="col-12 col-md-6">
+                                    <label asp-for="Email" class="form-label">
+                                        Email <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                                                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
+                                            </svg>
+                                        </span>
+                                        <input asp-for="Email" type="email" class="form-control" id="Email" name="Email" value=""
+                                               required>
+                                    </div>
+                                </div>
 
-    <div class="form-group">
-        <label asp-for="Password" class="control-label"></label>
-        <input asp-for="Password" type="password" class="form-control" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
+                                <!-- Trường Phone -->
+                                <div class="col-12 col-md-6">
+                                    <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
+                                                <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+                                            </svg>
+                                        </span>
+                                        <input asp-for="PhoneNumber" type="tel" class="form-control" id="phone" name="phone" value="">
+                                    </div>
+                                </div>
+                                <!-- Trường Họ -->
+                                <div class="col-12 col-md-6">
+                                    <label asp-for="FirstName" class="form-label">
+                                        Họ <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="input-group">
 
-    <div class="form-group">
-        <label asp-for="Role" class="control-label"></label>
-        <select asp-for="Role" class="form-control">
-            <option value="">-- Chọn vai trò --</option>
-            @if (ViewBag.Roles != null)
-            {
-                foreach (var role in ViewBag.Roles)
-                {
-                    <option value="@role.Name">@role.DisplayName</option>
-                }
-            }
-        </select>
-        <span asp-validation-for="Role" class="text-danger"></span>
-    </div>
+                                        <input asp-for="FirstName" type="text" class="form-control" id="FirstName" name="FirstName"
+                                               value="" required>
+                                    </div>
+                                </div> <!-- Trường Tên -->
+                                <div class="col-12 col-md-6">
+                                    <label asp-for="LastName" class="form-label">Tên</label>
+                                    <div class="input-group">
 
-    <div class="form-group">
-        <label asp-for="FirstName" class="control-label"></label>
-        <input asp-for="FirstName" class="form-control" />
-        <span asp-validation-for="FirstName" class="text-danger"></span>
-    </div>
+                                        <input asp-for="LastName" type="text" class="form-control" id="lastname" name="lastname"
+                                               value="">
+                                    </div>
+                                </div>
+                                <!-- Trường Giới Tính -->
+                                <div class="col-12 col-md-6">
+                                    <label asp-for="Gender" class="form-label">
+                                        Giới Tính <span class="text-danger">*</span>
+                                    </label>
+                                    <select asp-for="Gender" id="Gender" name="Gender" class="form-control" required>
+                                        <option value="Nam">Nam</option>
+                                        <option value="Nữ">Nữ</option>
+                                        <option value="Khác">Khác</option>
+                                    </select>
+                                </div>
 
-    <div class="form-group">
-        <label asp-for="LastName" class="control-label"></label>
-        <input asp-for="LastName" class="form-control" />
-        <span asp-validation-for="LastName" class="text-danger"></span>
-    </div>
+                                <div class="col-12 col-md-6">
+                                    <label asp-for="DateOfBirth" class="form-label">Ngày Sinh</label>
+                                    <input asp-for="DateOfBirth" type="date" class="form-select" id="DateOfBirth" name="DateOfBirth" value="">
+                                </div>
 
-    <button type="submit" class="btn btn-primary">Tạo người dùng</button>
-</form>
+                                <!-- Trường Vai Trò -->
+                                <div class="col-12 col-md-6">
+                                    <label asp-for="Role" class="form-label">Vai Trò</label>
+                                    <select asp-for="Role" id="Role" name="Role" class="form-select">
+                                        <option value="">Chọn vai trò </option>
+                                        @if (ViewBag.Roles != null)
+                                        {
+                                            foreach (var role in ViewBag.Roles)
+                                            {
+                                                <option value="@role.Name">@role.DisplayName</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
 
+                                <!-- Trường Địa Chỉ -->
+                                <div class="col-12">
+                                    <label asp-for="Address" class="form-label">Địa chỉ</label>
+                                    <input asp-for="Address" type="text" class="form-control" id="Address" name="Address" value="">
+                                </div>
+
+                                <!-- Nút Đăng Ký -->
+                                <div class="col-12">
+                                    <div class="d-grid">
+                                        <button class="btn btn-primary btn-lg" type="submit">Đăng ký</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js"></script>

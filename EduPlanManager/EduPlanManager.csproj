@@ -31,7 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Middleware\" />
     <Folder Include="Models\ViewModels\" />
     <Folder Include="Migrations\" />
   </ItemGroup>

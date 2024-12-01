@@ -46,7 +46,7 @@ namespace EduPlanManager.Controllers
                 var result = await _userService.CreateAsync(request);
                 if (result.IsSuccess)
                 {
-                    string body = GenerateEmailBody.GetEmailOTPBody(request.Email, request.Password);
+                    string body = GenerateEmailBody.GetEmailOTPBody(request.Email, result.Message);
                     await _emailService.SendEmailAsync(request.Email!, "Tạo tài khoản thành công", body, true);
                     TempData["SuccessMessage"] = "Người dùng đã được tạo thành công.";
                     return RedirectToAction("Index", "Home");

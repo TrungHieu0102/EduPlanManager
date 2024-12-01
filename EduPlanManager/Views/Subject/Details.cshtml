@@ -1,0 +1,25 @@
+﻿@model EduPlanManager.Models.DTOs.Subject.SubjectDetailDTO
+
+@{
+    ViewData["Title"] = "Chi tiết môn học";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="card">
+    <div class="card-header">
+        <h2>@Model.Name (@Model.Code)</h2>
+    </div>
+    <div class="card-body">
+        <p><strong>Mã môn học:</strong> @Model.Code</p>
+        <p><strong>Tên môn học:</strong> @Model.Name</p>
+        <p><strong>Ngày bắt đầu:</strong> @Model.StartDate.ToString("dd/MM/yyyy")</p>
+        <p><strong>Ngày kết thúc:</strong> @Model.EndDate.ToString("dd/MM/yyyy")</p>
+        <p><strong>Số tiết học mỗi ngày:</strong> @Model.LessonsPerDay</p>
+        <p><strong>Danh mục:</strong> @Model.CategoryName</p>
+        <p><strong>Năm học:</strong> @Model.AcademicTermYear - Học kỳ @Model.AcademicTermSemester</p>
+    </div>
+    <div class="card-footer">
+        <a href="@Url.Action("Index")" class="btn btn-secondary">Quay lại danh sách</a>
+    </div>
+</div>

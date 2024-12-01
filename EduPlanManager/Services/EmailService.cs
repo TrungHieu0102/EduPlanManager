@@ -30,7 +30,7 @@ namespace EduPlanManager.Services
         {
             var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
             var body = GenerateEmailBody.GetEmailConfirmationBody(user.GetFullName(), confirmationLink);
-            await SendEmailAsync(email, "Xác nhận đăng ký tài khoản", body, true);
+            await SendEmailAsync(email, "Yêu cầu cấp lại mật khẩu", body, true);
         }
     }
 }

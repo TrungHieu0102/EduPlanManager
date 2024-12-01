@@ -6,6 +6,9 @@ namespace EduPlanManager.UnitOfWork
     {
         IUserRepository Users { get; }
         IRoleRepository Roles { get; }
-        Task SaveAsync();
+        ISubjectRepository Subjects { get; }
+        Task<int> CompleteAsync();
+        void Dispose();
+
     }
 }

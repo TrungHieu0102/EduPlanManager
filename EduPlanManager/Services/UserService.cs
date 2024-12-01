@@ -42,7 +42,9 @@ namespace EduPlanManager.Services
                     throw new Exception("Email already exists");
                 }
                 var user = _mapper.Map<User>(request);
-                var result = await _userManager.CreateAsync(user, request.Password);
+                user.UserName = request.Email;
+                var password = RandomStringGenerator.GenerateRandomString(10);
+                var result = await _userManager.CreateAsync(user, password);
                 if (!result.Succeeded)
                 {
                     throw new Exception(result.Errors.FirstOrDefault().Description);
@@ -57,6 +59,7 @@ namespace EduPlanManager.Services
                 {
                     IsSuccess = true,
                     Data = resultModel,
+                    Message = password
                 };
             }
             catch (Exception e)

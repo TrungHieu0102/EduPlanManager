@@ -63,13 +63,11 @@ builder.Services.AddSingleton(cloudinary);
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IEmailService, EmailService>();
-builder.Services.AddScoped<IPhotoService, PhotoService>();  
+builder.Services.AddScoped<IPhotoService, PhotoService>();
+builder.Services.AddScoped<ISubjectService, SubjectService>();
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 builder.Services.AddScoped<MyAuthenFilter>();
-
 var app = builder.Build();
 app.SeedAdminUser();
 if (!app.Environment.IsDevelopment())
