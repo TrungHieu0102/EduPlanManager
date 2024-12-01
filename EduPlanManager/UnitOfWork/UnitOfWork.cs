@@ -11,12 +11,16 @@ namespace EduPlanManager.UnitOfWork
         public IUserRepository Users { get; private set; }
         public IRoleRepository Roles { get; private set; }
         public ISubjectRepository Subjects { get; private set; }
+        public IAcademicTermRepository AcademicTerms { get; set; }
+        public ISubjectCategoryRepository SubjectCategories { get; set; }
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
             Users = new UserRepository(_context);
             Roles = new RoleRepository(_context);
             Subjects = new SubjectRepository(_context);
+            AcademicTerms = new AcademicTermRepository(_context);
+            SubjectCategories = new SubjectCategoryRepository(_context);
         }
 
        

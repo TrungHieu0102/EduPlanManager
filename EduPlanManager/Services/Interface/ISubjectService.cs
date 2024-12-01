@@ -10,6 +10,9 @@ namespace EduPlanManager.Services.Interface
         Task<int> CountSubjectsAsync(string searchTerm, int? semester, int? year);
         Task<Result<IEnumerable<SubjectDTO>>> SearchSubjectsByNameOrCodeAsync(string term);
         Task<Result<SubjectDetailDTO>> GetSubjectWithDetailsAsync(Guid id);
-
+        Task<Result<bool>> DeleteSubjectById(Guid id);
+        Task<Result<Subject>> UpdateSubject(Subject subject);
+        //CCCC
+        Task<Result<Subject>> GetSubject(Guid id);
     }
 }

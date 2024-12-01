@@ -5,6 +5,7 @@ using EduPlanManager.Models.Entities;
 using EduPlanManager.Services.Interface;
 using EduPlanManager.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 
 namespace EduPlanManager.Services
 {
@@ -88,6 +89,28 @@ namespace EduPlanManager.Services
                 };
             }
         }
+        //CCCC
+
+        public async Task<Result<Subject>> GetSubject(Guid id)
+        {
+            try
+            {
+                var subject = await _unitOfWork.Subjects.GetByIdAsync(id);
+                return new Result<Subject>
+                {
+                    IsSuccess = true,
+                    Data = subject
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Result<Subject>
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
+        }
         public async Task<int> CountSubjectsAsync(string searchTerm, int? semester, int? year)
         {
             return await _unitOfWork.Subjects.GetTotalSubjectsAsync(searchTerm, semester, year);
@@ -117,5 +140,59 @@ namespace EduPlanManager.Services
 
         }
 
+        public async Task<Result<bool>> DeleteSubjectById(Guid id)
+        {
+            try
+            {
+                var subject = await _unitOfWork.Subjects.GetByIdAsync(id);
+                _unitOfWork.Subjects.Delete(subject);
+                if (await _unitOfWork.CompleteAsync() == 0)
+                    throw new Exception("Không có thay đổi nào được lưu vào cơ sở dữ liệu.");
+                return new Result<bool>
+                {
+                    IsSuccess = true,
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Result<bool>
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
+        }
+        public async Task<Result<Subject>> UpdateSubject(Subject subject)
+        {
+            try
+            {
+                var existingSubject = await _unitOfWork.Subjects.GetByIdAsync(subject.Id) ?? throw new Exception("Không tìm thấy môn học");            
+
+                existingSubject.Code = subject.Code;
+                existingSubject.Name = subject.Name;
+                existingSubject.StartDate = subject.StartDate;
+                existingSubject.EndDate = subject.EndDate;
+                existingSubject.LessonsPerDay = subject.LessonsPerDay;
+                existingSubject.CategoryId = subject.CategoryId;
+                existingSubject.AcademicTermId = subject.AcademicTermId;
+
+                _unitOfWork.Subjects.Update(existingSubject);
+                var result = await _unitOfWork.CompleteAsync();
+
+               return new Result<Subject>
+               {
+                   IsSuccess = true,
+                   Data = existingSubject
+               };
+            }
+            catch (Exception ex)
+            {
+               return new Result<Subject>
+               {
+                   IsSuccess = false,
+                   Message = ex.Message
+               };
+            }
+        }
     }
 }

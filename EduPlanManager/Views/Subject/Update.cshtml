@@ -1,0 +1,52 @@
+﻿@model EduPlanManager.Models.DTOs.Subject.SubjectUpdateDTO
+
+<h2>Cập nhật môn học</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label for="Code">Mã môn học</label>
+        <input type="text" class="form-control" id="Code" name="Code" value="@Model.Code" />
+    </div>
+
+    <div class="form-group">
+        <label for="Name">Tên môn học</label>
+        <input type="text" class="form-control" id="Name" name="Name" value="@Model.Name" />
+    </div>
+
+    <div class="form-group">
+        <label for="StartDate">Ngày bắt đầu</label>
+        <input type="date" class="form-control" id="StartDate" name="StartDate" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
+    </div>
+
+    <div class="form-group">
+        <label for="EndDate">Ngày kết thúc</label>
+        <input type="date" class="form-control" id="EndDate" name="EndDate" value="@Model.EndDate.ToString("yyyy-MM-dd")" />
+    </div>
+
+    <div class="form-group">
+        <label for="LessonsPerDay">Số tiết học mỗi ngày</label>
+        <input type="number" class="form-control" id="LessonsPerDay" name="LessonsPerDay" value="@Model.LessonsPerDay" />
+    </div>
+
+    <div class="form-group">
+        <label for="CategoryId">Danh mục</label>
+        <select class="form-control" id="CategoryId" name="CategoryId">
+            @foreach (var category in ViewBag.Categories as SelectList)
+            {
+                <option value="@category.Value" selected="@((category.Value == Model.CategoryId.ToString()) ? "selected" : null)">@category.Text</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="AcademicTermId">Học kỳ</label>
+        <select class="form-control" id="AcademicTermId" name="AcademicTermId">
+            @foreach (var term in ViewBag.AcademicTerms as SelectList)
+            {
+                <option value="@term.Value" selected="@((term.Value == Model.AcademicTermId.ToString()) ? "selected" : null)">@term.Text</option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Cập nhật</button>
+</form>

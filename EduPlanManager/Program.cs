@@ -66,6 +66,8 @@ builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.AddScoped<ISubjectService, SubjectService>();
+builder.Services.AddScoped<ISubjectCategoryService, SubjectCategoryService>();
+builder.Services.AddScoped<IAcademicTermService, AcademicTermService>();
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 builder.Services.AddScoped<MyAuthenFilter>();
 var app = builder.Build();

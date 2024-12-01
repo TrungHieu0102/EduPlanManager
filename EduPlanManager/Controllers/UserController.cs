@@ -73,11 +73,9 @@ namespace EduPlanManager.Controllers
             if (result.IsSuccess)
             {
                 TempData["SuccessMessage"] = "Cập nhật thành công";
-
                 return RedirectToAction("Index"); 
             }
 
-            ModelState.AddModelError("", result.Message);
             TempData["ErrorMessage"] = result.Message;
             return View(userUpdateDto); 
         }

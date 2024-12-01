@@ -7,6 +7,8 @@ namespace EduPlanManager.UnitOfWork
         IUserRepository Users { get; }
         IRoleRepository Roles { get; }
         ISubjectRepository Subjects { get; }
+        IAcademicTermRepository AcademicTerms { get; }
+        ISubjectCategoryRepository SubjectCategories { get; }
         Task<int> CompleteAsync();
         void Dispose();
 
