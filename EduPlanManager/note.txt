@@ -1,0 +1,14 @@
+﻿- Sinh viên đăng ký môn
++ Kiểm tra môn đó có phải thuộc danh sách lớp của sinh viên không
++ Kiểm tra môn đó có đang trong học kỳ khả dụng không
++ Gioi hạn số môn học tối thiểu và tối đa
++ Kiểm tra môn đó có trong danh sách môn hiện tại của sinh viên không
+- Giang viên chấm điểm
++ Kiểm tra môn học đó có phải môn học của giảng viên phụ trách không 
++ Kiểm tra môn học đó có phải trong học kỳ khả dụng không
++ Khi hiển thị danh sách điểm, cần binding được dữ liệu có sãn
++ Khi nhập điểm, cần kiểm tra điểm nhập vào có hợp lệ không
++ Giang viên chỉ chấm được điểm học sinh trong lớp mà giảng viên đã phụ trách
+
+
+

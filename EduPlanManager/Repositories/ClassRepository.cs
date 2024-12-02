@@ -37,6 +37,15 @@ namespace EduPlanManager.Repositories
             _context.Classes.RemoveRange(classes);
             await _context.SaveChangesAsync();
         }
-       
+        public async Task<Class?> GetClassUserAsync(Guid classId)
+        {
+            return await _context.Classes.Include(c => c.Users)
+                                      .FirstOrDefaultAsync(c => c.Id == classId);
+        }
+        public async Task<List<User>> GetUsersByIdsAsync(List<Guid> userIds)
+        {
+            return await _context.Users.Where(u => userIds.Contains(u.Id)).ToListAsync();
+        }
+
     }
 }

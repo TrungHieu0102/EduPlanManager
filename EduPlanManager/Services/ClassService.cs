@@ -4,6 +4,7 @@ using EduPlanManager.Models.DTOs.Respone;
 using EduPlanManager.Models.Entities;
 using EduPlanManager.Services.Interface;
 using EduPlanManager.UnitOfWork;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace EduPlanManager.Services
@@ -12,10 +13,12 @@ namespace EduPlanManager.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public ClassService(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly UserManager<User> _userManager;
+        public ClassService(IUnitOfWork unitOfWork, IMapper mapper, UserManager<User> userManager)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _userManager = userManager;
         }
         public async Task<ResultPage<ClassDTO>> SearchClassesAsync(string searchTerm, int pageNumber, int pageSize)
         {
@@ -59,13 +62,13 @@ namespace EduPlanManager.Services
                 };
             }
         }
-        public async Task<Result<ClassDTO>> GetClass(Guid id)
+        public async Task<Result<CreateUpdateClassDTO>> GetClass(Guid id)
         {
             try
             {
                 var classEntity = await _unitOfWork.Classes.GetByIdAsync(id);
-                var respone = _mapper.Map<ClassDTO>(classEntity);
-                return new Result<ClassDTO>
+                var respone = _mapper.Map<CreateUpdateClassDTO>(classEntity);
+                return new Result<CreateUpdateClassDTO>
                 {
                     IsSuccess = true,
                     Data = respone
@@ -73,7 +76,7 @@ namespace EduPlanManager.Services
             }
             catch (Exception ex)
             {
-                return new Result<ClassDTO>
+                return new Result<CreateUpdateClassDTO>
                 {
                     IsSuccess = false,
                     Message = ex.Message
@@ -135,7 +138,7 @@ namespace EduPlanManager.Services
             try
             {
                 var existingClass = await _unitOfWork.Classes.GetByIdAsync(classRequest.Id) ?? throw new Exception("Không tìm thấy môn học");
-                if (await _unitOfWork.Classes.CheckExists(classRequest.ClassName, classRequest.Code))
+                if (!await _unitOfWork.Classes.CheckExists(classRequest.ClassName, classRequest.Code))
                 {
                     throw new Exception("Tên lớp hoặc mã lớp đã tồn tại");
                 }
@@ -170,6 +173,10 @@ namespace EduPlanManager.Services
         {
             try
             {
+                if(!await _unitOfWork.Classes.CheckExists(classRequest.ClassName, classRequest.Code))
+                {
+                    throw new Exception("Lớp học này đã tồn tại");
+                }
                 classRequest.Id = Guid.NewGuid();
                 var classEntity = _mapper.Map<Class>(classRequest);
                 classEntity.Code = classEntity.Code.ToUpper();
@@ -191,5 +198,57 @@ namespace EduPlanManager.Services
                 };
             }
         }
+
+        public async Task<Result<ClassDTO>> GetClassDetailAsync(Guid id)
+        {
+            try
+            {
+                var classEntity = await _unitOfWork.Classes.GetByIdAsync(id)?? throw new Exception("Không tìm thấy lớp học");
+                var respone = _mapper.Map<ClassDTO>(classEntity);
+                return new Result<ClassDTO>
+                {
+                    IsSuccess = true,
+                    Data = respone
+                };
+            } catch(Exception ex)
+            {
+                return new Result<ClassDTO>
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
+        }
+        public async Task<bool> AddUsersToClass(List<Guid> userIds, Guid classId)
+        {
+            var classEntity = await _unitOfWork.Classes.GetClassUserAsync(classId);
+
+            if (classEntity == null)
+                return false;
+
+            var users = await _unitOfWork.Classes.GetUsersByIdsAsync(userIds);
+
+            if (!users.Any())
+                return false;
+
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+
+                if (!classEntity.Users.Contains(user))
+                {
+                    classEntity.Users.Add(user);
+
+                    if (roles.Contains("Student"))
+                        classEntity.StudentCount++;
+                    else if (roles.Contains("Teacher"))
+                        classEntity.TeacherCount++;
+                }
+            }
+
+            await _unitOfWork.CompleteAsync();
+            return true;
+        }
+
     }
 }

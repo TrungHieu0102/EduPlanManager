@@ -1,0 +1,23 @@
+﻿@model EduPlanManager.Models.DTOs.Class.ClassDTO
+
+@{
+    ViewData["Title"] = "Chi tiết môn học";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="card">
+    <div class="card-header">
+        <h2>@Model.ClassName (@Model.Code)</h2>
+    </div>
+    <div class="card-body">
+        <p><strong>Mã môn học:</strong> @Model.Code</p>
+        <p><strong>Tên môn học:</strong> @Model.ClassName</p>
+       
+        <p><strong>Số lượng sinh viên:</strong> @Model.StudentCount</p>
+        <p><strong>Số lượng giáo viên:</strong> @Model.TeacherCount</p>
+    </div>
+    <div class="card-footer">
+        <a href="@Url.Action("Index")" class="btn btn-secondary">Quay lại danh sách</a>
+    </div>
+</div>

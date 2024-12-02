@@ -4,6 +4,7 @@ using EduPlanManager.Models.Entities;
 using EduPlanManager.Services;
 using EduPlanManager.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using static System.Net.WebRequestMethods;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -62,6 +63,21 @@ namespace EduPlanManager.Controllers
 
             return View(request);
 
+        }
+        [HttpGet("GetUsersWithoutClass")]
+        public async Task<IActionResult> GetUsersWithoutClass(Guid id)
+        {
+
+            var users = await _userService.GetUsersWithoutClassAsync();
+
+            if (users == null || !users.Any())
+            {
+                TempData["Message"] = "Không tìm thấy người dùng không có lớp học.";
+                return RedirectToAction("Index");  
+            }
+            ViewData["ClassId"] = id;
+
+            return View(users); 
         }
     }
 }

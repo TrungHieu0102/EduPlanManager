@@ -1,16 +1,13 @@
 ﻿using EduPlanManager.Models.DTOs.Class;
+using EduPlanManager.Services;
 using EduPlanManager.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EduPlanManager.Controllers
 {
-    public class ClassController : Controller
+    public class ClassController(IClassService classService) : Controller
     {
-        private readonly IClassService _classService;
-        public ClassController(IClassService classService)
-        {
-            _classService = classService;
-        }
+        private readonly IClassService _classService = classService;
 
         [HttpGet]
         public async Task<IActionResult> Index(string searchTerm, int pageNumber = 1, int pageSize = 10)
@@ -59,7 +56,7 @@ namespace EduPlanManager.Controllers
             }
             TempData["SuccessMessage"] = "Cập nhật thành công";
 
-            return View(classEntity);
+            return View(classEntity.Data);
         }
         [HttpPost]
         public async Task<IActionResult> Update(CreateUpdateClassDTO classUpdateDTO)
@@ -68,7 +65,7 @@ namespace EduPlanManager.Controllers
             var result = await _classService.UpdateClass(classUpdateDTO);
             if (!result.IsSuccess)
             {
-                TempData["ErrorMessage"] = "Cập nhật môn học thất bại";
+                TempData["ErrorMessage"] = result.Message;
                 return View(classUpdateDTO);
             }
 
@@ -97,13 +94,13 @@ namespace EduPlanManager.Controllers
             }
         }
         [HttpGet("create-class")]
-        public IActionResult CreateSubject()
+        public IActionResult Create()
         {
             return View();
         }
         [HttpPost("create-class")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateClass(CreateUpdateClassDTO classRequest)
+        public async Task<IActionResult> Create(CreateUpdateClassDTO classRequest)
         {
             if (ModelState.IsValid)
             {
@@ -123,6 +120,28 @@ namespace EduPlanManager.Controllers
                 TempData["ErrorMessage"] = "Vui lòng kiểm tra lại thông tin nhập vào.";
             }
             return View(classRequest);
+        }
+
+        [HttpGet("Class/Detail/{id}")]
+        public async Task<IActionResult> Detail(Guid id)
+        {
+            var result = await _classService.GetClassDetailAsync(id);
+            if (!result.IsSuccess)
+            {
+                return NotFound();
+            }
+            return View(result.Data);
+        }
+        [HttpPost("AddUsersToClass")]
+        public async Task<IActionResult> AddUsersToClass(AddUsersToClassDTO dto)
+        {
+            var result = await _classService.AddUsersToClass(dto.UserId, dto.ClassId);
+
+            if (result)
+                return RedirectToAction("Index");
+            else
+                TempData["ErrorMessage"] = "Không thể thêm người dùng vào lớp.";
+            return RedirectToAction("Index");
         }
     }
 }

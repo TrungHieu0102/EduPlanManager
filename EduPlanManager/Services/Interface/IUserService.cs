@@ -10,5 +10,7 @@ namespace EduPlanManager.Services.Interface
         Task<Result<UserDto>> CreateAsync(CreateUserDto request);
         Task<List<User>> GetAllUser();
         Task<Result<bool>> UpdateUserAsync(UpdateUserDto userUpdateDto, string userId);
+        Task<List<UserInListDTO>> GetUsersWithoutClassAsync();   
     }
+
 }

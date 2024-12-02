@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EduPlanManager.Models.DTOs.AcademicTerm;
+using EduPlanManager.Models.DTOs.Class;
 using EduPlanManager.Models.DTOs.Subject;
 using EduPlanManager.Models.DTOs.User;
 using EduPlanManager.Models.Entities;
@@ -13,6 +14,9 @@ namespace EduPlanManager.Mappings
             CreateMap<User, CreateUserDto>().ReverseMap();
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<User, UpdateUserDto>().ReverseMap();
+            CreateMap<User, UserInListDTO>()
+          .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName))
+          .ForMember(dest => dest.ClassName, opt => opt.MapFrom(src => src.Classes.FirstOrDefault().ClassName));
             CreateMap<Subject, SubjectDetailDTO>()
             .ForMember(dest => dest.AcademicTermYear, opt => opt.MapFrom(src => src.AcademicTerm.Year))
             .ForMember(dest => dest.AcademicTermSemester, opt => opt.MapFrom(src => src.AcademicTerm.Semester))
@@ -30,6 +34,8 @@ namespace EduPlanManager.Mappings
             CreateMap<Subject, SubjectCreateDTO>().ReverseMap();
             CreateMap<CreateUpdateAcademicTermDTO, AcademicTerm>().ReverseMap();
             CreateMap<AcademicTerm, AcademicTermDTO>().ReverseMap();
+            CreateMap<Class,CreateUpdateClassDTO>().ReverseMap();
+            CreateMap<Class, ClassDTO>().ReverseMap();
         }
     }
 }

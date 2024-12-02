@@ -133,5 +133,13 @@ namespace EduPlanManager.Services
 
             return result;
         }
+        public async Task<List<UserInListDTO>> GetUsersWithoutClassAsync()
+        {
+            var users = await _unitOfWork.Users.GetUsersWithoutClassAsync();
+
+            var userDtos = _mapper.Map<List<UserInListDTO>>(users);
+
+            return userDtos;
+        }
     }
 }

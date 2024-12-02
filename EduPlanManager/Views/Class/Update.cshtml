@@ -1,0 +1,16 @@
+﻿@model EduPlanManager.Models.DTOs.Class.CreateUpdateClassDTO
+
+<h2>Cập nhật lớp học</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label for="Code">Mã lớp học</label>
+        <input type="text" class="form-control" id="Code" name="Code" value="@Model.Code" />
+    </div>
+
+    <div class="form-group">
+        <label for="ClassName">Tên lớp học</label>
+        <input type="text" class="form-control" id="ClassName" name="ClassName" value="@Model.ClassName" />
+    </div>
+    <button type="submit" class="btn btn-primary">Cập nhật</button>
+</form>

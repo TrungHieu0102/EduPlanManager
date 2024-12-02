@@ -7,22 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 namespace EduPlanManager.Controllers
 {
     [ValidateModelState]
-    public class AcademicTermController : Controller
+    public class AcademicTermController(IUnitOfWork unitOfWork, IAcademicTermService academicTermService, IMapper mapper) : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IAcademicTermService _academicTermService;
-        private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork = unitOfWork;
+        private readonly IAcademicTermService _academicTermService = academicTermService;
+        private readonly IMapper _mapper = mapper;
 
-        public AcademicTermController(IUnitOfWork unitOfWork, IAcademicTermService academicTermService, IMapper mapper)
-        {
-            _unitOfWork = unitOfWork;
-            _academicTermService = academicTermService;
-            _mapper = mapper;
-        }
         public async Task<IActionResult> Index()
         {
             var academicTerms = await _unitOfWork.AcademicTerms.GetAllAsync();
-
             return View(academicTerms);
         }
         [HttpGet]

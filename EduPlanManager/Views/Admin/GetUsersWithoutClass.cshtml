@@ -1,0 +1,59 @@
+﻿@model List<EduPlanManager.Models.DTOs.User.UserInListDTO>
+
+@{
+    ViewData["Title"] = "Danh sách người dùng không có lớp học";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-warning">
+        @TempData["Message"]
+    </div>
+}
+
+<form method="post" action="@Url.Action("AddUsersToClass", "Class")">
+    <input type="hidden" name="ClassId" value="@ViewData["ClassId"]" /> <!-- Truyền ClassId qua viewData -->
+    @if (Model != null && Model.Any())
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="selectAll" onclick="toggleSelectAll()" /></th>
+                    <th>Họ và tên</th>
+                    <th>Email</th>
+                    <th>Lớp học</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td><input type="checkbox" name="UserIds" value="@user.UserId" class="selectUser" /></td>
+                        <td>@user.FullName</td>
+                        <td>@user.Email</td>
+                        <td>@user.ClassName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Không có người dùng không có lớp học.</p>
+    }
+
+    <button type="submit" class="btn btn-primary mt-3">Thêm vào lớp</button>
+</form>
+
+<script>
+    // Select all checkboxes
+    function toggleSelectAll() {
+        var isChecked = document.getElementById("selectAll").checked;
+        var checkboxes = document.querySelectorAll(".selectUser");
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = isChecked;
+        });
+    }
+</script>
