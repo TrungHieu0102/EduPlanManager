@@ -40,6 +40,8 @@ namespace EduPlanManager.Models.Entities
         public ICollection<StudentSchedule> StudentSchedules { get; set; }
         public ICollection<Enrollment> Enrollments { get; set; }
         public ICollection<Class> Classes { get; set; }
+        public ICollection<SubjectSchedule> Schedules { get; set; } = new List<SubjectSchedule>();
+
 
     }
 }

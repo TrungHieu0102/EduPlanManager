@@ -1,0 +1,63 @@
+﻿@model EduPlanManager.Models.DTOs.SubjectSchedule.CreateSubjectScheduleDTO
+
+@{
+    ViewData["Title"] = "Tạo Lịch học";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.DayOfWeek, new { @class = "form-label" })
+        @Html.DropDownListFor(m => m.DayOfWeek,
+                new SelectList(ViewData["DayOfWeekEnum"] as IEnumerable<dynamic>, "Id", "Name"),
+                "Chọn Thứ",
+                new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.DayOfWeek, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Session, new { @class = "form-label" })
+        @Html.DropDownListFor(m => m.Session,
+                new SelectList(ViewData["SessionEnum"] as IEnumerable<dynamic>, "Id", "Name"),
+                "Chọn Buổi",
+                new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Session, "", new { @class = "text-danger" })
+    </div>
+
+    <!-- Thêm TimePicker cho StartTime -->
+    <div class="form-group">
+        @Html.LabelFor(m => m.StartTime, new { @class = "form-label" })
+        @Html.TextBoxFor(m => m.StartTime, "{0:HH:mm}", new { @class = "form-control timepicker", @placeholder = "Chọn giờ bắt đầu" })
+        @Html.ValidationMessageFor(m => m.StartTime, "", new { @class = "text-danger" })
+    </div>
+
+    <!-- Thêm TimePicker cho EndTime -->
+    <div class="form-group">
+        @Html.LabelFor(m => m.EndTime, new { @class = "form-label" })
+        @Html.TextBoxFor(m => m.EndTime, "{0:HH:mm}", new { @class = "form-control timepicker", @placeholder = "Chọn giờ kết thúc" })
+        @Html.ValidationMessageFor(m => m.EndTime, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-success">Tạo Lịch học</button>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Khởi tạo timepicker cho các trường StartTime và EndTime
+        $('.timepicker').timepicker({
+            showMeridian: false,   // Hiển thị thời gian 24 giờ (không có AM/PM)
+            showInputs: false,     // Không hiển thị trường nhập thủ công
+            defaultTime: 'now'     // Thời gian mặc định là thời gian hiện tại
+        });
+    });
+</script>

@@ -63,6 +63,7 @@ builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.AddScoped<ISubjectService, SubjectService>();
 builder.Services.AddScoped<ISubjectCategoryService, SubjectCategoryService>();
 builder.Services.AddScoped<IAcademicTermService, AcademicTermService>();
+builder.Services.AddScoped<ISubjectScheduleService, SubjectScheduleService>();
 builder.Services.AddScoped<IClassService, ClassService>();
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 builder.Services.AddScoped<MyAuthenFilter>();

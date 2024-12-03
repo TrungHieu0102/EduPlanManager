@@ -2,6 +2,7 @@
 using EduPlanManager.Models.DTOs.AcademicTerm;
 using EduPlanManager.Models.DTOs.Class;
 using EduPlanManager.Models.DTOs.Subject;
+using EduPlanManager.Models.DTOs.SubjectSchedule;
 using EduPlanManager.Models.DTOs.User;
 using EduPlanManager.Models.Entities;
 
@@ -37,6 +38,9 @@ namespace EduPlanManager.Mappings
             CreateMap<AcademicTerm, AcademicTermDTO>().ReverseMap();
             CreateMap<Class,CreateUpdateClassDTO>().ReverseMap();
             CreateMap<Class, ClassDTO>().ReverseMap();
+            CreateMap<SubjectSchedule, SubjectScheduleDTO>().ReverseMap();
+            CreateMap<SubjectSchedule, CreateSubjectScheduleDTO>().ReverseMap();
+            CreateMap<SubjectSchedule, UpdateSubjectScheduleDTO>().ReverseMap();
         }
     }
 }

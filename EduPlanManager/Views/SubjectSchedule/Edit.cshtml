@@ -1,0 +1,45 @@
+﻿@model EduPlanManager.Models.DTOs.SubjectSchedule.UpdateSubjectScheduleDTO
+
+@{
+    ViewData["Title"] = "Chỉnh sửa Lịch học";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.DayOfWeek)
+        @Html.EditorFor(m => m.DayOfWeek)
+        @Html.ValidationMessageFor(m => m.DayOfWeek)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Session)
+        @Html.EditorFor(m => m.Session)
+        @Html.ValidationMessageFor(m => m.Session)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.StartTime)
+        @Html.EditorFor(m => m.StartTime)
+        @Html.ValidationMessageFor(m => m.StartTime)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.EndTime)
+        @Html.EditorFor(m => m.EndTime)
+        @Html.ValidationMessageFor(m => m.EndTime)
+    </div>
+
+    <button type="submit" class="btn btn-warning">Cập nhật Lịch học</button>
+}
