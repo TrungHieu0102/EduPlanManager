@@ -14,6 +14,7 @@ namespace EduPlanManager.Mappings
             CreateMap<User, CreateUserDto>().ReverseMap();
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<User, UpdateUserDto>().ReverseMap();
+            CreateMap<UpdateUserDto, UserDetailsDto>().ReverseMap();
             CreateMap<User, UserInListDTO>()
           .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName))
           .ForMember(dest => dest.ClassName, opt => opt.MapFrom(src => src.Classes.FirstOrDefault().ClassName));

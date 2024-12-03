@@ -221,5 +221,26 @@ namespace EduPlanManager.Services
                 };
             }
         }
+        public async Task<Result<IEnumerable<SubjectDTO>>> GetSubjectsClassAsync(bool isHaveClass, Guid classId)
+        {
+            try
+            {
+                var subjects = await _unitOfWork.Subjects.GetSubjectsClassAsync(isHaveClass, classId);
+                var result = _mapper.Map<IEnumerable<SubjectDTO>>(subjects);
+                return new Result<IEnumerable<SubjectDTO>>
+                {
+                    IsSuccess = true,
+                    Data = result
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Result<IEnumerable<SubjectDTO>>
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }

@@ -15,5 +15,6 @@ namespace EduPlanManager.Services.Interface
         Task<Result<ClassDTO>> CreateClassAsync(CreateUpdateClassDTO classRequest);
         Task<Result<ClassDTO>> GetClassDetailAsync(Guid id);
         Task<bool> AddUsersToClass(List<Guid> userIds, Guid classId);
+        Task<bool> AddSubjectsToClass(List<Guid> subjectIds, Guid classId);
     }
 }

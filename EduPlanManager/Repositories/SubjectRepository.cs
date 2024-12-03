@@ -6,15 +6,13 @@ using Microsoft.EntityFrameworkCore;
 namespace EduPlanManager.Repositories
 {
     public class SubjectRepository(ApplicationDbContext context) : RepositoryBase<Subject, Guid>(context), ISubjectRepository
-    {
-       
-
+    {     
         public async Task<Subject> GetSubjectWithDetailsAsync(Guid id)
         {
             var subject = await _context.Subjects
                 .Include(s => s.AcademicTerm)  
                 .Include(s => s.Category)     
-                .FirstOrDefaultAsync(s => s.Id == id)?? throw new Exception("Subject not found"); 
+                .FirstOrDefaultAsync(s => s.Id == id) ?? throw new Exception("Subject not found"); 
             return subject;
         }
         public async Task<int> GetTotalSubjectsAsync(string searchTerm, int? semester, int? year)
@@ -55,6 +53,14 @@ namespace EduPlanManager.Repositories
             _context.Subjects.RemoveRange(subjects);
             await _context.SaveChangesAsync();
         }
+        public async Task<List<Subject>> GetSubjectsClassAsync(bool isHaveClass, Guid classId)
+        {
+            return await _context.Subjects
+                                 .Where(u => isHaveClass ? u.Classes.Any(c => c.Id == classId) : !u.Classes.Any(c => c.Id == classId))
+                                 .ToListAsync();
+        }
+
+
 
     }
 }

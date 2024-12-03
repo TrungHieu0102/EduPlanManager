@@ -11,5 +11,6 @@ namespace EduPlanManager.Repositories.Interface
         IQueryable<Subject> GetQueryable();
         Task<List<Subject>> GetSubjectsByIdsAsync(List<Guid> ids);
         Task DeleteSubjectsAsync(List<Subject> subjects);
+        Task<List<Subject>> GetSubjectsClassAsync(bool isHaveClass, Guid classId);
     }
 }

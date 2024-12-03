@@ -1,0 +1,86 @@
+﻿@model IEnumerable<EduPlanManager.Models.DTOs.Subject.SubjectDTO>
+
+<form method="post" action="@Url.Action("AddSubjectsToClass", "Class")">
+    <input type="hidden" name="ClassId" value="@ViewData["ClassId"]" />
+
+    <table class="table table-striped table-hover table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>
+                    <input type="checkbox" id="selectAll" onclick="toggleSelectAll()" />
+                </th>
+                <th>Mã môn học</th>
+                <th>Tên môn học</th>
+                <th>Chức năng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Any())
+            {
+                <tr>
+                    <td colspan="6" class="text-center">Không có dữ liệu</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var subject in Model)
+                {
+                    <tr class="align-middle">
+                        <td>
+                            <input type="checkbox" class="selectRow" name="Ids[]" value="@subject.Id" onclick="toggleSubmitButton()" />
+                        </td>
+                        <td>@subject.Code</td>
+                        <td>@subject.Name</td>
+                        <td class="d-flex justify-content-center align-items-center">
+                            <div class="d-flex align-items-center">
+                                <a href="@Url.Action("Details", new { id = subject.Id })" class="badge rounded-pill text-primary-emphasis bg-primary-subtle border border-primary align-items-center me-2">Xem chi tiết</a>
+                                <div class="dropdown">
+                                    <button class="btn btn-light btn-sm shadow-none dropdown-toggle border-0 bg-transparent" type="button" id="dropdownMenuButton-@subject.Id" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton-@subject.Id">
+                                        <li>
+                                            <a class="dropdown-item badge rounded-pill text-primary-emphasis align-items-center" href="@Url.Action("Update", new { id = subject.Id })">
+                                                <i class="bi bi-pencil"></i> Sửa
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <form action="@Url.Action("Delete", new { id = subject.Id })" method="post" style="display: inline;">
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit" class="dropdown-item badge rounded-pill text-danger-emphasis align-items-center">
+                                                    <i class="bi bi-trash"></i> Xóa
+                                                </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary mt-3" id="submitBtn" style="display:none;">Thêm vào lớp</button>
+    </div>
+</form>
+
+<script>
+    // Toggle check/uncheck tất cả checkbox khi click vào checkbox "Select All"
+    function toggleSelectAll() {
+        var isChecked = document.getElementById("selectAll").checked;
+        var checkboxes = document.querySelectorAll(".selectRow");
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = isChecked;
+        });
+        toggleSubmitButton(); // Kiểm tra lại trạng thái của nút submit
+    }
+
+    // Toggle button submit visibility based on checkbox selection
+    function toggleSubmitButton() {
+        var checkboxes = document.querySelectorAll(".selectRow");
+        var submitButton = document.getElementById("submitBtn");
+        var isChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+        submitButton.style.display = isChecked ? "inline-block" : "none";
+    }
+</script>

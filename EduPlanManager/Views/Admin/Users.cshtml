@@ -1,0 +1,146 @@
+﻿@model List<EduPlanManager.Models.DTOs.User.UserInListDTO>
+
+@{
+    ViewData["Title"] = "Danh sách người dùng ";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="post" action="@Url.Action("AddUsersToClass", "Class")">
+    <input type="hidden" name="ClassId" value="@ViewData["ClassId"]" />
+    @if (Model != null && Model.Any())
+    {
+            <table class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th class="checkbox-column">
+                        <input type="checkbox" id="selectAll" onclick="toggleSelectAll()" />
+                    </th>
+                    <th onclick="sortTable(1)" style="cursor: pointer;">
+                        Họ và tên 
+                        <span id="sortName" class="bi bi-arrow-down-up"></span>
+                    </th>
+                    <th onclick="sortTable(2)" style="cursor: pointer;">
+                        Email 
+                        <span id="sortEmail" class="bi bi-arrow-down-up"></span>
+                    </th>
+                    <th onclick="sortTable(3)" style="cursor: pointer;">
+                        Lớp học 
+                        <span id="sortClass" class="bi bi-arrow-down-up"></span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                            <tr class="clickable-row" onclick="redirectToEdit('@user.Id')">
+                                <td class="checkbox-column ">
+                                    <input type="checkbox"  data-id="@user.Id" class="selectRow" name="UserIds" value="@user.Id" />
+                                </td>
+                                <td>@user.FullName</td>
+                                <td>@user.Email</td>
+                                <td>@user.ClassName</td>
+                            </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+                <p>Không có người dùng không có lớp học.</p>
+    }
+
+     <button type="button" id="deleteRangeBtn" class="btn btn-danger" style="display: none;" onclick="deleteSelected()">Xóa</button>
+</form>
+
+<script>
+    function toggleSelectAll() {
+        var isChecked = document.getElementById("selectAll").checked;
+        var checkboxes = document.querySelectorAll(".selectRow");
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = isChecked;
+        });
+    toggleDeleteButton();
+
+    }
+     function redirectToEdit(userId) {
+         if (event.target.closest(".checkbox-column") || 
+            (event.target.tagName.toLowerCase() === 'input' && event.target.type === 'checkbox')) {
+            return; 
+        }
+        const url = '@Url.Action("Update", "Admin")' + '?id=' + userId;
+        window.location.href = url; 
+    }
+     function sortTable(columnIndex) {
+        const table = document.querySelector("table tbody");
+        const rows = Array.from(table.rows);
+
+        const currentSortDirection = table.getAttribute("data-sort") || "asc";
+        const newSortDirection = currentSortDirection === "asc" ? "desc" : "asc";
+        table.setAttribute("data-sort", newSortDirection);
+
+        rows.sort((a, b) => {
+            const cellA = a.cells[columnIndex].textContent.trim().toLowerCase();
+            const cellB = b.cells[columnIndex].textContent.trim().toLowerCase();
+            if (cellA < cellB) return newSortDirection === "asc" ? -1 : 1;
+            if (cellA > cellB) return newSortDirection === "asc" ? 1 : -1;
+            return 0;
+        });
+
+        table.innerHTML = "";
+        rows.forEach((row) => table.appendChild(row));
+
+        updateSortIcons(columnIndex, newSortDirection);
+    }
+
+    function updateSortIcons(columnIndex, direction) {
+        document.querySelectorAll("thead th span").forEach((icon) => {
+            icon.className = "bi bi-arrow-down-up";
+        });
+
+        const iconId = ["sortName", "sortEmail", "sortClass"][columnIndex - 1];
+        const selectedIcon = document.getElementById(iconId);
+        selectedIcon.className = direction === "asc" ? "bi bi-sort-alpha-down" : "bi bi-sort-alpha-up";
+    }
+    var checkboxes = document.querySelectorAll(".selectRow");
+    checkboxes.forEach(function (checkbox) {
+    checkbox.addEventListener("change", toggleDeleteButton);
+    });
+
+     function deleteSelected() {
+        var selectedIds = [];
+        var checkboxes = document.querySelectorAll(".selectRow:checked");
+        checkboxes.forEach(function (checkbox) {
+            selectedIds.push(checkbox.getAttribute("data-id"));
+        });
+
+        if (selectedIds.length > 0) {
+            var form = document.createElement("form");
+            form.method = "POST";
+            form.action = "@Url.Action("DeleteRange")"; 
+
+            var input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "selectedIds";  
+            input.value = selectedIds.join(',');  
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
+        } 
+        else 
+        {
+            alert("Vui lòng chọn ít nhất một môn học để xóa!");
+        }
+    }
+    function toggleDeleteButton() {
+    var checkboxes = document.querySelectorAll(".selectRow");
+    var selected = Array.from(checkboxes).some(checkbox => checkbox.checked);  // Kiểm tra xem có checkbox nào được chọn không.
+    var deleteButton = document.getElementById("deleteRangeBtn");
+
+    if (selected) {
+        deleteButton.style.display = "inline-block";  // Hiển thị nút xóa nếu có checkbox được chọn
+    } else {
+        deleteButton.style.display = "none";  // Ẩn nút xóa nếu không có checkbox nào được chọn
+    }
+}
+</script>

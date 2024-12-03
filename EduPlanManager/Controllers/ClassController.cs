@@ -1,4 +1,5 @@
 ﻿using EduPlanManager.Models.DTOs.Class;
+using EduPlanManager.Models.Entities;
 using EduPlanManager.Services;
 using EduPlanManager.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -133,9 +134,9 @@ namespace EduPlanManager.Controllers
             return View(result.Data);
         }
         [HttpPost("AddUsersToClass")]
-        public async Task<IActionResult> AddUsersToClass(AddUsersToClassDTO dto)
+        public async Task<IActionResult> AddUsersToClass(AddToClassDTO<User> dto)
         {
-            var result = await _classService.AddUsersToClass(dto.UserId, dto.ClassId);
+            var result = await _classService.AddUsersToClass(dto.Ids, dto.ClassId);
 
             if (result)
                 return RedirectToAction("Index");
@@ -143,5 +144,17 @@ namespace EduPlanManager.Controllers
                 TempData["ErrorMessage"] = "Không thể thêm người dùng vào lớp.";
             return RedirectToAction("Index");
         }
+        [HttpPost("AddSubjectsToClass")]
+        public async Task<IActionResult> AddSubjectsToClass(AddToClassDTO<Subject> dto)
+        {
+            var result = await _classService.AddSubjectsToClass(dto.Ids, dto.ClassId);
+
+            if (result)
+                return RedirectToAction("Index");
+            else
+                TempData["ErrorMessage"] = "Không thể thêm người dùng vào lớp.";
+            return RedirectToAction("Index");
+        }
+
     }
 }

@@ -149,19 +149,16 @@
         }
     }
     function deleteSelected() {
-        // Lấy danh sách các ID môn học được chọn
         var selectedIds = [];
         var checkboxes = document.querySelectorAll(".selectRow:checked");
         checkboxes.forEach(function (checkbox) {
             selectedIds.push(checkbox.getAttribute("data-id"));
         });
 
-        // Nếu có môn học được chọn, gửi yêu cầu xóa
         if (selectedIds.length > 0) {
-            // Gửi danh sách ID qua một yêu cầu AJAX hoặc submit form
             var form = document.createElement("form");
             form.method = "POST";
-            form.action = "@Url.Action("DeleteRange")"; // Chỉ định phương thức trong controller
+            form.action = "@Url.Action("DeleteRange")"; 
 
             // Tạo input ẩn để chứa danh sách ID
             var input = document.createElement("input");
@@ -173,7 +170,9 @@
             // Thêm form vào body và gửi
             document.body.appendChild(form);
             form.submit();
-        } else {
+        } 
+        else 
+        {
             alert("Vui lòng chọn ít nhất một môn học để xóa!");
         }
     }

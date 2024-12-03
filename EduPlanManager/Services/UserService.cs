@@ -71,10 +71,30 @@ namespace EduPlanManager.Services
                 };
             }
         }
-        public async Task<List<User>> GetAllUser()
+        public async Task<Result<List<UserInListDTO>>> GetAllUser()
         {
-            var user = await _unitOfWork.Users.GetAllAsync();
-            return user.ToList();
+            try
+            {
+                var user = await _unitOfWork.Users.GetAllAsync();
+                if (!user.Any())
+                {
+                    throw new Exception("No user found");
+                }
+                var result = _mapper.Map<List<UserInListDTO>>(user);
+                return new Result<List<UserInListDTO>>
+                {
+                    IsSuccess = true,
+                    Data = result
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Result<List<UserInListDTO>>
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
         public async Task<Result<bool>> UpdateUserAsync(UpdateUserDto userUpdateDto, string userId)
         {
@@ -133,13 +153,73 @@ namespace EduPlanManager.Services
 
             return result;
         }
-        public async Task<List<UserInListDTO>> GetUsersWithoutClassAsync()
+        public async Task<List<UserInListDTO>> GetUsersWithoutClassAsync(Guid id)
         {
-            var users = await _unitOfWork.Users.GetUsersWithoutClassAsync();
+            var users = await _unitOfWork.Users.GetUsersWithoutClassAsync(id);
 
             var userDtos = _mapper.Map<List<UserInListDTO>>(users);
 
             return userDtos;
+        }
+        public async Task<Result<UserDetailsDto>> GetUserWithRolesAsync(Guid userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if(user == null)
+            {
+                return new Result<UserDetailsDto>
+                {
+                    IsSuccess = false,
+                    Message = "User not found."
+                };
+            }
+            var roles = await _userManager.GetRolesAsync(user);
+            var userDetails = new UserDetailsDto
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Address = user.Address,
+                PhoneNumber = user.PhoneNumber,
+            };
+            return new Result<UserDetailsDto>
+            {
+                IsSuccess = true,
+                Data = userDetails
+            }; 
+
+        }
+        public async Task DeleteUsersAsync(List<Guid> userIds)
+        {
+            var users = await _unitOfWork.Users.GetUsersByIdsAsync(userIds);
+
+            var classes = await _unitOfWork.Users.GetClassesByUserIdsAsync(userIds);
+
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+
+                foreach (var classObj in classes)
+                {
+                    if (classObj.Users.Contains(user))
+                    {
+                        if (roles.Contains("Teacher"))
+                        {
+                            classObj.TeacherCount--; 
+                        }
+                        else if (roles.Contains("Student"))
+                        {
+                            classObj.StudentCount--; 
+                        }
+
+                        classObj.Users.Remove(user);
+                    }
+                }
+            }
+
+            await _unitOfWork.Users.RemoveUsersAsync(users);
+
+            await _unitOfWork.CompleteAsync();
         }
     }
 }

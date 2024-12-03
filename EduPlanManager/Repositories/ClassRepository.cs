@@ -47,5 +47,16 @@ namespace EduPlanManager.Repositories
             return await _context.Users.Where(u => userIds.Contains(u.Id)).ToListAsync();
         }
 
+        public async Task<Class?> GetClassSubjectAsync(Guid classId)
+        {
+            return await _context.Classes.Include(c => c.Subjects)
+                                     .FirstOrDefaultAsync(c => c.Id == classId);
+        }
+
+        public async Task<List<Subject>> GetSubjectsByIdsAsync(List<Guid> subjectIds)
+        {
+            return await _context.Subjects.Where(u => subjectIds.Contains(u.Id)).ToListAsync();
+
+        }
     }
 }

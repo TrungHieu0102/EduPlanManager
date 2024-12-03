@@ -9,8 +9,11 @@ namespace EduPlanManager.Repositories.Interface
         Task<IEnumerable<User>> GetAllAsync();
         Task CreateAsync(User user);
         Task UpdateAsync(User user);
-        Task<List<User>> GetUsersWithoutClassAsync();
-
+        Task<List<User>> GetUsersWithoutClassAsync(Guid classId);
+        Task<List<User>> GetUserssByIdsAsync(List<Guid> ids);
+        Task<List<User>> GetUsersByIdsAsync(List<Guid> userIds);
+        Task<List<Class>> GetClassesByUserIdsAsync(List<Guid> userIds);
+        Task RemoveUsersAsync(List<User> users);
     }
 
 }

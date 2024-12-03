@@ -6,6 +6,7 @@ using EduPlanManager.Services.Interface;
 using EduPlanManager.UnitOfWork;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Packaging;
 
 namespace EduPlanManager.Services
 {
@@ -173,7 +174,7 @@ namespace EduPlanManager.Services
         {
             try
             {
-                if(!await _unitOfWork.Classes.CheckExists(classRequest.ClassName, classRequest.Code))
+                if (!await _unitOfWork.Classes.CheckExists(classRequest.ClassName, classRequest.Code))
                 {
                     throw new Exception("Lớp học này đã tồn tại");
                 }
@@ -203,14 +204,15 @@ namespace EduPlanManager.Services
         {
             try
             {
-                var classEntity = await _unitOfWork.Classes.GetByIdAsync(id)?? throw new Exception("Không tìm thấy lớp học");
+                var classEntity = await _unitOfWork.Classes.GetByIdAsync(id) ?? throw new Exception("Không tìm thấy lớp học");
                 var respone = _mapper.Map<ClassDTO>(classEntity);
                 return new Result<ClassDTO>
                 {
                     IsSuccess = true,
                     Data = respone
                 };
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return new Result<ClassDTO>
                 {
@@ -246,6 +248,24 @@ namespace EduPlanManager.Services
                 }
             }
 
+            await _unitOfWork.CompleteAsync();
+            return true;
+        }
+        public async Task<bool> AddSubjectsToClass(List<Guid> subjectIds, Guid classId)
+        {
+            var classEntity = await _unitOfWork.Classes.GetClassSubjectAsync(classId);
+
+            if (classEntity == null)
+                return false;
+
+            var subjects = await _unitOfWork.Classes.GetSubjectsByIdsAsync(subjectIds);
+
+            if (!subjects.Any())
+                return false;
+            foreach (var subject in subjects)
+            {
+                classEntity.Subjects.Add(subject);
+            }
             await _unitOfWork.CompleteAsync();
             return true;
         }

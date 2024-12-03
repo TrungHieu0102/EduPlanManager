@@ -4,7 +4,6 @@ using EduPlanManager.Models.Entities;
 using EduPlanManager.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
 namespace EduPlanManager.Controllers
 {
@@ -191,5 +190,6 @@ namespace EduPlanManager.Controllers
 
             return View(subject);
         }
+       
     }
 }

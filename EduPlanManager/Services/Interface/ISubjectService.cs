@@ -15,6 +15,6 @@ namespace EduPlanManager.Services.Interface
         Task<Result<Subject>> GetSubject(Guid id);
         Task DeleteSubjectsAsync(List<Guid> ids);
         Task<Result<SubjectDTO>> CreateSubjectAsync(SubjectCreateDTO subjectCreateDTO);
-
+        Task<Result<IEnumerable<SubjectDTO>>> GetSubjectsClassAsync(bool isHaveClass, Guid classId);
     }
 }
