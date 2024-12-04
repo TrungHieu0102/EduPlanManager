@@ -17,14 +17,18 @@ namespace EduPlanManager.Repositories
         {
             var query = _context.SubjectSchedules.AsQueryable();
 
-            return await query.AnyAsync(s => (int)s.DayOfWeek == dayOfWeek && (int)s.Session == session); 
+            return await query.AnyAsync(s => (int)s.DayOfWeek == dayOfWeek && (int)s.Session == session ); 
         }
-
         public async Task UpdateAsync(SubjectSchedule schedule)
         {
             _context.SubjectSchedules.Update(schedule);
             await _context.SaveChangesAsync();
 
+        }
+        public async Task<SubjectSchedule?> GetScheduleSubjectAsync(Guid scheduleId)
+        {
+            return await _context.SubjectSchedules.Include(c => c.Subjects)
+                                     .FirstOrDefaultAsync(c => c.Id == scheduleId);
         }
     }
 }

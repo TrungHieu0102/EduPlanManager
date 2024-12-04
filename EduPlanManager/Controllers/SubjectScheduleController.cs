@@ -1,4 +1,5 @@
-﻿using EduPlanManager.Models.DTOs.SubjectSchedule;
+﻿using EduPlanManager.Extentions;
+using EduPlanManager.Models.DTOs.SubjectSchedule;
 using EduPlanManager.Models.Entities;
 using EduPlanManager.Services;
 using EduPlanManager.Services.Interface;
@@ -11,10 +12,12 @@ namespace EduPlanManager.Controllers
     public class SubjectScheduleController : Controller
     {
         private readonly ISubjectScheduleService _subjectScheduleService;
+        private readonly ISubjectService _subjectService;
 
-        public SubjectScheduleController(ISubjectScheduleService subjectScheduleService)
+        public SubjectScheduleController(ISubjectScheduleService subjectScheduleService, ISubjectService subjectService)
         {
             _subjectScheduleService = subjectScheduleService;
+            _subjectService = subjectService;
         }
         // GET: SubjectSchedule
         public async Task<IActionResult> Index()
@@ -43,11 +46,17 @@ namespace EduPlanManager.Controllers
         // GET: SubjectSchedule/Create
         public IActionResult Create()
         {
-            ViewData["DayOfWeekEnum"] = Enum.GetValues(typeof(DayOfWeekEnum)).Cast<DayOfWeekEnum>()
-                  .Select(e => new { Id = (int)e, Name = e.ToString() }).ToList();
+            // Lấy giá trị của DayOfWeekEnum với DisplayAttribute
+            ViewData["DayOfWeekEnum"] = Enum.GetValues(typeof(DayOfWeekEnum))
+                .Cast<DayOfWeekEnum>()
+                .Select(e => new { Id = (int)e, Name = e.GetDisplayName() })
+                .ToList();
 
-            ViewData["SessionEnum"] = Enum.GetValues(typeof(SessionEnum)).Cast<SessionEnum>()
-                .Select(e => new { Id = (int)e, Name = e.ToString() }).ToList();
+            // Lấy giá trị của SessionEnum với DisplayAttribute
+            ViewData["SessionEnum"] = Enum.GetValues(typeof(SessionEnum))
+                .Cast<SessionEnum>()
+                .Select(e => new { Id = (int)e, Name = e.GetDisplayName() })
+                .ToList();
             return View();
         }
 
@@ -56,6 +65,7 @@ namespace EduPlanManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateSubjectScheduleDTO dto)
         {
+
 
             dto.StartTime = TimeSpan.Parse(dto.StartTime.ToString());
             dto.EndTime = TimeSpan.Parse(dto.EndTime.ToString());
@@ -67,12 +77,31 @@ namespace EduPlanManager.Controllers
             }
 
             TempData["ErrorMessage"] = result.Message;
-            return View("Index");
+
+            ViewData["DayOfWeekEnum"] = Enum.GetValues(typeof(DayOfWeekEnum))
+                .Cast<DayOfWeekEnum>()
+                .Select(e => new { Id = (int)e, Name = e.GetDisplayName() })
+                .ToList();
+
+            ViewData["SessionEnum"] = Enum.GetValues(typeof(SessionEnum))
+                .Cast<SessionEnum>()
+                .Select(e => new { Id = (int)e, Name = e.GetDisplayName() })
+                .ToList();
+            return View();
 
         }
         // GET: SubjectSchedule/Edit/5
         public async Task<IActionResult> Edit(Guid id)
         {
+            ViewData["DayOfWeekEnum"] = Enum.GetValues(typeof(DayOfWeekEnum))
+                .Cast<DayOfWeekEnum>()
+                .Select(e => new { Id = (int)e, Name = e.GetDisplayName() })
+                .ToList();
+
+            ViewData["SessionEnum"] = Enum.GetValues(typeof(SessionEnum))
+                .Cast<SessionEnum>()
+                .Select(e => new { Id = (int)e, Name = e.GetDisplayName() })
+                .ToList();
             var result = await _subjectScheduleService.GetScheduleByIdAsync(id);
             if (result.IsSuccess)
             {
@@ -106,24 +135,22 @@ namespace EduPlanManager.Controllers
                 }
 
                 TempData["ErrorMessage"] = result.Message;
+                ViewData["DayOfWeekEnum"] = Enum.GetValues(typeof(DayOfWeekEnum))
+               .Cast<DayOfWeekEnum>()
+               .Select(e => new { Id = (int)e, Name = e.GetDisplayName() })
+               .ToList();
+
+                ViewData["SessionEnum"] = Enum.GetValues(typeof(SessionEnum))
+                    .Cast<SessionEnum>()
+                    .Select(e => new { Id = (int)e, Name = e.GetDisplayName() })
+                    .ToList();
                 return View(dto);
             }
 
             return View(dto);
         }
 
-        // GET: SubjectSchedule/Delete/5
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            var result = await _subjectScheduleService.GetScheduleByIdAsync(id);
-            if (result.IsSuccess)
-            {
-                return View(result.Data);
-            }
 
-            TempData["ErrorMessage"] = result.Message;
-            return View("Error");
-        }
 
         // POST: SubjectSchedule/Delete/5
         [HttpPost, ActionName("Delete")]
@@ -139,6 +166,29 @@ namespace EduPlanManager.Controllers
 
             TempData["ErrorMessage"] = result.Message;
             return View("Error");
+        }
+        [HttpGet("GetSubjectWithoutSchedule")]
+        public async Task<IActionResult> GetSubjectWithoutSchedule(Guid id)
+        {
+            var result = await _subjectService.GetSubjectsScheduleAsync(false, id);
+            if (!result.IsSuccess)
+            {
+                TempData["ErrorMessage"] = result.Message;
+                return RedirectToAction("Index");
+            }
+            ViewData["ScheduleId"] = id;
+            return View(result.Data);
+        }
+        [HttpPost("AddSubjectsToSchedule")]
+        public async Task<IActionResult> AddSubjectsToSchedule(AddToScheduleDTO<Subject> dto)
+        {
+            var result = await _subjectScheduleService.AddSubjectsToSchedule(dto.Ids, dto.ScheduleId);
+
+            if (result)
+                return RedirectToAction("Index");
+            else
+                TempData["ErrorMessage"] = "Không thể thêm người dùng vào lớp.";
+            return RedirectToAction("Index");
         }
     }
 }

@@ -6,20 +6,6 @@
 
 <h1>@ViewData["Title"]</h1>
 
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["SuccessMessage"]
-    </div>
-}
-
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger">
-        @TempData["ErrorMessage"]
-    </div>
-}
-
 <table class="table">
     <thead>
         <tr>
@@ -34,61 +20,38 @@
         @foreach (var schedule in Model)
         {
             <tr>
-                <td>@schedule.DayOfWeek</td>
-                <td>@schedule.Session</td>
+                <td>@schedule.DayOfWeekName</td>
+                <td>@schedule.SessionName</td>
                 <td>@schedule.StartTime</td>
                 <td>@schedule.EndTime</td>
                 <td>
-                    <a href="@Url.Action("Details", "SubjectSchedule", new { id = schedule.Id })" class="btn btn-info">Xem</a>
-                    <a href="@Url.Action("Edit", "SubjectSchedule", new { id = schedule.Id })" class="btn btn-warning">Chỉnh sửa</a>
-                    <!-- Nút Xóa -->
-                    <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-id="@schedule.Id" data-name="@schedule.DayOfWeek">Xóa</button>
+                    <a href="@Url.Action("Edit", "SubjectSchedule", new { id = schedule.Id })" class="btn text-success-emphasis bg-success-subtle">Sửa</a>
+                    <form method="post" action="@Url.Action("Delete", "SubjectSchedule", new { id = schedule.Id })" style="display:inline;">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn text-danger-emphasis bg-danger-subtle" onclick="return confirm('Bạn có chắc chắn muốn xóa lịch học này?');">Xóa</button>
+                    </form>
+                    <a class="btn text-success-emphasis bg-success-subtle" href="@Url.Action("GetSubjectWithoutSchedule","SubjectSchedule", new { id = schedule.Id })">
+                        Thêm môn học vào lịch học
+                    </a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-<a href="@Url.Action("Create", "SubjectSchedule")" class="btn btn-primary">Tạo Lịch học mới</a>
+<a href="@Url.Action("Create", "SubjectSchedule")" class="btn text-primary-emphasis bg-primary-subtle">Tạo Lịch học mới</a>
 
-<!-- Modal Xác nhận Xóa -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Xác nhận Xóa</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Bạn có chắc chắn muốn xóa lịch học này không?
-                <div id="scheduleDetails"></div> <!-- Hiển thị thông tin lịch học cần xóa -->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                <form id="deleteForm" method="post" action="" style="display:none;">
-                    @Html.AntiForgeryToken()
-                    <button type="submit" class="btn btn-danger">Xóa</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 @section Scripts {
     <script>
-        // Khi nút xóa được nhấn, thiết lập ID của lịch học vào trong form xác nhận
         $('#deleteModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Nút "Xóa" được nhấn
+            var button = $(event.relatedTarget);
             var id = button.data('id');
             var dayOfWeek = button.data('name');
             var actionUrl = '@Url.Action("DeleteConfirmed", "SubjectSchedule", new { id = "__id__" })'.replace('__id__', id);
 
-            // Hiển thị tên lịch học trong modal
-            $('#scheduleDetails').text('Ngày: ' + dayOfWeek);
+            $('#scheduleDetails').text(dayOfWeek);
 
-            // Cập nhật action của form để xóa đúng lịch học
             $('#deleteForm').attr('action', actionUrl);
         });
     </script>

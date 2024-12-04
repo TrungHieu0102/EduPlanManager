@@ -10,5 +10,6 @@ namespace EduPlanManager.Services.Interface
         Task<Result<bool>> DeleteScheduleAsync(Guid id);
         Task<Result<IEnumerable<SubjectScheduleDTO>>> GetAllSchedulesAsync();
         Task<Result<SubjectScheduleDTO>> GetScheduleByIdAsync(Guid id);
+        Task<bool> AddSubjectsToSchedule(List<Guid> subjectIds, Guid scheduleId);
     }
 }

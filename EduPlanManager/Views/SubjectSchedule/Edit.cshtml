@@ -6,40 +6,86 @@
 
 <h1>@ViewData["Title"]</h1>
 
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger">
-        @TempData["ErrorMessage"]
-    </div>
-}
 
-@using (Html.BeginForm())
-{
+<form method="post" id="subjectScheduleForm">
     @Html.AntiForgeryToken()
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.DayOfWeek)
-        @Html.EditorFor(m => m.DayOfWeek)
-        @Html.ValidationMessageFor(m => m.DayOfWeek)
+    <!-- DayOfWeek Dropdown -->
+    <div class="mb-3">
+        <label for="DayOfWeek" class="form-label">Chọn Thứ</label>
+        <select id="DayOfWeek" name="DayOfWeek" class="form-control" required>
+            <option value="">Chọn Thứ</option>
+            @foreach (var day in ViewData["DayOfWeekEnum"] as IEnumerable<dynamic>)
+            {
+                <option value="@day.Id">@day.Name</option>
+            }
+        </select>
+        @Html.ValidationMessageFor(m => m.DayOfWeek, "", new { @class = "text-danger" })
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Session)
-        @Html.EditorFor(m => m.Session)
-        @Html.ValidationMessageFor(m => m.Session)
+    <!-- Session Dropdown -->
+    <div class="mb-3">
+        <label for="Session" class="form-label">Chọn Buổi</label>
+        <select id="Session" name="Session" class="form-control" required>
+            <option value="">Chọn Buổi</option>
+            @foreach (var session in ViewData["SessionEnum"] as IEnumerable<dynamic>)
+            {
+                <option value="@session.Id">@session.Name</option>
+            }
+        </select>
+        @Html.ValidationMessageFor(m => m.Session, "", new { @class = "text-danger" })
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.StartTime)
-        @Html.EditorFor(m => m.StartTime)
-        @Html.ValidationMessageFor(m => m.StartTime)
+    <div class="mb-3">
+        <label for="StartTime" class="form-label">Chọn giờ bắt đầu</label>
+        <input name="StartTime" class="form-control" id="timepickerStart" width="276" />
+        @Html.ValidationMessageFor(m => m.StartTime, "", new { @class = "text-danger" })
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.EndTime)
-        @Html.EditorFor(m => m.EndTime)
-        @Html.ValidationMessageFor(m => m.EndTime)
+    <div class="mb-3">
+        <label for="EndTime" class="form-label">Chọn giờ kết thúc</label>
+        <input name="EndTime" class="form-control" id="timepickerEnd" width="276" />
+        @Html.ValidationMessageFor(m => m.EndTime, "", new { @class = "text-danger" })
     </div>
+    <button type="submit" class="btn btn-success">Tạo Lịch học</button>
+</form>
 
-    <button type="submit" class="btn btn-warning">Cập nhật Lịch học</button>
-}
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet" />
+
+<script>
+    // Khởi tạo timepicker
+    $('#timepickerStart').timepicker({
+        uiLibrary: 'bootstrap5'
+    });
+    $('#timepickerEnd').timepicker({
+        uiLibrary: 'bootstrap5'
+    });
+    // Form validation
+    $('#subjectScheduleForm').submit(function (event) {
+        // Kiểm tra tính hợp lệ của form
+        var isValid = this.checkValidity();
+
+        // Lấy giá trị StartTime và EndTime
+        var startTime = $('#timepickerStart').val();
+        var endTime = $('#timepickerEnd').val();
+
+        if (!startTime || !endTime) {
+            isValid = false;
+            alert("Vui lòng chọn giờ bắt đầu và giờ kết thúc!");
+        }
+
+        // Kiểm tra giờ bắt đầu phải trước giờ kết thúc
+        if (startTime && endTime) {
+            var start = new Date("1970-01-01T" + startTime + "Z");
+            var end = new Date("1970-01-01T" + endTime + "Z");
+
+            if (start >= end) {
+                isValid = false;
+                alert("Giờ bắt đầu phải trước giờ kết thúc!");
+            }
+        }
+
+        if (!isValid) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    });
+</script>

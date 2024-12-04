@@ -258,7 +258,7 @@ namespace EduPlanManager.Services
             if (classEntity == null)
                 return false;
 
-            var subjects = await _unitOfWork.Classes.GetSubjectsByIdsAsync(subjectIds);
+            var subjects = await _unitOfWork.Subjects.GetSubjectsByIdsAsync(subjectIds);
 
             if (!subjects.Any())
                 return false;

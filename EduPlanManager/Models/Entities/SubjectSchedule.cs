@@ -1,4 +1,6 @@
-﻿namespace EduPlanManager.Models.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace EduPlanManager.Models.Entities
 {
     public class SubjectSchedule
     {
@@ -13,18 +15,36 @@
     }
     public enum DayOfWeekEnum
     {
-        Sunday = 0,    // Chủ nhật
-        Monday = 1,    // Thứ Hai
-        Tuesday = 2,   // Thứ Ba
-        Wednesday = 3, // Thứ Tư
-        Thursday = 4,  // Thứ Năm
-        Friday = 5,    // Thứ Sáu
-        Saturday = 6   // Thứ Bảy
+        [Display(Name = "Chủ nhật")]
+        Sunday = 0,
+
+        [Display(Name = "Thứ Hai")]
+        Monday = 1,
+
+        [Display(Name = "Thứ Ba")]
+        Tuesday = 2,
+
+        [Display(Name = "Thứ Tư")]
+        Wednesday = 3,
+
+        [Display(Name = "Thứ Năm")]
+        Thursday = 4,
+
+        [Display(Name = "Thứ Sáu")]
+        Friday = 5,
+
+        [Display(Name = "Thứ Bảy")]
+        Saturday = 6
     }
     public enum SessionEnum
     {
-        Morning = 0,  // Sáng
-        Afternoon = 1, // Chiều
-        Evening = 2   // Tối
+        [Display(Name = "Sáng")]
+        Morning = 0,
+
+        [Display(Name = "Chiều")]
+        Afternoon = 1,
+
+        [Display(Name = "Tối")]
+        Evening = 2
     }
 }

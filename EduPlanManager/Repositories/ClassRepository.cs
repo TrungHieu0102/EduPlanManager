@@ -53,10 +53,6 @@ namespace EduPlanManager.Repositories
                                      .FirstOrDefaultAsync(c => c.Id == classId);
         }
 
-        public async Task<List<Subject>> GetSubjectsByIdsAsync(List<Guid> subjectIds)
-        {
-            return await _context.Subjects.Where(u => subjectIds.Contains(u.Id)).ToListAsync();
-
-        }
+      
     }
 }

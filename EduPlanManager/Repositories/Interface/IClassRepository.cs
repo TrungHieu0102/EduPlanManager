@@ -10,7 +10,6 @@ namespace EduPlanManager.Repositories.Interface
         Task<List<Class>> GetClassesByIdsAsync(List<Guid> ids);
         Task DeleteClassesAsync(List<Class> classes);
         Task<List<User>> GetUsersByIdsAsync(List<Guid> userIds);
-        Task<List<Subject>> GetSubjectsByIdsAsync(List<Guid> subjectIds);
         Task<Class?> GetClassUserAsync(Guid classId);
         Task<Class?> GetClassSubjectAsync(Guid classId);
     }

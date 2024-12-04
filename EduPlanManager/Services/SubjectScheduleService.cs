@@ -139,5 +139,23 @@ namespace EduPlanManager.Services
                 };
             }
         }
+        public async Task<bool> AddSubjectsToSchedule(List<Guid> subjectIds, Guid scheduleId)
+        {
+            var shedule = await _unitOfWork.SubjectSchedules.GetScheduleSubjectAsync(scheduleId);
+
+            if (shedule == null)
+                return false;
+
+            var subjects = await _unitOfWork.Subjects.GetSubjectsByIdsAsync(subjectIds);
+
+            if (!subjects.Any())
+                return false;
+            foreach (var subject in subjects)
+            {
+                shedule.Subjects.Add(subject);
+            }
+            await _unitOfWork.CompleteAsync();
+            return true;
+        }
     }
 }

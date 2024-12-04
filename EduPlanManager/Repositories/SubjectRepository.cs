@@ -59,6 +59,13 @@ namespace EduPlanManager.Repositories
                                  .Where(u => isHaveClass ? u.Classes.Any(c => c.Id == classId) : !u.Classes.Any(c => c.Id == classId))
                                  .ToListAsync();
         }
+        public async Task<List<Subject>> GetSubjectsScheduleAsync(bool isHaveSchedule, Guid scheduleId)
+        {
+            return await _context.Subjects
+                                 .Where(u => isHaveSchedule ? u.Schedules.Any(c => c.Id == scheduleId) : !u.Schedules.Any(c => c.Id == scheduleId))
+                                 .ToListAsync();
+        }
+
 
 
 

@@ -7,5 +7,6 @@ namespace EduPlanManager.Repositories.Interface
         Task UpdateAsync(SubjectSchedule schedule);
         Task DeleteAsync(SubjectSchedule schedule);
         Task<bool> IsDuplicateScheduleAsync(int? dayOfWeek, int? session);
+        Task<SubjectSchedule?> GetScheduleSubjectAsync(Guid scheduleId);
     }
 }
