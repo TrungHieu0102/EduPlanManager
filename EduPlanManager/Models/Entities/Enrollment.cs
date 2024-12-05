@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace EduPlanManager.Models.Entities
 {
@@ -13,6 +13,8 @@ namespace EduPlanManager.Models.Entities
 
         [Required]
         public Guid SubjectId { get; set; } // Mã môn học
+        [Required]
+        public Guid SubjectScheduleId { get; set; } // Mã môn học
 
         [Required]
         public DateTime RegisteredAt { get; set; } = DateTime.Now; // Ngày đăng ký
@@ -30,8 +32,9 @@ namespace EduPlanManager.Models.Entities
 
         [Required]
         public Subject Subject { get; set; }
+        [Required]
+        public SubjectSchedule SubjectSchedule { get; set; }
     }
-
     public enum EnrollmentStatus
     {
         Pending,     // Đang chờ phê duyệt

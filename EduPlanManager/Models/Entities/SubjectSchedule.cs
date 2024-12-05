@@ -12,6 +12,8 @@ namespace EduPlanManager.Models.Entities
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
         public ICollection<Subject> Subjects { get; set; } = new List<Subject>();
+        public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
+
     }
     public enum DayOfWeekEnum
     {

@@ -11,6 +11,7 @@ namespace EduPlanManager.UnitOfWork
         ISubjectCategoryRepository SubjectCategories { get; }
         IClassRepository Classes { get; }
         ISubjectScheduleRepository SubjectSchedules { get; }
+        IEnrollmentRepository Enrollments { get; }
         Task<int> CompleteAsync();
         void Dispose();
 

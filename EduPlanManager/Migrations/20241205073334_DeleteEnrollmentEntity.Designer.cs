@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduPlanManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241201075434_EditSubjectTable")]
-    partial class EditSubjectTable
+    [Migration("20241205073334_DeleteEnrollmentEntity")]
+    partial class DeleteEnrollmentEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,36 @@ namespace EduPlanManager.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("ClassSubject", b =>
+                {
+                    b.Property<Guid>("ClassesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SubjectsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ClassesId", "SubjectsId");
+
+                    b.HasIndex("SubjectsId");
+
+                    b.ToTable("ClassSubjects", (string)null);
+                });
+
+            modelBuilder.Entity("ClassUser", b =>
+                {
+                    b.Property<Guid>("ClassesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ClassesId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("UserClasses", (string)null);
+                });
 
             modelBuilder.Entity("EduPlanManager.Models.Entities.AcademicTerm", b =>
                 {
@@ -45,7 +75,35 @@ namespace EduPlanManager.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Year", "Semester", "StartDate", "EndDate")
+                        .IsUnique();
+
                     b.ToTable("AcademicTerms");
+                });
+
+            modelBuilder.Entity("EduPlanManager.Models.Entities.Class", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ClassName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StudentCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeacherCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Classes");
                 });
 
             modelBuilder.Entity("EduPlanManager.Models.Entities.Enrollment", b =>
@@ -69,6 +127,9 @@ namespace EduPlanManager.Migrations
                     b.Property<Guid>("SubjectId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("SubjectScheduleId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AcademicTermId");
@@ -77,37 +138,9 @@ namespace EduPlanManager.Migrations
 
                     b.HasIndex("SubjectId");
 
+                    b.HasIndex("SubjectScheduleId");
+
                     b.ToTable("Enrollments");
-                });
-
-            modelBuilder.Entity("EduPlanManager.Models.Entities.EnrollmentRequest", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("CancelledAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("StudentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("SubjectId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
-
-                    b.HasIndex("SubjectId");
-
-                    b.ToTable("EnrollmentRequests");
                 });
 
             modelBuilder.Entity("EduPlanManager.Models.Entities.Grade", b =>
@@ -277,6 +310,37 @@ namespace EduPlanManager.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SubjectCategories");
+                });
+
+            modelBuilder.Entity("EduPlanManager.Models.Entities.SubjectSchedule", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<int>("DayOfWeek")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("time");
+
+                    b.Property<int>("Session")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("time");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SubjectSchedules");
                 });
 
             modelBuilder.Entity("EduPlanManager.Models.Entities.User", b =>
@@ -482,6 +546,51 @@ namespace EduPlanManager.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("SubjectSubjectSchedule", b =>
+                {
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SubjectScheduleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("SubjectId", "SubjectScheduleId");
+
+                    b.HasIndex("SubjectScheduleId");
+
+                    b.ToTable("SubjectSubjectSchedule");
+                });
+
+            modelBuilder.Entity("ClassSubject", b =>
+                {
+                    b.HasOne("EduPlanManager.Models.Entities.Class", null)
+                        .WithMany()
+                        .HasForeignKey("ClassesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EduPlanManager.Models.Entities.Subject", null)
+                        .WithMany()
+                        .HasForeignKey("SubjectsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ClassUser", b =>
+                {
+                    b.HasOne("EduPlanManager.Models.Entities.Class", null)
+                        .WithMany()
+                        .HasForeignKey("ClassesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EduPlanManager.Models.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("EduPlanManager.Models.Entities.Enrollment", b =>
                 {
                     b.HasOne("EduPlanManager.Models.Entities.AcademicTerm", "AcademicTerm")
@@ -502,30 +611,19 @@ namespace EduPlanManager.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("EduPlanManager.Models.Entities.SubjectSchedule", "SubjectSchedule")
+                        .WithMany("Enrollments")
+                        .HasForeignKey("SubjectScheduleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("AcademicTerm");
 
                     b.Navigation("Student");
 
                     b.Navigation("Subject");
-                });
 
-            modelBuilder.Entity("EduPlanManager.Models.Entities.EnrollmentRequest", b =>
-                {
-                    b.HasOne("EduPlanManager.Models.Entities.User", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EduPlanManager.Models.Entities.Subject", "Subject")
-                        .WithMany()
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Student");
-
-                    b.Navigation("Subject");
+                    b.Navigation("SubjectSchedule");
                 });
 
             modelBuilder.Entity("EduPlanManager.Models.Entities.Grade", b =>
@@ -652,6 +750,21 @@ namespace EduPlanManager.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SubjectSubjectSchedule", b =>
+                {
+                    b.HasOne("EduPlanManager.Models.Entities.Subject", null)
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("EduPlanManager.Models.Entities.SubjectSchedule", null)
+                        .WithMany()
+                        .HasForeignKey("SubjectScheduleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("EduPlanManager.Models.Entities.AcademicTerm", b =>
                 {
                     b.Navigation("Enrollments");
@@ -675,6 +788,11 @@ namespace EduPlanManager.Migrations
             modelBuilder.Entity("EduPlanManager.Models.Entities.SubjectCategory", b =>
                 {
                     b.Navigation("Subjects");
+                });
+
+            modelBuilder.Entity("EduPlanManager.Models.Entities.SubjectSchedule", b =>
+                {
+                    b.Navigation("Enrollments");
                 });
 
             modelBuilder.Entity("EduPlanManager.Models.Entities.User", b =>

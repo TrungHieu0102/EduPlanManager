@@ -5,21 +5,24 @@ using EduPlanManager.Models.Entities;
 
 namespace EduPlanManager.Data
 {
-    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<User, Role, Guid>(options)
+    public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
     {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Grade> Grades { get; set; }
         public DbSet<StudentSchedule> StudentSchedules { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<AcademicTerm> AcademicTerms { get; set; }
-        public DbSet<EnrollmentRequest> EnrollmentRequests { get; set; }
         public DbSet<SubjectCategory> SubjectCategories { get; set; }
         public DbSet<Class> Classes { get; set; }
         public DbSet<SubjectSchedule> SubjectSchedules { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            // Ràng buộc cho Grade
             modelBuilder.Entity<Grade>()
                 .HasOne(g => g.Student)
                 .WithMany(s => s.Grades)
@@ -32,6 +35,7 @@ namespace EduPlanManager.Data
                 .HasForeignKey(g => g.SubjectId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // Ràng buộc cho StudentSchedule
             modelBuilder.Entity<StudentSchedule>()
                 .HasOne(ss => ss.Student)
                 .WithMany(u => u.Schedules)
@@ -44,9 +48,16 @@ namespace EduPlanManager.Data
                 .HasForeignKey(ss => ss.SubjectId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // Ràng buộc cho Enrollment
+            modelBuilder.Entity<Enrollment>()
+                .HasOne(e => e.SubjectSchedule)
+                .WithMany(ss => ss.Enrollments)
+                .HasForeignKey(e => e.SubjectScheduleId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<Enrollment>()
                 .HasOne(e => e.Student)
-                .WithMany(u => u.Enrollments)
+                .WithMany(s => s.Enrollments)
                 .HasForeignKey(e => e.StudentId)
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -55,17 +66,24 @@ namespace EduPlanManager.Data
                 .WithMany(s => s.Enrollments)
                 .HasForeignKey(e => e.SubjectId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // Ràng buộc duy nhất cho AcademicTerm
             modelBuilder.Entity<AcademicTerm>()
-            .HasIndex(a => new { a.Year, a.Semester, a.StartDate, a.EndDate })
-            .IsUnique();
+                .HasIndex(a => new { a.Year, a.Semester, a.StartDate, a.EndDate })
+                .IsUnique();
+
+            // Thiết lập quan hệ nhiều-nhiều
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Classes)
                 .WithMany(c => c.Users)
-                .UsingEntity(j => j.ToTable("UserClasses"));  
+                .UsingEntity(j => j.ToTable("UserClasses"));
+
             modelBuilder.Entity<Class>()
                 .HasMany(c => c.Subjects)
                 .WithMany(s => s.Classes)
-                .UsingEntity(j => j.ToTable("ClassSubjects"));  
+                .UsingEntity(j => j.ToTable("ClassSubjects"));
+
+            // Ràng buộc cho Subject và SubjectSchedule
             modelBuilder.Entity<Subject>(entity =>
             {
                 entity.HasKey(s => s.Id);
@@ -78,17 +96,19 @@ namespace EduPlanManager.Data
                               .HasOne<SubjectSchedule>()
                               .WithMany()
                               .HasForeignKey("SubjectScheduleId")
-                              .OnDelete(DeleteBehavior.Cascade),
+                              .OnDelete(DeleteBehavior.Restrict), // Không cascade delete
                           join => join
                               .HasOne<Subject>()
                               .WithMany()
                               .HasForeignKey("SubjectId")
-                              .OnDelete(DeleteBehavior.Cascade),
+                              .OnDelete(DeleteBehavior.Restrict), // Không cascade delete
                           join =>
                           {
                               join.HasKey("SubjectId", "SubjectScheduleId");
                           });
             });
+
+            // Ràng buộc cho SubjectSchedule
             modelBuilder.Entity<SubjectSchedule>(entity =>
             {
                 entity.HasKey(ss => ss.Id);
@@ -114,5 +134,5 @@ namespace EduPlanManager.Data
                       .IsRequired(false);
             });
         }
-   }
+    }
 }

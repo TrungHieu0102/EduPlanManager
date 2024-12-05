@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EduPlanManager.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class DeleteEnrollmentEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -76,6 +76,21 @@ namespace EduPlanManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Classes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClassName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StudentCount = table.Column<int>(type: "int", nullable: false),
+                    TeacherCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Classes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SubjectCategories",
                 columns: table => new
                 {
@@ -86,6 +101,23 @@ namespace EduPlanManager.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SubjectCategories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SubjectSchedules",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DayOfWeek = table.Column<int>(type: "int", nullable: false),
+                    Session = table.Column<int>(type: "int", nullable: false),
+                    StartTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    EndTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubjectSchedules", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -195,14 +227,36 @@ namespace EduPlanManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserClasses",
+                columns: table => new
+                {
+                    ClassesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserClasses", x => new { x.ClassesId, x.UsersId });
+                    table.ForeignKey(
+                        name: "FK_UserClasses_AspNetUsers_UsersId",
+                        column: x => x.UsersId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserClasses_Classes_ClassesId",
+                        column: x => x.ClassesId,
+                        principalTable: "Classes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Subjects",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Semester = table.Column<int>(type: "int", nullable: false),
-                    Year = table.Column<int>(type: "int", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LessonsPerDay = table.Column<int>(type: "int", nullable: false),
@@ -227,28 +281,24 @@ namespace EduPlanManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EnrollmentRequests",
+                name: "ClassSubjects",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CancelledAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    ClassesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SubjectsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EnrollmentRequests", x => x.Id);
+                    table.PrimaryKey("PK_ClassSubjects", x => new { x.ClassesId, x.SubjectsId });
                     table.ForeignKey(
-                        name: "FK_EnrollmentRequests_AspNetUsers_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "AspNetUsers",
+                        name: "FK_ClassSubjects_Classes_ClassesId",
+                        column: x => x.ClassesId,
+                        principalTable: "Classes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EnrollmentRequests_Subjects_SubjectId",
-                        column: x => x.SubjectId,
+                        name: "FK_ClassSubjects_Subjects_SubjectsId",
+                        column: x => x.SubjectsId,
                         principalTable: "Subjects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -261,6 +311,7 @@ namespace EduPlanManager.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SubjectScheduleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RegisteredAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     AcademicTermId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
@@ -278,6 +329,12 @@ namespace EduPlanManager.Migrations
                         name: "FK_Enrollments_AspNetUsers_StudentId",
                         column: x => x.StudentId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Enrollments_SubjectSchedules_SubjectScheduleId",
+                        column: x => x.SubjectScheduleId,
+                        principalTable: "SubjectSchedules",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -359,6 +416,36 @@ namespace EduPlanManager.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "SubjectSubjectSchedule",
+                columns: table => new
+                {
+                    SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SubjectScheduleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubjectSubjectSchedule", x => new { x.SubjectId, x.SubjectScheduleId });
+                    table.ForeignKey(
+                        name: "FK_SubjectSubjectSchedule_SubjectSchedules_SubjectScheduleId",
+                        column: x => x.SubjectScheduleId,
+                        principalTable: "SubjectSchedules",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_SubjectSubjectSchedule_Subjects_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "Subjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AcademicTerms_Year_Semester_StartDate_EndDate",
+                table: "AcademicTerms",
+                columns: new[] { "Year", "Semester", "StartDate", "EndDate" },
+                unique: true);
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -399,14 +486,9 @@ namespace EduPlanManager.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EnrollmentRequests_StudentId",
-                table: "EnrollmentRequests",
-                column: "StudentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EnrollmentRequests_SubjectId",
-                table: "EnrollmentRequests",
-                column: "SubjectId");
+                name: "IX_ClassSubjects_SubjectsId",
+                table: "ClassSubjects",
+                column: "SubjectsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Enrollments_AcademicTermId",
@@ -422,6 +504,11 @@ namespace EduPlanManager.Migrations
                 name: "IX_Enrollments_SubjectId",
                 table: "Enrollments",
                 column: "SubjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Enrollments_SubjectScheduleId",
+                table: "Enrollments",
+                column: "SubjectScheduleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Grades_AcademicTermId",
@@ -462,6 +549,16 @@ namespace EduPlanManager.Migrations
                 name: "IX_Subjects_CategoryId",
                 table: "Subjects",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubjectSubjectSchedule_SubjectScheduleId",
+                table: "SubjectSubjectSchedule",
+                column: "SubjectScheduleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserClasses_UsersId",
+                table: "UserClasses",
+                column: "UsersId");
         }
 
         /// <inheritdoc />
@@ -483,7 +580,7 @@ namespace EduPlanManager.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "EnrollmentRequests");
+                name: "ClassSubjects");
 
             migrationBuilder.DropTable(
                 name: "Enrollments");
@@ -495,13 +592,25 @@ namespace EduPlanManager.Migrations
                 name: "StudentSchedules");
 
             migrationBuilder.DropTable(
+                name: "SubjectSubjectSchedule");
+
+            migrationBuilder.DropTable(
+                name: "UserClasses");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "SubjectSchedules");
+
+            migrationBuilder.DropTable(
+                name: "Subjects");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Subjects");
+                name: "Classes");
 
             migrationBuilder.DropTable(
                 name: "AcademicTerms");

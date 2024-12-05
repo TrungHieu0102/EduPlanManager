@@ -15,6 +15,7 @@ namespace EduPlanManager.UnitOfWork
         public ISubjectCategoryRepository SubjectCategories { get; set; }
         public IClassRepository Classes { get; set; }
         public ISubjectScheduleRepository SubjectSchedules { get; set; }
+        public IEnrollmentRepository Enrollments { get; set; }
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
@@ -25,6 +26,7 @@ namespace EduPlanManager.UnitOfWork
             SubjectCategories = new SubjectCategoryRepository(_context);
             Classes = new ClassRepository(_context);
             SubjectSchedules = new SubjectScheduleRepository(_context);
+            Enrollments = new EnrollmentRepository(_context);
         }
 
        
