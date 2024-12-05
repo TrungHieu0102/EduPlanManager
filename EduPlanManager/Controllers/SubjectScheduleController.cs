@@ -19,7 +19,6 @@ namespace EduPlanManager.Controllers
             _subjectScheduleService = subjectScheduleService;
             _subjectService = subjectService;
         }
-        // GET: SubjectSchedule
         public async Task<IActionResult> Index()
         {
             var result = await _subjectScheduleService.GetAllSchedulesAsync();
@@ -31,7 +30,6 @@ namespace EduPlanManager.Controllers
             TempData["ErrorMessage"] = result.Message;
             return View("Error");
         }
-        // GET: SubjectSchedule/Details/5
         public async Task<IActionResult> Details(Guid id)
         {
             var result = await _subjectScheduleService.GetScheduleByIdAsync(id);
@@ -43,16 +41,13 @@ namespace EduPlanManager.Controllers
             TempData["ErrorMessage"] = result.Message;
             return View("Index");
         }
-        // GET: SubjectSchedule/Create
         public IActionResult Create()
         {
-            // Lấy giá trị của DayOfWeekEnum với DisplayAttribute
             ViewData["DayOfWeekEnum"] = Enum.GetValues(typeof(DayOfWeekEnum))
                 .Cast<DayOfWeekEnum>()
                 .Select(e => new { Id = (int)e, Name = e.GetDisplayName() })
                 .ToList();
 
-            // Lấy giá trị của SessionEnum với DisplayAttribute
             ViewData["SessionEnum"] = Enum.GetValues(typeof(SessionEnum))
                 .Cast<SessionEnum>()
                 .Select(e => new { Id = (int)e, Name = e.GetDisplayName() })
@@ -60,7 +55,6 @@ namespace EduPlanManager.Controllers
             return View();
         }
 
-        // POST: SubjectSchedule/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateSubjectScheduleDTO dto)
@@ -90,7 +84,6 @@ namespace EduPlanManager.Controllers
             return View();
 
         }
-        // GET: SubjectSchedule/Edit/5
         public async Task<IActionResult> Edit(Guid id)
         {
             ViewData["DayOfWeekEnum"] = Enum.GetValues(typeof(DayOfWeekEnum))
@@ -120,7 +113,6 @@ namespace EduPlanManager.Controllers
             return View("Error");
         }
 
-        // POST: SubjectSchedule/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(UpdateSubjectScheduleDTO dto)
@@ -152,7 +144,6 @@ namespace EduPlanManager.Controllers
 
 
 
-        // POST: SubjectSchedule/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

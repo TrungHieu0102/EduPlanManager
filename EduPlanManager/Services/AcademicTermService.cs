@@ -4,39 +4,27 @@ using EduPlanManager.Models.DTOs.Respone;
 using EduPlanManager.Models.Entities;
 using EduPlanManager.Services.Interface;
 using EduPlanManager.UnitOfWork;
-
 namespace EduPlanManager.Services
 {
-    public class AcademicTermService : IAcademicTermService
+    public class AcademicTermService(IUnitOfWork unitOfWork, IMapper mapper) : IAcademicTermService
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-
-
-
-        public AcademicTermService(IUnitOfWork unitOfWork, IMapper mapper)
-        {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
-        }
-
         public async Task<Result<AcademicTermDTO>> CreateAcademicTermsAsync(CreateUpdateAcademicTermDTO createAcademicTerm)
         {
             try
             {
-                var existingTerm = await _unitOfWork.AcademicTerms.CheckExists(createAcademicTerm);
+                var existingTerm = await unitOfWork.AcademicTerms.CheckExists(createAcademicTerm);
                 if (existingTerm != null)
                 {
                     throw new Exception("Academic term already exists");
                 }
                 createAcademicTerm.Id = Guid.NewGuid();
-                var academicTerm = _mapper.Map<AcademicTerm>(createAcademicTerm);
-                await _unitOfWork.AcademicTerms.AddAsync(academicTerm);
-                await _unitOfWork.CompleteAsync();
+                var academicTerm = mapper.Map<AcademicTerm>(createAcademicTerm);
+                await unitOfWork.AcademicTerms.AddAsync(academicTerm);
+                await unitOfWork.CompleteAsync();
                 return new Result<AcademicTermDTO>
                 {
                     IsSuccess = true,
-                    Data = _mapper.Map<AcademicTermDTO>(academicTerm)
+                    Data = mapper.Map<AcademicTermDTO>(academicTerm)
                 };
             }
             catch (Exception ex)
@@ -48,14 +36,13 @@ namespace EduPlanManager.Services
                 };
             }
         }
-
         public async Task<Result<bool>> DeleteAcademicAsync(Guid id)
         {
             try
             {
-                var subject = _unitOfWork.AcademicTerms.GetByIdAsync(id);
-                _unitOfWork.AcademicTerms.Delete(subject.Result);
-                if (await _unitOfWork.CompleteAsync() == 0)
+                var subject = unitOfWork.AcademicTerms.GetByIdAsync(id);
+                unitOfWork.AcademicTerms.Delete(subject.Result);
+                if (await unitOfWork.CompleteAsync() == 0)
                 {
                     throw new Exception("Delete failed");
                 }
@@ -76,19 +63,19 @@ namespace EduPlanManager.Services
 
         public async Task<IEnumerable<AcademicTerm>> GetAllAcademicTermsAsync()
         {
-            return await _unitOfWork.AcademicTerms.GetAllAsync();
+            return await unitOfWork.AcademicTerms.GetAllAsync();
         }
         public async Task<Result<AcademicTermDTO>> UpdateAcademic(CreateUpdateAcademicTermDTO request)
         {
             try
             {
-                var academicTerm = await _unitOfWork.AcademicTerms.GetByIdAsync(request.Id) ?? throw new Exception("Không tìm thấy");
-                _mapper.Map(request, academicTerm);
-                await _unitOfWork.CompleteAsync();
+                var academicTerm = await unitOfWork.AcademicTerms.GetByIdAsync(request.Id) ?? throw new Exception("Không tìm thấy");
+                mapper.Map(request, academicTerm);
+                await unitOfWork.CompleteAsync();
                 return new Result<AcademicTermDTO>
                 {
                     IsSuccess = true,
-                    Data = _mapper.Map<AcademicTermDTO>(academicTerm)
+                    Data = mapper.Map<AcademicTermDTO>(academicTerm)
                 };
             }
             catch (Exception ex)

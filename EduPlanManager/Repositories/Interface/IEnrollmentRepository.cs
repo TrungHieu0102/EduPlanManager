@@ -1,6 +1,7 @@
 ﻿using EduPlanManager.Models.DTOs.Enrollment;
 using EduPlanManager.Models.DTOs.SubjectSchedule;
 using EduPlanManager.Models.Entities;
+using System.Threading.Tasks;
 
 namespace EduPlanManager.Repositories.Interface
 {
@@ -11,5 +12,7 @@ namespace EduPlanManager.Repositories.Interface
         Task<bool> HasConflictSchedule(Guid studentId, Guid subjectScheduleId);
         Task<bool> HasDuplicateSubject(Guid studentId, Guid subjectId, Guid academicTermId);
         Task AddEnrollment(Enrollment enrollment);
+        Task<List<EnrollmentDetailResponse>> GetAllEnrollmentDetailsAsync();
+        Task<List<Enrollment>> GetEnrollmentsByStudentIdAsync(Guid studentId);
     }
 }

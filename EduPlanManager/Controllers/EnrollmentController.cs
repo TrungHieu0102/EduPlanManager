@@ -1,9 +1,10 @@
 ﻿using EduPlanManager.Models.DTOs.Enrollment;
 using EduPlanManager.Models.Entities;
+using EduPlanManager.Models.ViewModels;
 using EduPlanManager.Services.Interface;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
+using PagedList;
 namespace EduPlanManager.Controllers
 {
     public class EnrollmentController : Controller
@@ -16,13 +17,30 @@ namespace EduPlanManager.Controllers
             _userManager = userManager;
         }
         [HttpGet]
-        public async Task<IActionResult> EligibleSubjects()
+        public async Task<IActionResult> EligibleSubjects(int page = 1, int pageSize = 10)
         {
             var user = await _userManager.GetUserAsync(User);
-            var subjects = await _enrollmentService.GetEligibleSubjects(user!.Id);
+            var registeredSubjects = await _enrollmentService.GetEnrollmentsByStudentIdAsync(user!.Id);
+
+            // Lấy các môn học có thể đăng ký với phân trang
+            var eligibleSubjectsResult = await _enrollmentService.GetEligibleSubjects(user.Id, page, pageSize);
+
+            // Tạo ViewModel và gán dữ liệu
+            var viewModel = new EnrollmentViewModel
+            {
+                RegisteredSubjects = registeredSubjects,
+                EligibleSubjects = eligibleSubjectsResult.Data.ToList(), // Chỉ lấy danh sách môn học
+                TotalCount = eligibleSubjectsResult.TotalCount ?? 0,
+                TotalPages = eligibleSubjectsResult.TotalPages ?? 0,
+                CurrentPage = eligibleSubjectsResult.CurrentPage ?? 1
+            };
+
+            // Truyền StudentId cho view
             ViewBag.StudentId = user.Id;
-            return View(subjects); 
+
+            return View(viewModel);
         }
+
         [HttpPost]
         public async Task<IActionResult> Enroll(List<string> selectedSubjects, Guid studentId)
         {
@@ -32,7 +50,6 @@ namespace EduPlanManager.Controllers
                 return RedirectToAction("EligibleSubjects", new { studentId });
             }
 
-            // Tạo danh sách các EnrollmentRequest từ selectedSubjects
             List<EnrollmentRequest> enrollmentRequests = new List<EnrollmentRequest>();
 
             foreach (var subjectSchedule in selectedSubjects)
@@ -52,7 +69,6 @@ namespace EduPlanManager.Controllers
                 enrollmentRequests.Add(request);
             }
 
-            // Gọi dịch vụ EnrollSubjects để đăng ký các môn học
             var result = await _enrollmentService.EnrollSubjects(enrollmentRequests);
 
             TempData["ErrorMessage"] = result;
