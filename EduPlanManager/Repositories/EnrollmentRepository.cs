@@ -67,12 +67,12 @@ namespace EduPlanManager.Repositories
             return await _context.Enrollments
                 .Include(e => e.Subject)
                 .Include(e => e.SubjectSchedule)
-                .Include(e => e.Student) // Bảng User (giả sử có navigation là `Student`)
+                .Include(e => e.Student)
                 .Select(e => new EnrollmentDetailResponse
                 {
                     EnrollmentId = e.Id,
                     StudentId = e.StudentId,
-                    StudentFullName = e.Student.GetFullName(), // Thuộc tính trong bảng User
+                    StudentFullName = e.Student.GetFullName(),
                     SubjectCode = e.Subject.Code,
                     SubjectName = e.Subject.Name,
                     DayOfWeek = e.SubjectSchedule.DayOfWeek.ToString(),
@@ -90,6 +90,34 @@ namespace EduPlanManager.Repositories
                 .Include(e => e.SubjectSchedule)
                 .ToListAsync();
         }
-
+        public async Task<List<Enrollment>> GetAllEnrollmentRequestsAsync()
+        {
+            return await _context.Enrollments
+                .Include(e => e.Student)
+                .Include(e => e.SubjectSchedule.Subjects)
+                .ToListAsync();
+        }
+        public async Task<Enrollment?> GetEnrollmentByIdAsync(Guid enrollmentId)
+        {
+            return await _context.Enrollments
+                .Include(e => e.Student)
+                .Include(e => e.SubjectSchedule)
+                .FirstOrDefaultAsync(e => e.Id == enrollmentId);
+        }
+        public async Task UpdateEnrollmentAsync(Enrollment enrollment)
+        {
+            _context.Enrollments.Update(enrollment);
+            await _context.SaveChangesAsync();
+        }
+        public async Task<Enrollment?> GetDetailByIdAsync(Guid enrollmentId)
+        {
+            return await _context.Enrollments
+                .Include(e => e.Student)
+                .Include(e => e.Subject)
+                .Include(e => e.SubjectSchedule)
+                .ThenInclude(ss => ss.Subjects)
+                .Include(e => e.AcademicTerm)
+                .FirstOrDefaultAsync(e => e.Id == enrollmentId);
+        }
     }
 }

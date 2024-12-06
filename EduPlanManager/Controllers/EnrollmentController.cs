@@ -17,36 +17,37 @@ namespace EduPlanManager.Controllers
             _userManager = userManager;
         }
         [HttpGet]
-        public async Task<IActionResult> EligibleSubjects(int page = 1, int pageSize = 10)
+        public async Task<IActionResult> EligibleSubjects(string searchTerm = "", DayOfWeekEnum? dayOfWeek = null, SessionEnum? session = null, int page = 1, int pageSize = 10)
         {
             var user = await _userManager.GetUserAsync(User);
             var registeredSubjects = await _enrollmentService.GetEnrollmentsByStudentIdAsync(user!.Id);
 
-            // Lấy các môn học có thể đăng ký với phân trang
-            var eligibleSubjectsResult = await _enrollmentService.GetEligibleSubjects(user.Id, page, pageSize);
+            var eligibleSubjectsResult = await _enrollmentService.GetEligibleSubjects(
+                user.Id, page, pageSize, searchTerm, dayOfWeek, session
+            );
 
-            // Tạo ViewModel và gán dữ liệu
             var viewModel = new EnrollmentViewModel
             {
                 RegisteredSubjects = registeredSubjects,
-                EligibleSubjects = eligibleSubjectsResult.Data.ToList(), // Chỉ lấy danh sách môn học
+                EligibleSubjects = eligibleSubjectsResult.Data.ToList(),
                 TotalCount = eligibleSubjectsResult.TotalCount ?? 0,
                 TotalPages = eligibleSubjectsResult.TotalPages ?? 0,
-                CurrentPage = eligibleSubjectsResult.CurrentPage ?? 1
+                CurrentPage = eligibleSubjectsResult.CurrentPage ?? 1,
+                SearchTerm = searchTerm,
+                DayOfWeek = dayOfWeek,
+                Session = session
             };
-
-            // Truyền StudentId cho view
             ViewBag.StudentId = user.Id;
-
             return View(viewModel);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Enroll(List<string> selectedSubjects, Guid studentId)
         {
             if (selectedSubjects == null || selectedSubjects.Count == 0)
             {
-                TempData["ErrorMessage"] = "Bạn chưa chọn môn học nào để đăng ký.";              
+                TempData["ErrorMessage"] = "Bạn chưa chọn môn học nào để đăng ký.";
                 return RedirectToAction("EligibleSubjects", new { studentId });
             }
 
@@ -63,7 +64,7 @@ namespace EduPlanManager.Controllers
                     StudentId = studentId,
                     SubjectId = subjectId,
                     SubjectScheduleId = scheduleId,
-                    AcademicTermId = Guid.Parse("1CCB0087-DBD0-4BFA-B990-3F3CD481ACB0") 
+                    AcademicTermId = Guid.Parse("1CCB0087-DBD0-4BFA-B990-3F3CD481ACB0")
                 };
 
                 enrollmentRequests.Add(request);
@@ -71,9 +72,36 @@ namespace EduPlanManager.Controllers
 
             var result = await _enrollmentService.EnrollSubjects(enrollmentRequests);
 
-            TempData["ErrorMessage"] = result;
+            TempData["ErrorMessage"] = result.Message;
 
             return RedirectToAction("EligibleSubjects", new { studentId });
+        }
+        [HttpGet]
+        public async Task<IActionResult> EnrollmentRequests()
+        {
+            var result = await _enrollmentService.GetAllEnrollmentRequestsAsync();
+            if (!result.IsSuccess)
+            {
+                TempData["ErrorMessage"] = "Không thể lấy danh sách đăng ký. Vui lòng thử lại.";
+                return RedirectToAction("Index", "Home");
+            }
+            return View(result.Data);
+        }
+        [HttpPost]
+        public async Task<IActionResult> ApproveEnrollment(Guid enrollmentId)
+        {
+            var isApproved = await _enrollmentService.ApproveEnrollmentAsync(enrollmentId);
+
+            if (isApproved.IsSuccess)
+            {
+                TempData["SuccessMessage"] = "Đăng ký đã được duyệt và lịch học đã được thêm!";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Không thể duyệt đăng ký. Vui lòng thử lại.";
+            }
+
+            return RedirectToAction("EnrollmentRequests");
         }
 
 

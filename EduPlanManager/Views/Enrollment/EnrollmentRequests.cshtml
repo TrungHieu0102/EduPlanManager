@@ -1,0 +1,48 @@
+﻿@model List<EduPlanManager.Models.DTOs.Enrollment.EnrollmentRequestDto>
+
+<div class="container mt-5">
+    <h2 class="text-center">Danh sách đăng ký môn học</h2>
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Học sinh</th>
+                <th>Môn học</th>
+                <th>Ngày học</th>
+                <th>Buổi</th>
+                <th>Thời gian</th>
+                <th>Trạng thái</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var request in Model)
+            {
+                <tr>
+                    <td>@request.StudentName</td>
+                    <td>@request.SubjectName</td>
+                    <td>@request.DayOfWeek</td>
+                    <td>@request.Session</td>
+                    <td>@request.StartTime - @request.EndTime</td>
+                    <td>@request.Status</td>
+                    <td>
+                        @if (request.Status == "Pending")
+                        {
+                            <form method="post" asp-action="ApproveEnrollment">
+                                <input type="hidden" name="enrollmentId" value="@request.EnrollmentId" />
+                                <button type="submit" class="btn btn-success btn-sm">Duyệt</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <span class="text-muted">Đã xử lý</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

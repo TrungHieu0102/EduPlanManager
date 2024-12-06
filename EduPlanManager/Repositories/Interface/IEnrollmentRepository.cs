@@ -14,5 +14,9 @@ namespace EduPlanManager.Repositories.Interface
         Task AddEnrollment(Enrollment enrollment);
         Task<List<EnrollmentDetailResponse>> GetAllEnrollmentDetailsAsync();
         Task<List<Enrollment>> GetEnrollmentsByStudentIdAsync(Guid studentId);
+        Task<List<Enrollment>> GetAllEnrollmentRequestsAsync();
+        Task<Enrollment?> GetEnrollmentByIdAsync(Guid enrollmentId);
+        Task UpdateEnrollmentAsync(Enrollment enrollment);
+        Task<Enrollment?> GetDetailByIdAsync(Guid enrollmentId);
     }
 }
