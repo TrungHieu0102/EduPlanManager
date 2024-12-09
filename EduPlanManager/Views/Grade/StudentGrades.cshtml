@@ -1,0 +1,52 @@
+﻿@model IEnumerable<EduPlanManager.Models.DTOs.Grade.SemesterGradeDto>
+
+<div class="container mt-5">
+    <h2 class="text-center">Kết Quả Học Tập</h2>
+
+    @if (Model.Any())
+    {
+        @foreach (var semester in Model)
+        {
+            <div class="mb-4">
+                <h4 class="text-primary">
+                    Năm học: @semester.AcademicYear, Học kỳ: @semester.AcademicSemester
+                </h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Môn Học</th>
+                            <th>Điểm Tổng Kết</th>
+                            <th>Trạng Thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var subject in semester.SubjectGrades)
+                        {
+                            <tr>
+                                <td>@subject.SubjectName</td>
+                                <td>@subject.TotalScore</td>
+                                <td>
+                                    <span class="badge @(subject.Status == "Đạt" ? "bg-success" : "bg-danger")">
+                                        @subject.Status
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td colspan="2" class="text-start"><strong>Điểm trung bình học kỳ:</strong></td>
+                            <td>
+                                <strong>
+                                    @Math.Round(semester.SubjectGrades.Average(s => s.TotalScore), 2)
+                                </strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+    }
+    else
+    {
+        <p class="text-center text-muted">Không có dữ liệu để hiển thị.</p>
+    }
+</div>

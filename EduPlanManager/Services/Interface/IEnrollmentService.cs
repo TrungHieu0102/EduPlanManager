@@ -12,5 +12,6 @@ namespace EduPlanManager.Services.Interface
         Task<Result<string>> EnrollSubjects(List<EnrollmentRequest> requests);
         Task<Result<List<EnrollmentRequestDto>>> GetAllEnrollmentRequestsAsync();
         Task<Result<bool>> ApproveEnrollmentAsync(Guid enrollmentId);
+        Task<Result<bool>> DeleteEnrollmentAsync(Guid enrollmentId, Guid studentId);
     }
 }

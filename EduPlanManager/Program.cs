@@ -66,7 +66,8 @@ builder.Services.AddScoped<IAcademicTermService, AcademicTermService>();
 builder.Services.AddScoped<ISubjectScheduleService, SubjectScheduleService>();
 builder.Services.AddScoped<IClassService, ClassService>();
 builder.Services.AddScoped<IEnrollmentService, EnrollmentService>();
-
+builder.Services.AddScoped<IStudentScheduleService, StudentScheduleService>();
+builder.Services.AddScoped<IGradeService, GradeService>();
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 builder.Services.AddScoped<MyAuthenFilter>();
 var app = builder.Build();

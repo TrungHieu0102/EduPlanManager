@@ -15,6 +15,8 @@
                 <th class="fw-semibold">Thời gian bắt đầu</th>
                 <th class="fw-semibold">Thời gian kết thúc</th>
                 <th class="fw-semibold">Ngày đăng ký</th>
+                <th class="fw-semibold">Trạng thái</th>
+                <th class="fw-semibold">Hủy đăng ký</th>
             </tr>
         </thead>
         <tbody>
@@ -28,6 +30,13 @@
                     <td>@subject.StartTime</td>
                     <td>@subject.EndTime</td>
                     <td>@subject.RegisteredAt.ToString("dd/MM/yyyy")</td>
+                    <td>@subject.Status</td>
+                    <td>
+                        <form method="post" asp-action="DeleteEnrollment">
+                            <input type="hidden" name="enrollmentId" value="@subject.EnrollmentId" />
+                            <button type="submit" class="btn text-danger-emphasis bg-danger-subtle btn-sm">Hủy</button>
+                        </form>                       
+                    </td>
                 </tr>
             }
         </tbody>

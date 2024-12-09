@@ -130,7 +130,9 @@ namespace EduPlanManager.Services
                 Session = e.SubjectSchedule.Session.ToString(),
                 StartTime = e.SubjectSchedule.StartTime.ToString(@"hh\:mm"),
                 EndTime = e.SubjectSchedule.EndTime.ToString(@"hh\:mm"),
-                RegisteredAt = e.RegisteredAt
+                RegisteredAt = e.RegisteredAt,
+                Status = e.Status.ToString()
+
             }).ToList();
         }
         public async Task<Result<List<EnrollmentRequestDto>>> GetAllEnrollmentRequestsAsync()
@@ -194,6 +196,39 @@ namespace EduPlanManager.Services
                 {
                     IsSuccess = true,
                     Message = "Duyệt thành công"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Result<bool>
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
+        }
+
+        public async Task<Result<bool>> DeleteEnrollmentAsync(Guid enrollmentId, Guid studentId)
+        {
+            try
+            {
+                var enrollment = await _unitOfWork.Enrollments.GetEnrollmentByIdAsync(enrollmentId)
+                    ?? throw new Exception("Không tìm thấy mã đăng ký");
+                if (enrollment.StudentId != studentId)
+                {
+
+                    throw new Exception("Không thể hủy đăng ký của sinh viên khác");
+                }
+                if (enrollment.Status == EnrollmentStatus.Approved)
+                {
+                    throw new Exception("Không thể hủy môn học đã được duyệt");
+                }
+                _unitOfWork.Enrollments.Delete(enrollment);
+                await _unitOfWork.CompleteAsync();
+                return new Result<bool>
+                {
+                    IsSuccess = true,
+                    Message = "Hủy thành công"
                 };
             }
             catch (Exception ex)

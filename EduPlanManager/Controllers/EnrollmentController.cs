@@ -103,7 +103,22 @@ namespace EduPlanManager.Controllers
 
             return RedirectToAction("EnrollmentRequests");
         }
+        [HttpPost]
+        public async Task<IActionResult> DeleteEnrollment(Guid enrollmentId)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var result = await _enrollmentService.DeleteEnrollmentAsync(enrollmentId, user.Id);
 
+            if (result.IsSuccess)
+            {
+                TempData["SuccessMessage"] = result.Message;
+            }
+            else
+            {
+                TempData["ErrorMessage"] = result.Message;
+            }
 
+            return RedirectToAction("EligibleSubjects");
+        }
     }
 }

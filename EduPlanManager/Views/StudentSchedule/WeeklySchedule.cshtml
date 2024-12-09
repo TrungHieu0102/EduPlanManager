@@ -1,0 +1,83 @@
+﻿@model EduPlanManager.Models.ViewModels.WeeklyScheduleViewModel
+
+<div class="container mt-5">
+    <h2 class="text-center">Thời Khóa Biểu Cá Nhân</h2>
+
+    @if (Model.WeeklySchedule != null)
+
+    {
+        <h4 class="text-center mb-4">
+            Tuần: @Model.WeeklySchedule.WeekStartDate.ToString("dd/MM/yyyy") - @Model.WeeklySchedule.WeekEndDate.ToString("dd/MM/yyyy")
+        </h4>
+
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="thead-dark text-center">
+                    <tr>
+                        <th>Giờ/Ngày</th>
+                        <th>Thứ Hai</th>
+                        <th>Thứ Ba</th>
+                        <th>Thứ Tư</th>
+                        <th>Thứ Năm</th>
+                        <th>Thứ Sáu</th>
+                        <th>Thứ Bảy</th>
+                        <th>Chủ Nhật</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (var hour = 7; hour <= 20; hour++) 
+                    {
+                        <tr>
+                            <td class="text-center">@hour:00 - @hour:59</td>
+                            @for (var day = 1; day <= 7; day++) 
+                            {
+                                var schedules = Model.WeeklySchedule.DailySchedules
+
+                                .Where(s => (int)s.DayOfWeek == day &&
+                                hour >= s.StartTime.Hours &&
+                                hour < s.EndTime.Hours).ToList();
+
+                                if (schedules.Any() && hour == schedules.First().StartTime.Hours)
+                                {
+                                    <td class="text-center bg-primary text-white" rowspan="@(schedules.First().EndTime.Hours - schedules.First().StartTime.Hours)">
+                                        <strong>@schedules.First().SubjectName</strong><br />
+                                        @schedules.First().StartTime.ToString(@"hh\:mm") - @schedules.First().EndTime.ToString(@"hh\:mm")
+                                    </td>
+                                }
+                                else if (!schedules.Any() || hour != schedules.FirstOrDefault()?.StartTime.Hours)
+                                {
+                                    <td></td>
+                                }
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    else
+
+    {
+        <p class="text-center text-muted">Không có lịch học cho tuần này.</p>
+    }
+
+    <!-- Phân trang -->
+    @if (Model.TotalPages > 1)
+
+    {
+        <div class="d-flex justify-content-between mt-4">
+            <a href="@Url.Action("WeeklySchedule", new { page = Model.CurrentPage - 1 })"
+               class="btn btn-primary btn-sm @(Model.CurrentPage == 1 ? "disabled" : "")">
+                Tuần trước
+            </a>
+
+            <span>Trang @Model.CurrentPage / @Model.TotalPages</span>
+
+            <a href="@Url.Action("WeeklySchedule", new { page = Model.CurrentPage + 1 })"
+               class="btn btn-primary btn-sm @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                Tuần sau
+            </a>
+        </div>
+    }
+</div>
