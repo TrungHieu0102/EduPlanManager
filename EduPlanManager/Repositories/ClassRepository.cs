@@ -24,7 +24,7 @@ namespace EduPlanManager.Repositories
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 query = query.Where(s => s.Code.Contains(searchTerm) || s.ClassName.Contains(searchTerm));
-            }        
+            }
 
             return await query.CountAsync();
         }
@@ -52,7 +52,13 @@ namespace EduPlanManager.Repositories
             return await _context.Classes.Include(c => c.Subjects)
                                      .FirstOrDefaultAsync(c => c.Id == classId);
         }
+        public async Task<List<Class>> GetAllClassByUserIdAsync(Guid userId)
+        {
+            return await _context.Classes.Include(c => c.Users)
+                                        .Include(s=>s.Subjects)
+                                     .Where(c => c.Users.Any(u => u.Id == userId))
+                                     .ToListAsync();
+        }
 
-      
     }
 }

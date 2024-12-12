@@ -44,7 +44,7 @@ namespace EduPlanManager.Services
                 }
                 var user = _mapper.Map<User>(request);
                 user.UserName = request.Email;
-                var password = RandomStringGenerator.GenerateRandomString(10);
+                var password ="Admin@123$";
                 var result = await _userManager.CreateAsync(user, password);
                 if (!result.Succeeded)
                 {

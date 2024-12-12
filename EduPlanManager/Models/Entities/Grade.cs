@@ -6,10 +6,10 @@ namespace EduPlanManager.Models.Entities
     public class Grade
     {
         [Key]
-        public Guid Id { get; set; } // Khóa chính
+        public Guid Id { get; set; } 
 
         [Required]
-        public Guid StudentId { get; set; } // ID sinh viên
+        public Guid StudentId { get; set; } 
 
         [Required]
         public Guid SubjectId { get; set; } // ID môn học
@@ -35,8 +35,8 @@ namespace EduPlanManager.Models.Entities
 
     public enum GradeType
     {
-        Midterm = 1,    // Điểm giữa kỳ
-        Final = 2,      // Điểm cuối kỳ
-        Bonus = 3       // Điểm cộng
+        Midterm = 1,    
+        Final = 2,      
+        Bonus = 3       
     }
 }

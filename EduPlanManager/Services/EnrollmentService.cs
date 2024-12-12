@@ -188,7 +188,14 @@ namespace EduPlanManager.Services
                     Student = enrollment.Student,
                     Subject = enrollment.SubjectSchedule.Subjects.FirstOrDefault(s => s.Id == enrollment.SubjectId)
                 };
-
+                var studentGrade = new Grade
+                {
+                    Id = new Guid(),
+                    StudentId = enrollment.StudentId,
+                    SubjectId = enrollment.SubjectId,
+                    AcademicTermId = enrollment.AcademicTermId
+                };
+                await _unitOfWork.Grades.AddAsync(studentGrade);
                 await _unitOfWork.StudentSchedules.AddStudentScheduleAsync(studentSchedule);
 
                 await _unitOfWork.CompleteAsync();

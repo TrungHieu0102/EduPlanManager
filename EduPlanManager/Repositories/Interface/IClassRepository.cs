@@ -12,5 +12,6 @@ namespace EduPlanManager.Repositories.Interface
         Task<List<User>> GetUsersByIdsAsync(List<Guid> userIds);
         Task<Class?> GetClassUserAsync(Guid classId);
         Task<Class?> GetClassSubjectAsync(Guid classId);
+        Task<List<Class>> GetAllClassByUserIdAsync(Guid userId);
     }
 }

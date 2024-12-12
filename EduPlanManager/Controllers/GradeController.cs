@@ -1,5 +1,6 @@
 ﻿using EduPlanManager.Models.DTOs.Grade;
 using EduPlanManager.Models.Entities;
+using EduPlanManager.Models.ViewModels;
 using EduPlanManager.Services;
 using EduPlanManager.Services.Interface;
 using Microsoft.AspNetCore.Identity;
@@ -54,6 +55,28 @@ namespace EduPlanManager.Controllers
 
             return View(semesterGrades);
         }
+        public async Task<IActionResult> GetTeacherResponsibleGrades(string? studentName = null,Guid ?subjectId= null , Guid? academicTermId = null, Guid? classId = null)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if(user == null)
+            {
+                return RedirectToAction("Login", "Auth");   
+            }
+            var (teacherSubjects, teacherAcademicTerms, teacherClasses) = await _gradeService.GetTeacherSubjectsAndAcademicTermsAsync(user.Id);
+
+            var grades = await _gradeService.GetTeacherResponsibleGradesAsync(user.Id, subjectId, studentName, academicTermId, classId);
+
+            var viewModel = new TeacherGradesViewModel
+            {
+                Grades = grades,
+                AcademicTerms = teacherAcademicTerms ?? new List<AcademicTerm>(),
+                Classes = teacherClasses,
+                Subjects = teacherSubjects
+            };
+
+            return View(viewModel);
+        }
+
 
 
     }

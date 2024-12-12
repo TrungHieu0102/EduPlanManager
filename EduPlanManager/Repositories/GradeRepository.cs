@@ -2,6 +2,7 @@
 using EduPlanManager.Models.Entities;
 using EduPlanManager.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace EduPlanManager.Repositories
 {
@@ -16,5 +17,21 @@ namespace EduPlanManager.Repositories
                 .ToListAsync();
             return grades;
         }
+        public async Task<List<Grade>> GetStudentGradeOnTeacher(List<Class> teacherClasses, List<Subject> teacherSubjects)
+        {
+            var teacherClassIds = teacherClasses.Select(c => c.Id).ToList();
+            var teacherSubjectIds = teacherSubjects.Select(s => s.Id).ToList();
+
+            return await _context.Grades
+                .Include(g => g.Student)
+                .Include(g => g.Subject)
+                .Include(g => g.Student.Classes)
+                .Where(g => teacherSubjectIds.Contains(g.SubjectId) &&
+                            g.Student.Classes.Any(sc => teacherClassIds.Contains(sc.Id)))
+                .ToListAsync();
+        }
+
+
     }
 }
+
