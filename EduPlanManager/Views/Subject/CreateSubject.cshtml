@@ -70,6 +70,40 @@
                             <input asp-for="LessonsPerDay" type="number" class="form-control" min="1" max="10" />
                             @Html.ValidationMessageFor(model => model.LessonsPerDay, "", new { @class = "text-danger" })
                         </div>
+                        <div class="col-12 col-md-6">
+                            <label for="TeacherDropdown" class="form-label">Giảng viên</label>
+
+                            <!-- Ô tìm kiếm và chọn -->
+                            <div class="dropdown">
+                                <input type="text"
+                                       id="TeacherSearch"
+                                       class="form-control dropdown-toggle"
+                                       placeholder="Tìm kiếm giảng viên..."
+                                       data-bs-toggle="dropdown"
+                                       aria-expanded="false"
+                                       autocomplete="off" />
+
+                                <ul id="TeacherList" class="dropdown-menu w-100" aria-labelledby="TeacherSearch">
+                                    @if (ViewBag.Teachers != null)
+                                    {
+                                        foreach (var teacher in ViewBag.Teachers)
+                                        {
+                                            <li>
+                                                <button type="button"
+                                                        class="dropdown-item"
+                                                        data-value="@teacher.Id">
+                                                    @teacher.FullName
+                                                </button>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+
+                                <input type="hidden" asp-for="TeacherId" id="SelectedTeacher" />
+                            </div>
+
+                            @Html.ValidationMessageFor(model => model.TeacherId, "", new { @class = "text-danger" })
+                        </div>
 
                         <!-- Nút Tạo mới -->
                         <div class="col-12">
@@ -90,15 +124,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js"></script>
     <script>
         function updateDateRange() {
-            // Lấy thông tin kỳ học được chọn
             const termSelect = document.getElementById("AcademicTermId");
             const selectedOption = termSelect.options[termSelect.selectedIndex];
 
-            // Lấy giá trị StartDate và EndDate từ thuộc tính data
             const startDate = selectedOption.getAttribute("data-startdate");
             const endDate = selectedOption.getAttribute("data-enddate");
 
-            // Cập nhật giới hạn min/max cho các trường ngày
             const startDateInput = document.getElementById("StartDate");
             const endDateInput = document.getElementById("EndDate");
 
@@ -109,7 +140,6 @@
                 endDateInput.setAttribute("min", startDate);
                 endDateInput.setAttribute("max", endDate);
             } else {
-                // Xóa giới hạn nếu không có kỳ học nào được chọn
                 startDateInput.removeAttribute("min");
                 startDateInput.removeAttribute("max");
 
@@ -118,7 +148,46 @@
             }
         }
 
-        // Gọi hàm khi trang được tải nếu cần
         document.getElementById("AcademicTermId").addEventListener("change", updateDateRange);
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById("TeacherSearch");
+            const teacherList = document.getElementById("TeacherList");
+            const selectedTeacher = document.getElementById("SelectedTeacher");
+
+            searchInput.addEventListener("input", function () {
+                const filter = searchInput.value.toLowerCase();
+                const items = teacherList.getElementsByClassName("dropdown-item");
+
+                Array.from(items).forEach(item => {
+                    const text = item.textContent || item.innerText;
+                    if (text.toLowerCase().includes(filter)) {
+                        item.style.display = "block";
+                    } else {
+                        item.style.display = "none";
+                    }
+                });
+                teacherList.classList.add("show");
+            });
+
+            teacherList.addEventListener("click", function (e) {
+                const item = e.target;
+                if (item.tagName === "BUTTON") {
+                    searchInput.value = item.textContent;
+
+                    selectedTeacher.value = item.getAttribute("data-value");
+
+                    teacherList.classList.remove("show");
+                }
+            });
+
+            document.addEventListener("click", function (e) {
+                if (!searchInput.contains(e.target) && !teacherList.contains(e.target)) {
+                    teacherList.classList.remove("show");
+                }
+            });
+        });
+    </script>
+
 }

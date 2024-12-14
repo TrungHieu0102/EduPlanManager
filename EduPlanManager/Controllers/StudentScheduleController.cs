@@ -1,6 +1,7 @@
 ﻿using EduPlanManager.Models.Entities;
 using EduPlanManager.Models.ViewModels;
 using EduPlanManager.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,7 +11,7 @@ namespace EduPlanManager.Controllers
     {
         private readonly IStudentScheduleService _studentScheduleService = studentScheduleService;
         private readonly UserManager<User> _userManager = userManager;
-
+        [Authorize(Roles = "Admin,Student")]
         public async Task<IActionResult> WeeklySchedule(int page = 1)
         {
             const int pageSize = 1; 

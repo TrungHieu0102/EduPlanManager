@@ -31,7 +31,8 @@ namespace EduPlanManager.Repositories
                     DayOfWeek = ss.DayOfWeek,
                     Session = ss.Session,
                     StartTime = ss.StartTime,
-                    EndTime = ss.EndTime
+                    EndTime = ss.EndTime,
+                    TeacherName = subject.Teacher.GetFullName()
                 }))
                 .ToListAsync();
             return subjectSchedules;

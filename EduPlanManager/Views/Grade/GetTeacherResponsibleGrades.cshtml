@@ -8,19 +8,7 @@
             <input type="text" name="studentName" placeholder="Tìm sinh viên" class="form-control" value="@Context.Request.Query["studentName"]" />
         </div>
 
-        <!-- Class Select -->
-        <div class="col-md-4">
-            <select name="classId" class="form-control">
-                <option value="">Chọn lớp</option>
-                @foreach (var cls in Model.Classes)
-                {
-                    var isSelected = cls.Id.ToString() == Context.Request.Query["classId"];
-                    <option value="@cls.Id" selected="@isSelected">
-                        @cls.ClassName
-                    </option>
-                }
-            </select>
-        </div>
+      
 
         <!-- Subject Select -->
         <div class="col-md-4">
@@ -60,7 +48,11 @@
             @foreach (var grade in Model.Grades)
             {
                 <tr>
-                    <td>@grade.StudentFullName</td>
+                    <td>
+                        <a href="@Url.Action("AddGrade", "Grade", new { studentId = grade.StudentId, subjectId = grade.SubjectId })">
+                            @grade.StudentFullName
+                        </a>
+                    </td>
                     <td>@grade.SubjectName</td>
                     <td>@grade.MidtermScore</td>
                     <td>@grade.FinalScore</td>

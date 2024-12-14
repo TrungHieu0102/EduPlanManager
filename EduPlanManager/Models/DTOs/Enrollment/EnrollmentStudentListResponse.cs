@@ -12,5 +12,6 @@
         public string EndTime { get; set; }
         public DateTime RegisteredAt { get; set; }
         public string Status { get; set; }
+        public string TeacherName { get; set; } 
     }
 }

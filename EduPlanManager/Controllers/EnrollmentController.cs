@@ -2,6 +2,7 @@
 using EduPlanManager.Models.Entities;
 using EduPlanManager.Models.ViewModels;
 using EduPlanManager.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PagedList;
@@ -17,6 +18,7 @@ namespace EduPlanManager.Controllers
             _userManager = userManager;
         }
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> EligibleSubjects(string searchTerm = "", DayOfWeekEnum? dayOfWeek = null, SessionEnum? session = null, int page = 1, int pageSize = 10)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -43,6 +45,7 @@ namespace EduPlanManager.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Admin,Student")]
         public async Task<IActionResult> Enroll(List<string> selectedSubjects, Guid studentId)
         {
             if (selectedSubjects == null || selectedSubjects.Count == 0)
@@ -77,6 +80,8 @@ namespace EduPlanManager.Controllers
             return RedirectToAction("EligibleSubjects", new { studentId });
         }
         [HttpGet]
+        [Authorize(Roles = "Admin,Student")]
+
         public async Task<IActionResult> EnrollmentRequests()
         {
             var result = await _enrollmentService.GetAllEnrollmentRequestsAsync();
@@ -88,6 +93,8 @@ namespace EduPlanManager.Controllers
             return View(result.Data);
         }
         [HttpPost]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> ApproveEnrollment(Guid enrollmentId)
         {
             var isApproved = await _enrollmentService.ApproveEnrollmentAsync(enrollmentId);
@@ -104,6 +111,8 @@ namespace EduPlanManager.Controllers
             return RedirectToAction("EnrollmentRequests");
         }
         [HttpPost]
+        [Authorize(Roles = "Admin,Student")]
+
         public async Task<IActionResult> DeleteEnrollment(Guid enrollmentId)
         {
             var user = await _userManager.GetUserAsync(User);

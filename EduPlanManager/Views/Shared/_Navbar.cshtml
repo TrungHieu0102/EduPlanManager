@@ -10,14 +10,12 @@
         </button>
         <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item d-flex align-items-center">
-                <!-- Ảnh và tên -->
                 <a asp-controller="User" asp-action="Index" class="nav-link d-flex align-items-center">
                     <div class="nav-profile-img me-2">
                         <img src="@Model.ProfilePictureUrl" alt="image"
                              style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
                         <span class="availability-status online"></span>
-                    </div>
-                  
+                    </div>                
                 </a>
                 <form id="logoutForm" action="@Url.Action("Logout", "Auth")" method="post" style="display: inline;">
                     @Html.AntiForgeryToken()

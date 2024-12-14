@@ -65,27 +65,37 @@
                     <td>@subject.AcademicTermYear</td>
                     <td class="d-flex justify-content-center align-items-center">
                         <div class="d-flex align-items-center">
-                            <a href="@Url.Action("Details", new { id = subject.Id })" class="badge rounded-pill text-primary-emphasis bg-primary-subtle border border-primary align-items-center me-2">Xem chi tiết</a>
-                            <div class="dropdown">
-                                <button class="btn btn-light btn-sm shadow-none dropdown-toggle border-0 bg-transparent" type="button" id="dropdownMenuButton-@subject.Id" data-bs-toggle="dropdown" aria-expanded="false"></button>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton-@subject.Id">
-                                    <li>
-                                        <a class="dropdown-item badge rounded-pill text-primary-emphasis align-items-center" href="@Url.Action("Update", new { id = subject.Id })">
-                                            <i class="bi bi-pencil"></i> Sửa
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <form action="@Url.Action("Delete", new { id = subject.Id })" method="post" style="display: inline;">
-                                            @Html.AntiForgeryToken()
-                                            <button type="submit" class="dropdown-item badge rounded-pill text-danger-emphasis align-items-center">
-                                                <i class="bi bi-trash"></i> Xóa
-                                            </button>
-                                        </form>
-                                    </li>
-                                </ul>
-                            </div>
+                            <a href="@Url.Action("Details", new { id = subject.Id })"
+                               class="badge rounded-pill text-primary-emphasis bg-primary-subtle border border-primary align-items-center me-2">
+                                Xem chi tiết
+                            </a>
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <div class="dropdown">
+                                    <button class="btn btn-light btn-sm shadow-none dropdown-toggle border-0 bg-transparent"
+                                            type="button" id="dropdownMenuButton-@subject.Id" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton-@subject.Id">
+                                        <li>
+                                            <a class="dropdown-item badge rounded-pill text-primary-emphasis align-items-center"
+                                               href="@Url.Action("Update", new { id = subject.Id })">
+                                                <i class="bi bi-pencil"></i> Sửa
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <form action="@Url.Action("Delete", new { id = subject.Id })" method="post" style="display: inline;">
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit" class="dropdown-item badge rounded-pill text-danger-emphasis align-items-center">
+                                                    <i class="bi bi-trash"></i> Xóa
+                                                </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            }
                         </div>
                     </td>
+
                 </tr>
             }
         }

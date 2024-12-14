@@ -30,10 +30,11 @@ namespace EduPlanManager.Models.Entities
         public string? AdditionalInfo { get; set; }
 
         // Navigation Properties
-        public ICollection<Grade> Grades { get; set; } // Liên kết tới điểm số
-        public ICollection<StudentSchedule> Schedules { get; set; } // Liên kết tới thời khóa biểu
-        public ICollection<Enrollment> Enrollments { get; set; } // Quan hệ với bảng đăng ký môn học
-        public ICollection<Class> Classes { get; set; } // Mối quan hệ nhiều - nhiều với bảng Class
+        public ICollection<Grade> Grades { get; set; }
+        public ICollection<StudentSchedule> Schedules { get; set; } 
+        public ICollection<Enrollment> Enrollments { get; set; } 
+        public ICollection<Class> Classes { get; set; } 
+        public ICollection<Subject> Subjects { get; set; }
 
         public string GetFullName()
         {

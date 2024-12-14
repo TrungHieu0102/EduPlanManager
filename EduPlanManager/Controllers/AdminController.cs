@@ -2,13 +2,14 @@
 using EduPlanManager.Models.DTOs.User;
 using EduPlanManager.Services;
 using EduPlanManager.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EduPlanManager.Controllers
 {
     [Route("/admin")]
     [ValidateModelState]
-
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
 

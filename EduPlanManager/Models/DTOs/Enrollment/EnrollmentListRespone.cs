@@ -12,5 +12,6 @@ namespace EduPlanManager.Models.DTOs.Enrollment
         public SessionEnum Session { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
+        public string TeacherName { get; set; }
     }
 }

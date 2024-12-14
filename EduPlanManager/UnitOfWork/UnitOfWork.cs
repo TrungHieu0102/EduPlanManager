@@ -1,7 +1,6 @@
 ﻿using EduPlanManager.Data;
 using EduPlanManager.Repositories;
 using EduPlanManager.Repositories.Interface;
-using System.Linq.Expressions;
 
 namespace EduPlanManager.UnitOfWork
 {
@@ -18,6 +17,7 @@ namespace EduPlanManager.UnitOfWork
         public IEnrollmentRepository Enrollments { get; set; }
         public IStudentScheduleRepository StudentSchedules { get; set; }
         public IGradeRepository Grades { get; set; }
+        public ISumaryGradeRepository SumaryGrades { get; set; }
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
@@ -31,6 +31,7 @@ namespace EduPlanManager.UnitOfWork
             Enrollments = new EnrollmentRepository(_context);
             StudentSchedules = new StudentScheduleRepository(_context);
             Grades = new GradeRepository(_context);
+            SumaryGrades = new SumaryGradeRepository(_context);
         }
 
        

@@ -17,19 +17,21 @@ namespace EduPlanManager.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IEmailService _emailService;
-
         public AuthController( UserManager<User> userManager, SignInManager<User> signInManager, IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailService = emailService;
         }
-
+        
+        [AllowAnonymous]
         [HttpGet("login")]
         public IActionResult Login()
         {
             return View();
         }
+        
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequest model)
         {
@@ -68,19 +70,24 @@ namespace EduPlanManager.Controllers
 
             return View(model);
         }
-
+        
+        [AllowAnonymous]
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
             Response.Cookies.Delete("UserRole");
             return RedirectToAction("Login", "Auth");
-        }  
+        }
+        
+        [AllowAnonymous]
         [HttpGet("forgot-password")]
         public IActionResult ForgotPassword()
         {
             return View();
         }
+        [AllowAnonymous]
+
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordDto model)
         {
@@ -101,6 +108,8 @@ namespace EduPlanManager.Controllers
             }
             return View(model);
         }
+        
+        [Authorize]
         [HttpGet("reset-password")]
         public IActionResult ResetPassword(string token, string email)
         {
@@ -112,6 +121,8 @@ namespace EduPlanManager.Controllers
             var model = new ResetPasswordDto { Token = token, Email = email };
             return View(model);
         }
+        
+        [Authorize]
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword(ResetPasswordDto model)
         {
@@ -139,12 +150,14 @@ namespace EduPlanManager.Controllers
 
             return View(model);
         }
+        
         [Authorize]
         [HttpGet("change-password")]
         public IActionResult ChangePassword()
         {
             return View();
         }
+       
         [Authorize]
         [HttpPost("change-password")]
         public async Task<IActionResult> ChangePassword(ChangePasswordRequest model)

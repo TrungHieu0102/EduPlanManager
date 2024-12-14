@@ -3,8 +3,6 @@ using EduPlanManager.Models.DTOs.Respone;
 using EduPlanManager.Models.Entities;
 using EduPlanManager.Services.Interface;
 using EduPlanManager.UnitOfWork;
-using NuGet.Protocol.Core.Types;
-using PagedList.Core;
 
 namespace EduPlanManager.Services
 {
@@ -20,25 +18,22 @@ namespace EduPlanManager.Services
         {
             try
             {
-                Guid defaultAcademicTermId = Guid.Parse("1CCB0087-DBD0-4BFA-B990-3F3CD481ACB0");
 
                 foreach (var request in requests)
                 {
-                    var academicTermId = request.AcademicTermId == Guid.Empty ? defaultAcademicTermId : request.AcademicTermId;
 
                     if (!await _unitOfWork.Enrollments.IsStudentInClass(request.StudentId, request.SubjectId))
                     {
                         throw new Exception("Sinh viên không thuộc lớp có môn học này.");
                     }
-
+                    var subject = await _unitOfWork.Subjects.GetByIdAsync(request.SubjectId);
+                    if (await _unitOfWork.Enrollments.HasDuplicateSubject(request.StudentId, request.SubjectId, subject.AcademicTermId))
+                    {
+                        throw new Exception("Sinh viên đã đăng ký môn học này.");
+                    }
                     if (await _unitOfWork.Enrollments.HasConflictSchedule(request.StudentId, request.SubjectScheduleId))
                     {
                         throw new Exception("Sinh viên đã đăng ký môn học khác trong giờ này.");
-                    }
-
-                    if (await _unitOfWork.Enrollments.HasDuplicateSubject(request.StudentId, request.SubjectId, academicTermId))
-                    {
-                        throw new Exception("Sinh viên đã đăng ký môn học này.");
                     }
 
                     var enrollment = new Enrollment
@@ -47,15 +42,16 @@ namespace EduPlanManager.Services
                         StudentId = request.StudentId,
                         SubjectId = request.SubjectId,
                         SubjectScheduleId = request.SubjectScheduleId,
-                        AcademicTermId = academicTermId,
+                        AcademicTermId = subject.AcademicTermId,
                         RegisteredAt = DateTime.UtcNow,
                         Status = EnrollmentStatus.Pending
                     };
 
                     await _unitOfWork.Enrollments.AddEnrollment(enrollment);
+                    await _unitOfWork.CompleteAsync();
+
                 }
 
-                await _unitOfWork.CompleteAsync();
 
                 return new Result<string>
                 {
@@ -120,7 +116,7 @@ namespace EduPlanManager.Services
         public async Task<List<EnrollmentStudentListResponse>> GetEnrollmentsByStudentIdAsync(Guid studentId)
         {
             var enrollments = await _unitOfWork.Enrollments.GetEnrollmentsByStudentIdAsync(studentId);
-            return enrollments.Select(e => new EnrollmentStudentListResponse
+            var respone = enrollments.Select(e => new EnrollmentStudentListResponse
             {
                 EnrollmentId = e.Id,
                 StudentId = e.StudentId,
@@ -131,9 +127,10 @@ namespace EduPlanManager.Services
                 StartTime = e.SubjectSchedule.StartTime.ToString(@"hh\:mm"),
                 EndTime = e.SubjectSchedule.EndTime.ToString(@"hh\:mm"),
                 RegisteredAt = e.RegisteredAt,
-                Status = e.Status.ToString()
-
+                Status = e.Status.ToString(),
             }).ToList();
+
+            return respone;
         }
         public async Task<Result<List<EnrollmentRequestDto>>> GetAllEnrollmentRequestsAsync()
         {
@@ -188,14 +185,34 @@ namespace EduPlanManager.Services
                     Student = enrollment.Student,
                     Subject = enrollment.SubjectSchedule.Subjects.FirstOrDefault(s => s.Id == enrollment.SubjectId)
                 };
-                var studentGrade = new Grade
+                Guid summaryId = Guid.NewGuid();
+                var summaryGreade = new SumaryGrade
                 {
-                    Id = new Guid(),
+                    Id = summaryId,
                     StudentId = enrollment.StudentId,
                     SubjectId = enrollment.SubjectId,
+                    Status = Status.Pass,
+                    Summary = 0,
+                    NeedsImprovement = false,
                     AcademicTermId = enrollment.AcademicTermId
                 };
-                await _unitOfWork.Grades.AddAsync(studentGrade);
+                await _unitOfWork.SumaryGrades.AddAsync(summaryGreade);
+                await _unitOfWork.CompleteAsync();
+                for (int i = 1; i < 4; i++)
+                {
+                    studentSchedule.Id = Guid.NewGuid();
+                    var studentGrade = new Grade
+                    {
+                        Id = new Guid(),
+                        StudentId = enrollment.StudentId,
+                        SubjectId = enrollment.SubjectId,
+                        AcademicTermId = enrollment.AcademicTermId,
+                        Type = (GradeType)i,
+                        SumaryGradeId = summaryId
+
+                    };
+                    await _unitOfWork.Grades.AddAsync(studentGrade);
+                }
                 await _unitOfWork.StudentSchedules.AddStudentScheduleAsync(studentSchedule);
 
                 await _unitOfWork.CompleteAsync();

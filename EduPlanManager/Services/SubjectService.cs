@@ -5,6 +5,7 @@ using EduPlanManager.Models.Entities;
 using EduPlanManager.Services.Interface;
 using EduPlanManager.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
+using System.Net.WebSockets;
 
 namespace EduPlanManager.Services
 {
@@ -200,6 +201,8 @@ namespace EduPlanManager.Services
         {
             try
             {
+                var isExists = await _unitOfWork.Subjects.IsSubjectExistsInformation(subjectCreateDTO.Code, subjectCreateDTO.AcademicTermId, subjectCreateDTO.TeacherId);
+                if (isExists) throw new Exception("Môn học đã tồn tại. Vui lòng kiểm tra lại thông tin");
                 subjectCreateDTO.Id = Guid.NewGuid();
                 var subject = _mapper.Map<Subject>(subjectCreateDTO);
                 subject.Code = subject.Code.ToUpper();

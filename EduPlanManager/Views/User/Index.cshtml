@@ -21,10 +21,7 @@
                             <div>
                                 <h1 class="mb-0">@Model.GetFullName()</h1>
                                 <!--content-->
-                                <div class="d-flex flex-lg-row flex-column gap-2">
-                                    <small class="fw-medium text-gray-800">Chuyên ngành:  </small>
-                                    <small class="fw-medium text-success">Khoa học máy tính</small>
-                                </div>
+                               
                             </div>
                             <!--button-->
                             <div class="d-flex flex-row gap-3 align-items-center">
@@ -72,7 +69,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex flex-column gap-2">
+                   @*  <div class="d-flex flex-column gap-2">
                         <h3 class="mb-0">Danh sách môn học</h3>
                         <div class="gap-2 d-flex flex-wrap">
                             <a href="#!" class="btn btn-tag btn-sm">Frontend</a>
@@ -83,7 +80,7 @@
                             <a href="#!" class="btn btn-tag btn-sm">Vuejs</a>
                             <a href="#!" class="btn btn-tag btn-sm">Next.js</a>
                         </div>
-                    </div>
+                    </div> *@
                     <div>
                         <!-- Changed the link text to redirect to the Update page -->
                         <a href="@Url.Action("Update", "User")" class="badge rounded-pill text-success-emphasis bg-success-subtle border border-success align-items-center">

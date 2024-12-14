@@ -33,6 +33,7 @@
     max-width: 200px; /* Giới hạn chiều rộng ảnh */
     max-height: 200px; /* Giới hạn chiều cao ảnh */
 }
+
 .badge {
     text-decoration: none; /* Loại bỏ gạch chân */
     font-size: 1.25rem; /* Tăng kích thước chữ */
@@ -128,4 +129,8 @@
     border-radius: 5px;
     border: 0;
     margin-bottom: 1rem;
+}
+#gradeSubmenu {
+    overflow: hidden; 
+    transition: height 0.3s ease; 
 }

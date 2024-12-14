@@ -32,8 +32,7 @@ namespace EduPlanManager.Models.DTOs.Subject
 
         [Required(ErrorMessage = "Kỳ học là bắt buộc.")]
         public Guid AcademicTermId { get; set; }
-
-        // Custom validation for EndDate
+        public Guid TeacherId { get; set; }
         public static ValidationResult? ValidateEndDate(DateTime endDate, ValidationContext context)
         {
             var instance = context.ObjectInstance as SubjectCreateDTO;

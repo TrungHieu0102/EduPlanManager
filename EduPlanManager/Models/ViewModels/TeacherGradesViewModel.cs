@@ -7,7 +7,6 @@ namespace EduPlanManager.Models.ViewModels
     {
         public List<StudentSubjectGradeDto> Grades { get; set; }
         public List<AcademicTerm> AcademicTerms { get; set; }
-        public List<Class> Classes { get; set; }
         public List<Subject> Subjects { get; set; } 
 
     }

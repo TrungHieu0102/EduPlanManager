@@ -1,0 +1,49 @@
+﻿@model EduPlanManager.Models.DTOs.User.UserInfoDto
+
+<nav style="background-color: #F6FAFF !important;" class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+        <li class="nav-item nav-profile">
+            <a href="#" class="nav-link">
+                <div class="nav-profile-image">
+                    <img src="../../layout/assets/images/faces/face2.jpg" alt="profile">
+                    <span class="login-status online"></span>
+                </div>
+                <div class="nav-profile-text d-flex flex-column">
+                    <span class="font-weight-bold mb-2">@Model.FullName</span>
+                    <span class="text-secondary text-small">Student</span>
+                </div>
+                <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/">
+                <span class="menu-title">Trang chủ</span>
+                <i class="mdi mdi-home menu-icon"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/subject/index">
+                <span class="menu-title">Danh sách môn học</span>
+                <i class="mdi mdi-book-open-variant menu-icon"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Enrollment/EligibleSubjects">
+                <span class="menu-title">Đăng ký môn học</span>
+                <i class="mdi mdi-pencil menu-icon"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/StudentSchedule/WeeklySchedule">
+                <span class="menu-title">Kế hoạch học tập</span>
+                <i class="mdi mdi-calendar-week menu-icon"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/grade/index">
+                <span class="menu-title">Kết quả học tập</span>
+                <i class="mdi mdi-chart-bar menu-icon"></i>
+            </a>
+        </li>
+    </ul>
+</nav>

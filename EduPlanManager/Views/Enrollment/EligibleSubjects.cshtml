@@ -35,7 +35,7 @@
                         <form method="post" asp-action="DeleteEnrollment">
                             <input type="hidden" name="enrollmentId" value="@subject.EnrollmentId" />
                             <button type="submit" class="btn text-danger-emphasis bg-danger-subtle btn-sm">Hủy</button>
-                        </form>                       
+                        </form>
                     </td>
                 </tr>
             }
@@ -85,6 +85,7 @@
                     <th class="fw-semibold">Buổi</th>
                     <th class="fw-semibold">Thời gian bắt đầu</th>
                     <th class="fw-semibold">Thời gian kết thúc</th>
+                    <th class="fw-semibold">Giảng viên phụ trách</th>
                     <th class="fw-semibold">Chọn môn học</th>
                 </tr>
             </thead>
@@ -98,6 +99,7 @@
                         <td>@subject.Session</td>
                         <td>@subject.StartTime</td>
                         <td>@subject.EndTime</td>
+                        <td>@subject.TeacherName</td>
                         <td>
                             <input type="checkbox" name="selectedSubjects" value="@subject.SubjectId|@subject.ScheduleId" />
                         </td>

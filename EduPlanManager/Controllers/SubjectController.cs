@@ -2,6 +2,8 @@
 using EduPlanManager.Models.DTOs.Subject;
 using EduPlanManager.Models.Entities;
 using EduPlanManager.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -13,14 +15,17 @@ namespace EduPlanManager.Controllers
         private readonly ISubjectCategoryService _subjectCategoryService;
         private readonly IAcademicTermService _academicTermService;
         private readonly IMapper _mapper;
-        public SubjectController(ISubjectService subjectService, IMapper mapper, ISubjectCategoryService subjectCategoryService, IAcademicTermService academicTermService)
+        private readonly UserManager<User> _userManager;
+        public SubjectController(ISubjectService subjectService,UserManager<User> userManager, IMapper mapper, ISubjectCategoryService subjectCategoryService, IAcademicTermService academicTermService)
         {
             _subjectService = subjectService;
             _subjectCategoryService = subjectCategoryService;
             _academicTermService = academicTermService;
             _mapper = mapper;
+            _userManager = userManager;
         }
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Index(string searchTerm, int? semester, int? year, int pageNumber = 1, int pageSize = 10)
         {
             var result = await _subjectService.SearchSubjectsAsync(searchTerm, semester, year, pageNumber, pageSize);
@@ -37,7 +42,7 @@ namespace EduPlanManager.Controllers
             }
             return NoContent();
         }
-
+        [Authorize]
         [HttpGet("Subject/Details/{id}")]
         public async Task<IActionResult> Details(Guid id)
         {
@@ -49,6 +54,7 @@ namespace EduPlanManager.Controllers
             return View(result.Data);
         }
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> SearchSubjects(string term)
         {
             var result = await _subjectService.SearchSubjectsByNameOrCodeAsync(term);
@@ -59,6 +65,8 @@ namespace EduPlanManager.Controllers
             return Json(result.Data.Select(s => new { label = $"{s.Code} - {s.Name}", value = s.Id }));
         }
         [HttpPost]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _subjectService.DeleteSubjectById(id);
@@ -71,6 +79,8 @@ namespace EduPlanManager.Controllers
             return RedirectToAction("Index");
         }
         [HttpGet("Subject/Update/{id}")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> Update(Guid id)
         {
             var subject = await _subjectService.GetSubject(id);
@@ -96,6 +106,8 @@ namespace EduPlanManager.Controllers
             return View(subjectUpdateDTO);
         }
         [HttpPost]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> Update(SubjectUpdateDTO subjectUpdateDTO)
         {
             if (!ModelState.IsValid)
@@ -127,6 +139,8 @@ namespace EduPlanManager.Controllers
             return RedirectToAction("Index");
         }
         [HttpPost]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> DeleteRange(string selectedIds)
         {
             try
@@ -148,19 +162,34 @@ namespace EduPlanManager.Controllers
             }
         }
         [HttpGet("create-subject")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> CreateSubject()
         {
             var categories = await _subjectCategoryService.GetAllCategoriesAsync();
             var academicTerms = await _academicTermService.GetAllAcademicTermsAsync();
+
+            // Lấy danh sách giảng viên
+            var teachers = await _userManager.GetUsersInRoleAsync("Teacher");
+
             ViewBag.CategoryName = categories.Select(c => new { c.Id, c.FullName });
-            ViewBag.AcademicTerm = academicTerms.Select(at => new { at.Id, at.Year , at.Semester ,
+            ViewBag.AcademicTerm = academicTerms.Select(at => new
+            {
+                at.Id,
+                at.Year,
+                at.Semester,
                 StartDate = at.StartDate.ToString("yyyy-MM-dd"),
                 EndDate = at.EndDate.ToString("yyyy-MM-dd")
             });
+            ViewBag.Teachers = teachers.Select(t => new { t.Id, FullName = $"{t.FirstName} {t.LastName}" });
+
             return View();
         }
+
         [HttpPost("create-subject")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> CreateSubject(SubjectCreateDTO subject)
         {
             if (ModelState.IsValid)

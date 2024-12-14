@@ -32,7 +32,7 @@ builder.Services.AddIdentity<User, Role>(options =>
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/auth/login"; 
-    options.AccessDeniedPath = "/auth/access-denied";
+    options.AccessDeniedPath = "/Error/Forbidden";
     options.LogoutPath = "/auth/logout";
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true; 
@@ -83,6 +83,7 @@ app.UseRouting();
 app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseStatusCodePagesWithReExecute("/Forbidden");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}"

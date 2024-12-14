@@ -1,0 +1,28 @@
+﻿@model EduPlanManager.Models.DTOs.User.UserDetailsDto
+
+<h1>Chi tiết người dùng</h1>
+
+<table class="table">
+    <tr>
+        <th>Họ</th>
+        <td>@Model.FirstName</td>
+    </tr>
+    <tr>
+        <th>Tên</th>
+        <td>@Model.LastName</td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td>@Model.Email</td>
+    </tr>
+    <tr>
+        <th>Số điện thoại</th>
+        <td>@Model.PhoneNumber</td>
+    </tr>
+    <tr>
+        <th>Địa chỉ</th>
+        <td>@Model.Address</td>
+    </tr>
+</table>
+
+<a href="@Url.Action("ListUser")" class="btn btn-primary">Quay lại danh sách người dùng</a>

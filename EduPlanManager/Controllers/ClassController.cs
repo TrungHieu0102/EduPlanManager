@@ -2,14 +2,17 @@
 using EduPlanManager.Models.Entities;
 using EduPlanManager.Services;
 using EduPlanManager.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EduPlanManager.Controllers
 {
+    [Authorize]
+
     public class ClassController(IClassService classService) : Controller
     {
         private readonly IClassService _classService = classService;
-
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Index(string searchTerm, int pageNumber = 1, int pageSize = 10)
         {
@@ -23,7 +26,7 @@ namespace EduPlanManager.Controllers
             }
             return NoContent();
         }
-
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> SearchClasses(string term)
         {
@@ -34,7 +37,10 @@ namespace EduPlanManager.Controllers
             }
             return Json(result.Data.Select(s => new { label = $"{s.Code} - {s.ClassName}" }));
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _classService.DeleteClassById(id);
@@ -46,6 +52,8 @@ namespace EduPlanManager.Controllers
             TempData["SuccessMessage"] = "Xóa thành công";
             return RedirectToAction("Index");
         }
+        [Authorize(Roles = "Admin")]
+
         [HttpGet("Class/Update/{id}")]
         public async Task<IActionResult> Update(Guid id)
         {
@@ -59,6 +67,8 @@ namespace EduPlanManager.Controllers
 
             return View(classEntity.Data);
         }
+        [Authorize(Roles = "Admin")]
+
         [HttpPost]
         public async Task<IActionResult> Update(CreateUpdateClassDTO classUpdateDTO)
         {
@@ -73,6 +83,8 @@ namespace EduPlanManager.Controllers
             TempData["SuccessMessage"] = "Cập nhật môn học thành công";
             return RedirectToAction("Index");
         }
+        [Authorize(Roles = "Admin")]
+
         [HttpPost]
         public async Task<IActionResult> DeleteRange(string selectedIds)
         {
@@ -94,6 +106,8 @@ namespace EduPlanManager.Controllers
                 return RedirectToAction("Index");
             }
         }
+        [Authorize(Roles = "Admin")]
+
         [HttpGet("create-class")]
         public IActionResult Create()
         {
@@ -101,6 +115,8 @@ namespace EduPlanManager.Controllers
         }
         [HttpPost("create-class")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> Create(CreateUpdateClassDTO classRequest)
         {
             if (ModelState.IsValid)
@@ -124,6 +140,7 @@ namespace EduPlanManager.Controllers
         }
 
         [HttpGet("Class/Detail/{id}")]
+        [Authorize]
         public async Task<IActionResult> Detail(Guid id)
         {
             var result = await _classService.GetClassDetailAsync(id);
@@ -134,6 +151,8 @@ namespace EduPlanManager.Controllers
             return View(result.Data);
         }
         [HttpPost("AddUsersToClass")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> AddUsersToClass(AddToClassDTO<User> dto)
         {
             var result = await _classService.AddUsersToClass(dto.Ids, dto.ClassId);
@@ -145,6 +164,8 @@ namespace EduPlanManager.Controllers
             return RedirectToAction("Index");
         }
         [HttpPost("AddSubjectsToClass")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> AddSubjectsToClass(AddToClassDTO<Subject> dto)
         {
             var result = await _classService.AddSubjectsToClass(dto.Ids, dto.ClassId);

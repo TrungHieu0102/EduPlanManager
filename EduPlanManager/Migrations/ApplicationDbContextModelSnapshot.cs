@@ -158,6 +158,9 @@ namespace EduPlanManager.Migrations
                     b.Property<Guid>("SubjectId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("SumaryGradeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
@@ -168,6 +171,8 @@ namespace EduPlanManager.Migrations
                     b.HasIndex("StudentId");
 
                     b.HasIndex("SubjectId");
+
+                    b.HasIndex("SumaryGradeId");
 
                     b.ToTable("Grades");
                 });
@@ -279,11 +284,16 @@ namespace EduPlanManager.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("TeacherId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AcademicTermId");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Subjects");
                 });
@@ -338,6 +348,35 @@ namespace EduPlanManager.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SubjectSchedules");
+                });
+
+            modelBuilder.Entity("EduPlanManager.Models.Entities.SumaryGrade", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AcademicTermId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("NeedsImprovement")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<float>("Summary")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SumaryGrade");
                 });
 
             modelBuilder.Entity("EduPlanManager.Models.Entities.User", b =>
@@ -643,11 +682,19 @@ namespace EduPlanManager.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("EduPlanManager.Models.Entities.SumaryGrade", "SumaryGrade")
+                        .WithMany("Grades")
+                        .HasForeignKey("SumaryGradeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("AcademicTerm");
 
                     b.Navigation("Student");
 
                     b.Navigation("Subject");
+
+                    b.Navigation("SumaryGrade");
                 });
 
             modelBuilder.Entity("EduPlanManager.Models.Entities.StudentSchedule", b =>
@@ -691,9 +738,17 @@ namespace EduPlanManager.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("EduPlanManager.Models.Entities.User", "Teacher")
+                        .WithMany("Subjects")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("AcademicTerm");
 
                     b.Navigation("Category");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -792,6 +847,11 @@ namespace EduPlanManager.Migrations
                     b.Navigation("Enrollments");
                 });
 
+            modelBuilder.Entity("EduPlanManager.Models.Entities.SumaryGrade", b =>
+                {
+                    b.Navigation("Grades");
+                });
+
             modelBuilder.Entity("EduPlanManager.Models.Entities.User", b =>
                 {
                     b.Navigation("Enrollments");
@@ -799,6 +859,8 @@ namespace EduPlanManager.Migrations
                     b.Navigation("Grades");
 
                     b.Navigation("Schedules");
+
+                    b.Navigation("Subjects");
                 });
 #pragma warning restore 612, 618
         }

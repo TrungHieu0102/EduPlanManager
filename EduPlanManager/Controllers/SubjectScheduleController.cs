@@ -3,11 +3,13 @@ using EduPlanManager.Models.DTOs.SubjectSchedule;
 using EduPlanManager.Models.Entities;
 using EduPlanManager.Services;
 using EduPlanManager.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EduPlanManager.Controllers
 {
     [ValidateModelState]
+    [Authorize(Roles = "Admin")]
 
     public class SubjectScheduleController : Controller
     {

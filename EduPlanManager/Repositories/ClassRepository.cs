@@ -56,8 +56,8 @@ namespace EduPlanManager.Repositories
         {
             return await _context.Classes.Include(c => c.Users)
                                         .Include(s=>s.Subjects)
-                                     .Where(c => c.Users.Any(u => u.Id == userId))
-                                     .ToListAsync();
+                                         .Where(c => c.Users.Any(u => u.Id == userId))
+                                         .ToListAsync();
         }
 
     }

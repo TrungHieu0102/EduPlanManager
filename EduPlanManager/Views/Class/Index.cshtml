@@ -7,7 +7,9 @@
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 }
+
 <h1 class="text-center text-primary my-4">@ViewData["Title"]</h1>
+
 <form method="get" class="mb-4">
     <div class="mb-3">
         <input type="text" id="searchTerm" name="searchTerm" placeholder="Tìm theo mã hoặc tên lớp học" value="@ViewData["SearchTerm"]" class="form-control shadow-sm" list="classList" oninput="updateDatalist()" />
@@ -17,8 +19,11 @@
     </div>
 
     <button type="submit" class="btn text-success-emphasis bg-success-subtle ">Tìm kiếm</button>
-    <a href="@Url.Action("Create")" class="btn text-primary-emphasis bg-primary-subtle">Thêm mới lớp học</a>
-
+    @* Chỉ hiển thị nút "Thêm mới lớp học" nếu người dùng là Admin *@
+    @if (User.IsInRole("Admin"))
+    {
+        <a href="@Url.Action("Create")" class="btn text-primary-emphasis bg-primary-subtle">Thêm mới lớp học</a>
+    }
 </form>
 
 <table class="table table-bordered">
@@ -51,7 +56,6 @@
         </tr>
     </thead>
     <tbody id="tableBody">
-        <!-- Các hàng của bảng -->
         @foreach (var item in Model)
         {
             <tr class="align-middle">
@@ -65,42 +69,45 @@
                 <td class="d-flex justify-content-center align-items-center">
                     <div class="d-flex align-items-center">
                         <a href="@Url.Action("Detail", new { id = item.Id })" class="badge rounded-pill text-primary-emphasis bg-primary-subtle border border-primary align-items-center me-2">Xem chi tiết</a>
-                        <div class="dropdown">
-                            <button class="btn btn-light btn-sm shadow-none dropdown-toggle border-0 bg-transparent" type="button" id="dropdownMenuButton-@item.Id" data-bs-toggle="dropdown" aria-expanded="false"></button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton-@item.Id">
-                                <li>
-                                    <a class="dropdown-item badge rounded-pill text-primary-emphasis align-items-center" href="@Url.Action("Update", new { id = item.Id })">
-                                        <i class="bi bi-pencil"></i> Sửa
-                                    </a>
-                                </li>
-                                <li>
-                                    <form action="@Url.Action("Delete", new { id = item.Id })" method="post" style="display: inline;">
-                                        @Html.AntiForgeryToken()
-                                        <button type="submit" class="dropdown-item badge rounded-pill text-danger-emphasis align-items-center">
-                                            <i class="bi bi-trash"></i> Xóa
-                                        </button>
-                                    </form>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item badge rounded-pill text-primary-emphasis align-items-center" href="@Url.Action("GetUsersWithoutClass","Admin", new { id = item.Id })">
-                                        <i class="bi bi-pencil"></i> Thêm sinh viên vào lớp
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item badge rounded-pill text-primary-emphasis align-items-center" href="@Url.Action("GetSubjectWithoutClass","Admin", new { id = item.Id })">
-                                        <i class="bi bi-pencil"></i> Thêm môn học vào lớp
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+
+                        @* Hiển thị dropdown chỉ khi người dùng là Admin *@
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <div class="dropdown">
+                                <button class="btn btn-light btn-sm shadow-none dropdown-toggle border-0 bg-transparent" type="button" id="dropdownMenuButton-@item.Id" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton-@item.Id">
+                                    <li>
+                                        <a class="dropdown-item badge rounded-pill text-primary-emphasis align-items-center" href="@Url.Action("Update", new { id = item.Id })">
+                                            <i class="bi bi-pencil"></i> Sửa
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <form action="@Url.Action("Delete", new { id = item.Id })" method="post" style="display: inline;">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="dropdown-item badge rounded-pill text-danger-emphasis align-items-center">
+                                                <i class="bi bi-trash"></i> Xóa
+                                            </button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item badge rounded-pill text-primary-emphasis align-items-center" href="@Url.Action("GetUsersWithoutClass", "Admin", new { id = item.Id })">
+                                            <i class="bi bi-pencil"></i> Thêm sinh viên vào lớp
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item badge rounded-pill text-primary-emphasis align-items-center" href="@Url.Action("GetSubjectWithoutClass", "Admin", new { id = item.Id })">
+                                            <i class="bi bi-pencil"></i> Thêm môn học vào lớp
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
                     </div>
                 </td>
             </tr>
         }
     </tbody>
 </table>
-
-
 
 <nav>
     <div class="d-flex justify-content-between align-items-center">
@@ -117,10 +124,12 @@
         </ul>
 
         <!-- Nút Xóa Range -->
-        <button type="button" id="deleteRangeBtn" class="btn btn-danger" style="display: none;" onclick="deleteSelected()">Xóa</button>
+        @if (User.IsInRole("Admin"))
+        {
+            <button type="button" id="deleteRangeBtn" class="btn btn-danger" style="display: none;" onclick="deleteSelected()">Xóa</button>
+        }
     </div>
 </nav>
-
 
 <script>
     var classFilter = @Html.Raw(Json.Serialize(Model.Select(s => s.ClassName).ToList()))
@@ -139,6 +148,7 @@
                 });
             }
         }
+
     function toggleSelectAll() {
         var selectAllCheckbox = document.getElementById("selectAll");
         var checkboxes = document.querySelectorAll(".selectRow");
@@ -147,6 +157,7 @@
         });
         toggleDeleteButton();
     }
+
     function toggleDeleteButton() {
         var checkboxes = document.querySelectorAll(".selectRow");
         var selected = Array.from(checkboxes).some(checkbox => checkbox.checked);
@@ -157,8 +168,8 @@
             deleteButton.style.display = "none";
         }
     }
+
     function deleteSelected() {
-        // Lấy danh sách các ID môn học được chọn
         var selectedIds = [];
         var checkboxes = document.querySelectorAll(".selectRow:checked");
         checkboxes.forEach(function (checkbox) {
@@ -168,12 +179,12 @@
         if (selectedIds.length > 0) {
             var form = document.createElement("form");
             form.method = "POST";
-            form.action = "@Url.Action("DeleteRange")"; 
+            form.action = "@Url.Action("DeleteRange")";
 
             var input = document.createElement("input");
             input.type = "hidden";
-            input.name = "selectedIds";  
-            input.value = selectedIds.join(','); 
+            input.name = "selectedIds";
+            input.value = selectedIds.join(',');
             form.appendChild(input);
 
             document.body.appendChild(form);
@@ -182,6 +193,7 @@
             alert("Vui lòng chọn ít nhất một môn học để xóa!");
         }
     }
+
     function sortTable(columnIndex) {
         const tableBody = document.getElementById("tableBody");
         const rows = Array.from(tableBody.getElementsByTagName("tr"));
@@ -203,7 +215,4 @@
 
         tableBody.dataset.sortOrder = ascending ? "asc" : "desc";
     }
-
-
-
 </script>

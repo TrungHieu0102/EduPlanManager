@@ -41,24 +41,29 @@
         @await Component.InvokeAsync("UserInfo")
         <div style="background-color:#F6FAFF !important" class="container-fluid page-body-wrapper">
             @{
-                var role = Context.Request.Cookies["UserRole"] ?? Context.Session.GetString("UserRole")?? "";
+                var role = Context.Request.Cookies["UserRole"]
+                ?? Context.Session.GetString("UserRole")
+                ?? string.Empty; 
             }
-            @if (role == "Admin")
+            @await Component.InvokeAsync("Sidebar")
+
+
+          @*   @if (role == "Admin")
             {
-                @await Html.PartialAsync("_Sidebar")
+                @await Html.PartialAsync("_AdminSidebar")
             }
             else if (role == "Teacher")
             {
-                @await Html.PartialAsync("_AdminSidebar")
+                @await Html.PartialAsync("_TeacherSidebar")
             }
             else if (role == "Student")
             {
-                @await Html.PartialAsync("_AdminSidebar")
+                @await Html.PartialAsync("StudentSidebar")
             }
             else
             {
-                @await Html.PartialAsync("_AdminSidebar")
-            }
+                @await Html.PartialAsync("_DefaultSidebar")
+            } *@
             <div class="main-panel">
                 <div style="background-color: #ffffff !important" class="content-wrapper">
                     @RenderBody()

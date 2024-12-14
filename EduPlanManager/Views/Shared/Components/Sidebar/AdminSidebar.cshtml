@@ -1,0 +1,49 @@
+﻿<nav style="background-color: #F6FAFF !important;" class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+        <!-- Thông tin Admin -->
+        <li class="nav-item nav-profile">
+            <a href="#" class="nav-link">
+                <div class="nav-profile-image">
+                    <img src="@Model.ProfilePictureUrl" alt="profile">
+                    <span class="login-status online"></span>
+                </div>
+                <div class="nav-profile-text d-flex flex-column">
+                    <span class="font-weight-bold mb-2">@Model.FullName</span>
+                    <span class="text-secondary text-small">Admin</span>
+                </div>
+                <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/subject/index">
+                <span class="menu-title">Quản lý môn học</span>
+                <i class="mdi mdi-book-open-page-variant menu-icon"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/class/index">
+                <span class="menu-title">Quản lý lớp học</span>
+                <i class="mdi mdi-account-group menu-icon"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/SubjectSchedule/index">
+                <span class="menu-title">Quản lý lịch học</span>
+                <i class="mdi mdi-calendar-text menu-icon"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/AcademicTerm/index">
+                <span class="menu-title">Quản lý học kỳ</span>
+                <i class="mdi mdi-calendar-range menu-icon"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Enrollment/EnrollmentRequests">
+                <span class="menu-title">Phê duyệt đăng ký</span>
+                <i class="mdi mdi-check-circle-outline menu-icon"></i>
+            </a>
+        </li>    
+    </ul>
+</nav>

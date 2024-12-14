@@ -1,0 +1,70 @@
+﻿@model IEnumerable<EduPlanManager.Models.Entities.User>
+
+<h1 class="my-4 text-center">Danh sách người dùng</h1>
+
+<form method="post" action="@Url.Action("DeleteMultiple")">
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th><input type="checkbox" id="selectAll" onclick="toggleSelectAll()" /></th>
+                    <th>Email</th>
+                    <th>Full Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td><input type="checkbox" name="selectedUserIds" value="@user.Id" class="selectRow" /></td>
+                        <td>@user.Email</td>
+                        <td>@user.UserName</td>
+                        <td>
+                            <a href="@Url.Action("Detail", new { id = user.Id })" class="btn btn-primary btn-sm">Xem chi tiết</a>
+                            <form action="@Url.Action("Delete", new { id = user.Id })" method="post" style="display:inline;">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-danger" style="display:none" id="deleteRangeBtn">Xóa người dùng đã chọn</button>
+    </div>
+</form>
+
+<script>
+    function toggleSelectAll() {
+        var selectAllCheckbox = document.getElementById("selectAll");
+        var checkboxes = document.querySelectorAll(".selectRow");
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = selectAllCheckbox.checked;
+        });
+        toggleDeleteButton();  // Kiểm tra lại và hiển thị nút xóa nếu cần
+    }
+
+    // Hàm kiểm tra xem có checkbox nào được chọn không
+    function toggleDeleteButton() {
+        var checkboxes = document.querySelectorAll(".selectRow");
+        var selected = Array.from(checkboxes).some(checkbox => checkbox.checked); // Kiểm tra xem có checkbox nào được chọn không
+        var deleteButton = document.getElementById("deleteRangeBtn");
+        if (selected) {
+            deleteButton.style.display = "inline-block";  // Hiển thị nút nếu có ít nhất một checkbox được chọn
+        } else {
+            deleteButton.style.display = "none";  // Ẩn nút nếu không có checkbox nào được chọn
+        }
+    }
+
+    // Cập nhật nút xóa khi có sự thay đổi trong các checkbox
+    document.querySelectorAll(".selectRow").forEach(function (checkbox) {
+        checkbox.addEventListener("change", toggleDeleteButton); // Gọi toggleDeleteButton khi có thay đổi trong các checkbox
+    });
+
+    // Gọi toggleDeleteButton khi trang được tải để kiểm tra trạng thái ban đầu của các checkbox
+    document.addEventListener("DOMContentLoaded", toggleDeleteButton);
+</script>

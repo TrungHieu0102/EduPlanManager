@@ -12,25 +12,29 @@ namespace EduPlanManager.Models.Entities
         public Guid StudentId { get; set; } 
 
         [Required]
-        public Guid SubjectId { get; set; } // ID môn học
+        public Guid SubjectId { get; set; }
 
         [Required]
-        public GradeType Type { get; set; } // Loại điểm (giữa kỳ, cuối kỳ, v.v.)
+        public GradeType Type { get; set; } 
 
-        [Range(0, 10)] // Giới hạn điểm số từ 0 đến 10
-        public float Score { get; set; } // Điểm số
+        [Range(0, 10)]
+        public float Score { get; set; } 
 
         [Required]
-        public Guid AcademicTermId { get; set; } // FK tới AcademicTerm
-        [ForeignKey("AcademicTermId")] // Chỉ định rõ khóa ngoại
-        public virtual AcademicTerm AcademicTerm { get; set; } // Navigation Property
+        public Guid AcademicTermId { get; set; } 
+        [ForeignKey("AcademicTermId")] 
+        public virtual AcademicTerm AcademicTerm { get; set; } 
 
-        // Navigation Properties
         [Required]
         public User Student { get; set; }
 
         [Required]
         public Subject Subject { get; set; }
+        [Required]
+        public Guid SumaryGradeId { get; set; }
+
+        [ForeignKey("SumaryGradeId")]
+        public virtual SumaryGrade SumaryGrade { get; set; }
     }
 
     public enum GradeType

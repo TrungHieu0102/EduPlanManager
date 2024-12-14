@@ -14,6 +14,7 @@ namespace EduPlanManager.UnitOfWork
         IEnrollmentRepository Enrollments { get; }
         IStudentScheduleRepository StudentSchedules { get; }
         IGradeRepository Grades { get; }
+        ISumaryGradeRepository SumaryGrades { get; }
         Task<int> CompleteAsync();
         void Dispose();
 
