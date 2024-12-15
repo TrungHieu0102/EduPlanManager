@@ -27,10 +27,9 @@
             <div class="row gy-4 gy-md-5 gy-lg-0 align-items-md-center">
                 <div class="col-12 col-lg-6">
                     <div class="border overflow-hidden">
-                        <form asp-action ="CreateUser" method="post">
+                        <form asp-action="CreateUser" method="post">
                             @Html.AntiForgeryToken()
                             <div class="row gy-4 gy-xl-5 p-4 p-xl-5">
-                                <!-- Trường Email -->
                                 <div class="col-12 col-md-6">
                                     <label asp-for="Email" class="form-label">
                                         Email <span class="text-danger">*</span>
@@ -47,7 +46,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Trường Phone -->
                                 <div class="col-12 col-md-6">
                                     <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
                                     <div class="input-group">
@@ -60,26 +58,22 @@
                                         <input asp-for="PhoneNumber" type="tel" class="form-control" id="phone" name="phone" value="">
                                     </div>
                                 </div>
-                                <!-- Trường Họ -->
                                 <div class="col-12 col-md-6">
                                     <label asp-for="FirstName" class="form-label">
                                         Họ <span class="text-danger">*</span>
                                     </label>
                                     <div class="input-group">
-
                                         <input asp-for="FirstName" type="text" class="form-control" id="FirstName" name="FirstName"
                                                value="" required>
                                     </div>
-                                </div> <!-- Trường Tên -->
+                                </div>
                                 <div class="col-12 col-md-6">
                                     <label asp-for="LastName" class="form-label">Tên</label>
                                     <div class="input-group">
-
                                         <input asp-for="LastName" type="text" class="form-control" id="lastname" name="lastname"
                                                value="">
                                     </div>
                                 </div>
-                                <!-- Trường Giới Tính -->
                                 <div class="col-12 col-md-6">
                                     <label asp-for="Gender" class="form-label">
                                         Giới Tính <span class="text-danger">*</span>
@@ -96,7 +90,6 @@
                                     <input asp-for="DateOfBirth" type="date" class="form-select" id="DateOfBirth" name="DateOfBirth" value="">
                                 </div>
 
-                                <!-- Trường Vai Trò -->
                                 <div class="col-12 col-md-6">
                                     <label asp-for="Role" class="form-label">Vai Trò</label>
                                     <select asp-for="Role" id="Role" name="Role" class="form-select">
@@ -111,13 +104,11 @@
                                     </select>
                                 </div>
 
-                                <!-- Trường Địa Chỉ -->
                                 <div class="col-12">
                                     <label asp-for="Address" class="form-label">Địa chỉ</label>
                                     <input asp-for="Address" type="text" class="form-control" id="Address" name="Address" value="">
                                 </div>
 
-                                <!-- Nút Đăng Ký -->
                                 <div class="col-12">
                                     <div class="d-grid">
                                         <button class="btn btn-primary btn-lg" type="submit">Đăng ký</button>
@@ -131,6 +122,7 @@
         </div>
     </section>
 </div>
+
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js"></script>

@@ -19,7 +19,6 @@
     </div>
 
     <button type="submit" class="btn text-success-emphasis bg-success-subtle ">Tìm kiếm</button>
-    @* Chỉ hiển thị nút "Thêm mới lớp học" nếu người dùng là Admin *@
     @if (User.IsInRole("Admin"))
     {
         <a href="@Url.Action("Create")" class="btn text-primary-emphasis bg-primary-subtle">Thêm mới lớp học</a>

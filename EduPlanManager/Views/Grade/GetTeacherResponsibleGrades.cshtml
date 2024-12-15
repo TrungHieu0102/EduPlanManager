@@ -3,14 +3,12 @@
 <!-- Form for searching -->
 <form method="get" action="@Url.Action("GetTeacherResponsibleGrades", "Grade")" class="mb-4">
     <div class="row">
-        <!-- Student Name Input -->
         <div class="col-md-4">
             <input type="text" name="studentName" placeholder="Tìm sinh viên" class="form-control" value="@Context.Request.Query["studentName"]" />
         </div>
 
       
 
-        <!-- Subject Select -->
         <div class="col-md-4">
             <select name="subjectId" class="form-control">
                 <option value="">Chọn môn</option>

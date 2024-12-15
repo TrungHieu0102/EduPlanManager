@@ -134,13 +134,13 @@
     }
     function toggleDeleteButton() {
     var checkboxes = document.querySelectorAll(".selectRow");
-    var selected = Array.from(checkboxes).some(checkbox => checkbox.checked);  // Kiểm tra xem có checkbox nào được chọn không.
+    var selected = Array.from(checkboxes).some(checkbox => checkbox.checked); 
     var deleteButton = document.getElementById("deleteRangeBtn");
 
     if (selected) {
-        deleteButton.style.display = "inline-block";  // Hiển thị nút xóa nếu có checkbox được chọn
+        deleteButton.style.display = "inline-block"; 
     } else {
-        deleteButton.style.display = "none";  // Ẩn nút xóa nếu không có checkbox nào được chọn
+        deleteButton.style.display = "none"; 
     }
 }
 </script>

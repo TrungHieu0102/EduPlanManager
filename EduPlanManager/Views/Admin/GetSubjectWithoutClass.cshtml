@@ -66,17 +66,15 @@
 </form>
 
 <script>
-    // Toggle check/uncheck tất cả checkbox khi click vào checkbox "Select All"
     function toggleSelectAll() {
         var isChecked = document.getElementById("selectAll").checked;
         var checkboxes = document.querySelectorAll(".selectRow");
         checkboxes.forEach(function (checkbox) {
             checkbox.checked = isChecked;
         });
-        toggleSubmitButton(); // Kiểm tra lại trạng thái của nút submit
+        toggleSubmitButton();
     }
 
-    // Toggle button submit visibility based on checkbox selection
     function toggleSubmitButton() {
         var checkboxes = document.querySelectorAll(".selectRow");
         var submitButton = document.getElementById("submitBtn");

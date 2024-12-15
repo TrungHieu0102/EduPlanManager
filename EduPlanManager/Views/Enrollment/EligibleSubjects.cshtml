@@ -44,7 +44,6 @@
     <hr />
     <h3 class="text-left mt-5">Danh sách môn học có thể đăng ký</h3>
 
-    <!-- Form tìm kiếm và lọc -->
     <form method="get" action="@Url.Action("EligibleSubjects", "Enrollment")" class="mb-4 mt-5">
         <div class="row">
             <div class="col-md-3">
@@ -114,7 +113,6 @@
         </div>
     </form>
 
-    <!-- Phân trang -->
     <div class="text-left mt-4">
         @if (Model.TotalPages > 1)
         {

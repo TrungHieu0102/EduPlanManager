@@ -1,4 +1,5 @@
-﻿using EduPlanManager.Models.DTOs.User;
+﻿using EduPlanManager.Data;
+using EduPlanManager.Models.DTOs.User;
 using EduPlanManager.Models.Entities;
 using EduPlanManager.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
@@ -13,11 +14,14 @@ namespace EduPlanManager.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IPhotoService _photoService;
         private readonly IUserService _userService;
-        public UserController(UserManager<User> userManager, IPhotoService photoService, IUserService userService)
+        private readonly ApplicationDbContext _context;
+
+        public UserController(UserManager<User> userManager, IPhotoService photoService, ApplicationDbContext context, IUserService userService)
         {
             _userManager = userManager;
             _photoService = photoService;
             _userService = userService;
+            _context = context;
         }
         [Authorize]
 
@@ -84,25 +88,29 @@ namespace EduPlanManager.Controllers
             return View();
         }
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> ListUser()
+        public async Task<IActionResult> ListUser(string searchQuery)
         {
             var users = await _userManager.Users.ToListAsync();
-
             var nonAdminUsers = new List<User>();
 
             foreach (var user in users)
             {
                 var roles = await _userManager.GetRolesAsync(user);
-
                 if (!roles.Contains("Admin"))
                 {
                     nonAdminUsers.Add(user);
                 }
             }
-
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                nonAdminUsers = nonAdminUsers
+                    .Where(u => (u.Email != null && u.Email.Contains(searchQuery, StringComparison.OrdinalIgnoreCase)) ||
+                                (u.GetFullName() != null && u.GetFullName().Contains(searchQuery, StringComparison.OrdinalIgnoreCase)) ||
+                                (u.PhoneNumber != null && u.PhoneNumber.Contains(searchQuery, StringComparison.OrdinalIgnoreCase)))
+                    .ToList();
+            }
             return View(nonAdminUsers);
         }
-
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
@@ -112,6 +120,14 @@ namespace EduPlanManager.Controllers
             if (user == null)
             {
                 return NotFound();
+            }
+
+            // Check if the user is referenced in the Subjects table
+            var subjectsWithUser = await _context.Subjects.Where(s => s.TeacherId.ToString() == id).ToListAsync();
+            if (subjectsWithUser.Any())
+            {
+                TempData["ErrorMessage"] = "Không thể xóa người dùng vì họ đang được tham chiếu trong bảng môn học!";
+                return RedirectToAction("ListUser");
             }
 
             var result = await _userManager.DeleteAsync(user);
@@ -126,16 +142,16 @@ namespace EduPlanManager.Controllers
 
             return RedirectToAction("ListUser");
         }
+
         [HttpPost]
         [Authorize(Roles = "Admin")]
-
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteMultiple(List<string> selectedUserIds)
         {
             if (selectedUserIds == null || selectedUserIds.Count == 0)
             {
                 TempData["ErrorMessage"] = "Vui lòng chọn ít nhất một người dùng để xóa!";
-                return RedirectToAction("Index");
+                return RedirectToAction("ListUser");
             }
 
             foreach (var userId in selectedUserIds)
@@ -143,11 +159,18 @@ namespace EduPlanManager.Controllers
                 var user = await _userManager.FindByIdAsync(userId);
                 if (user != null)
                 {
+                    var subjectsWithUser = await _context.Subjects.Where(s => s.TeacherId.ToString() == userId).ToListAsync();
+                    if (subjectsWithUser.Any())
+                    {
+                        TempData["ErrorMessage"] = $"Không thể xóa người dùng {user.Email} vì họ đang được tham chiếu trong bảng môn học!";
+                        return RedirectToAction("ListUser");
+                    }
+
                     var result = await _userManager.DeleteAsync(user);
                     if (!result.Succeeded)
                     {
                         TempData["ErrorMessage"] = "Có lỗi xảy ra khi xóa người dùng!";
-                        return RedirectToAction("Index");
+                        return RedirectToAction("ListUser");
                     }
                 }
             }
@@ -155,6 +178,7 @@ namespace EduPlanManager.Controllers
             TempData["SuccessMessage"] = "Đã xóa người dùng thành công!";
             return RedirectToAction("ListUser");
         }
+
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Detail(string id)
         {

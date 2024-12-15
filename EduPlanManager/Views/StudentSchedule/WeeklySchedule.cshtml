@@ -39,7 +39,7 @@
 
                                 if (schedules.Any() && hour == schedules.First().StartTime.Hours)
                                 {
-                                    <td class="text-center bg-primary text-white" rowspan="@(schedules.First().EndTime.Hours - schedules.First().StartTime.Hours)">
+                                    <td class="text-center bg-primary-subtle text-primary-emphasis" rowspan="@(schedules.First().EndTime.Hours - schedules.First().StartTime.Hours)">
                                         <strong>@schedules.First().SubjectName</strong><br />
                                         @schedules.First().StartTime.ToString(@"hh\:mm") - @schedules.First().EndTime.ToString(@"hh\:mm")
                                     </td>
