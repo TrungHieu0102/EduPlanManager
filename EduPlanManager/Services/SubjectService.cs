@@ -18,6 +18,15 @@ namespace EduPlanManager.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+        /// <summary>
+        /// Tìm kiếm các môn học theo từ khóa, kỳ học, năm học với phân trang.
+        /// </summary>
+        /// <param name="searchTerm">Từ khóa tìm kiếm (tên hoặc mã môn học).</param>
+        /// <param name="semester">Kỳ học.</param>
+        /// <param name="year">Năm học.</param>
+        /// <param name="pageNumber">Số trang hiện tại.</param>
+        /// <param name="pageSize">Số môn học mỗi trang.</param>
+        /// <returns>Danh sách các môn học tìm được với thông tin phân trang.</returns>
         public async Task<ResultPage<SubjectDTO>> SearchSubjectsAsync(string searchTerm, int? semester, int? year, int pageNumber, int pageSize)
         {
             try
@@ -67,7 +76,11 @@ namespace EduPlanManager.Services
                 };
             }
         }
-
+        /// <summary>
+        /// Lấy chi tiết của một môn học theo ID.
+        /// </summary>
+        /// <param name="id">ID của môn học.</param>
+        /// <returns>Thông tin chi tiết của môn học.</returns>
         public async Task<Result<SubjectDetailDTO>> GetSubjectWithDetailsAsync(Guid id)
         {
             try
@@ -89,6 +102,11 @@ namespace EduPlanManager.Services
                 };
             }
         }
+        /// <summary>
+        /// Lấy thông tin của một môn học theo ID.
+        /// </summary>
+        /// <param name="id">ID của môn học.</param>
+        /// <returns>Môn học với thông tin cơ bản.</returns>
         public async Task<Result<Subject>> GetSubject(Guid id)
         {
             try
@@ -109,10 +127,22 @@ namespace EduPlanManager.Services
                 };
             }
         }
+        /// <summary>
+        /// Đếm số lượng môn học thỏa mãn điều kiện tìm kiếm.
+        /// </summary>
+        /// <param name="searchTerm">Từ khóa tìm kiếm (tên hoặc mã môn học).</param>
+        /// <param name="semester">Kỳ học.</param>
+        /// <param name="year">Năm học.</param>
+        /// <returns>Số lượng môn học thỏa mãn các điều kiện tìm kiếm.</returns>
         public async Task<int> CountSubjectsAsync(string searchTerm, int? semester, int? year)
         {
             return await _unitOfWork.Subjects.GetTotalSubjectsAsync(searchTerm, semester, year);
         }
+        /// <summary>
+        /// Tìm kiếm môn học theo tên hoặc mã môn học.
+        /// </summary>
+        /// <param name="term">Từ khóa tìm kiếm.</param>
+        /// <returns>Danh sách các môn học tìm được.</returns>  
         public async Task<Result<IEnumerable<SubjectDTO>>> SearchSubjectsByNameOrCodeAsync(string term)
         {
             try
@@ -137,6 +167,11 @@ namespace EduPlanManager.Services
             }
 
         }
+        /// <summary>
+        /// Xóa một môn học theo ID.
+        /// </summary>
+        /// <param name="id">ID của môn học cần xóa.</param>
+        /// <returns>Kết quả xóa môn học (thành công hay thất bại).</returns>
         public async Task<Result<bool>> DeleteSubjectById(Guid id)
         {
             try
@@ -159,6 +194,11 @@ namespace EduPlanManager.Services
                 };
             }
         }
+        /// <summary>
+        /// Cập nhật thông tin môn học.
+        /// </summary>
+        /// <param name="subject">Môn học với các thông tin cập nhật.</param>
+        /// <returns>Môn học sau khi được cập nhật.</returns>
         public async Task<Result<Subject>> UpdateSubject(Subject subject)
         {
             try
@@ -189,6 +229,11 @@ namespace EduPlanManager.Services
                 };
             }
         }
+        /// <summary>
+        /// Xóa nhiều môn học theo danh sách ID.
+        /// </summary>
+        /// <param name="ids">Danh sách các ID môn học cần xóa.</param>
+        /// <returns>Không trả về kết quả cụ thể, chỉ đảm bảo xóa các môn học.</returns>
         public async Task DeleteSubjectsAsync(List<Guid> ids)
         {
             var subjects = await _unitOfWork.Subjects.GetSubjectsByIdsAsync(ids);
@@ -197,6 +242,12 @@ namespace EduPlanManager.Services
                 await _unitOfWork.Subjects.DeleteSubjectsAsync(subjects);
             }
         }
+
+        /// <summary>
+        /// Tạo mới một môn học.
+        /// </summary>
+        /// <param name="subjectCreateDTO">Thông tin môn học mới.</param>
+        /// <returns>Môn học vừa tạo với thông tin trả về.</returns>
         public async Task<Result<SubjectDTO>> CreateSubjectAsync(SubjectCreateDTO subjectCreateDTO)
         {
             try
@@ -224,6 +275,12 @@ namespace EduPlanManager.Services
                 };
             }
         }
+        /// <summary>
+        /// Lấy danh sách các môn học có liên kết với lớp học cụ thể.
+        /// </summary>
+        /// <param name="isHaveClass">Xác định môn học có lớp học hay không.</param>
+        /// <param name="classId">ID của lớp học cần lấy môn học.</param>
+        /// <returns>Danh sách môn học liên kết với lớp học.</returns>
         public async Task<Result<IEnumerable<SubjectDTO>>> GetSubjectsClassAsync(bool isHaveClass, Guid classId)
         {
             try
@@ -245,6 +302,12 @@ namespace EduPlanManager.Services
                 };
             }
         }
+        /// <summary>
+        /// Lấy danh sách các môn học có liên kết với lịch học cụ thể.
+        /// </summary>
+        /// <param name="isHaveSchedule">Xác định môn học có lịch học hay không.</param>
+        /// <param name="scheduleId">ID của lịch học cần lấy môn học.</param>
+        /// <returns>Danh sách môn học có liên kết với lịch học.</returns>
         public async Task<Result<IEnumerable<SubjectDTO>>> GetSubjectsScheduleAsync(bool isHaveSchedule, Guid scheduleId)
         {
             try

@@ -17,7 +17,12 @@ namespace EduPlanManager.Services
             _unitOfWork = unitOfWork;
             _userManager = userManager;
         }
-        //Dùng để student có thể xem được điểm các môn học của mình
+        /// <summary>
+        /// Lấy danh sách điểm của sinh viên theo ID người dùng.
+        /// Phương thức này sẽ truy xuất dữ liệu điểm của sinh viên và trả về dưới dạng danh sách DTO.
+        /// </summary>
+        /// <param name="userId">ID của sinh viên</param>
+        /// <returns>Danh sách điểm của sinh viên dưới dạng GradeDto</returns>
         public async Task<Result<List<GradeDto>>> GetGradeByUserID(Guid userId)
         {
             try
@@ -52,7 +57,14 @@ namespace EduPlanManager.Services
             }
 
         }
-        //Dùng để sinh viên xem kết quả các môn học đạt hay không đạt, kết quả toàn học kỳ 
+
+        /// <summary>
+        /// Lấy danh sách điểm của sinh viên và nhóm theo học kỳ.
+        /// Phương thức này sẽ tính toán điểm tổng kết của sinh viên theo môn học và học kỳ.
+        /// Điểm được tính theo công thức, và trạng thái (Đạt/Không đạt) được xác định dựa trên tổng điểm.
+        /// </summary>
+        /// <param name="studentId">ID của sinh viên</param>
+        /// <returns>Danh sách điểm theo học kỳ với các thông tin về môn học và trạng thái</returns>
         public async Task<List<SemesterGradeDto>> GetStudentGradesGroupedBySemesterAsync(Guid studentId)
         {
             var grades = await _unitOfWork.Grades.GetGradeByUserID(studentId);
@@ -97,7 +109,16 @@ namespace EduPlanManager.Services
 
             return semesterGrades;
         }
-       //Thêm điểm cho sinh viên
+        /// <summary>
+        /// Thêm hoặc cập nhật điểm cho sinh viên trong môn học.
+        /// Phương thức này kiểm tra quyền của giảng viên, sau đó thêm hoặc cập nhật điểm của sinh viên cho môn học trong học kỳ tương ứng.
+        /// </summary>
+        /// <param name="teacherId">ID của giảng viên</param>
+        /// <param name="studentId">ID của sinh viên</param>
+        /// <param name="subjectId">ID của môn học</param>
+        /// <param name="score">Điểm số cần thêm hoặc cập nhật</param>
+        /// <param name="type">Loại điểm (Giữa kỳ, Cuối kỳ, Thưởng)</param>
+        /// <returns>Thông báo kết quả việc thêm hoặc cập nhật điểm</returns>
         public async Task<Result<bool>> AddGradeAsync(Guid teacherId, Guid studentId, Guid subjectId, float score, GradeType type)
         {
             try
@@ -159,7 +180,12 @@ namespace EduPlanManager.Services
                 };
             }
         }
-        //Lọc dữ liệu để lấy danh sách sinh viên có môn học do teacher phụ trách
+        /// <summary>
+        /// Lấy danh sách các môn học và học kỳ mà giảng viên phụ trách.
+        /// Phương thức này truy xuất các môn học mà giảng viên dạy và các học kỳ tương ứng.
+        /// </summary>
+        /// <param name="teacherId">ID của giảng viên</param>
+        /// <returns>Danh sách các môn học và học kỳ của giảng viên</returns>
         public async Task<(List<Subject> Subjects, List<AcademicTerm> AcademicTerms)> GetTeacherSubjectsAndAcademicTermsAsync(Guid teacherId)
         {
             var teacherSubjects = await _unitOfWork.Subjects.GetAllSubjectByUserId(teacherId);
@@ -177,6 +203,17 @@ namespace EduPlanManager.Services
 
             return (teacherSubjects, teacherAcademicTerms);
         }
+
+        /// <summary>
+        /// Lấy danh sách điểm của sinh viên mà giảng viên phụ trách theo nhiều tiêu chí tìm kiếm.
+        /// Phương thức này cho phép giảng viên lọc điểm sinh viên theo môn học, học kỳ, tên sinh viên hoặc lớp học.
+        /// </summary>
+        /// <param name="teacherId">ID của giảng viên</param>
+        /// <param name="subjectId">ID của môn học (có thể null)</param>
+        /// <param name="studentName">Tên sinh viên (có thể null)</param>
+        /// <param name="academicTermId">ID học kỳ (có thể null)</param>
+        /// <param name="classId">ID lớp học (có thể null)</param>
+        /// <returns>Danh sách điểm của sinh viên theo các tiêu chí lọc</returns
         public async Task<Result<List<StudentSubjectGradeDto>>> GetTeacherResponsibleGradesAsync(Guid teacherId, Guid? subjectId, string? studentName = null, Guid? academicTermId = null, Guid? classId = null)
         {
             try

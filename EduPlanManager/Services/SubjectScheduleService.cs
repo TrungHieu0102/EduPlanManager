@@ -16,7 +16,14 @@ namespace EduPlanManager.Services
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
-
+        /// <summary>
+        /// Tạo mới một lịch học cho môn học. 
+        /// Phương thức này kiểm tra xem lịch học có trùng lặp với lịch học đã tồn tại hay không.
+        /// Nếu không trùng lặp, sẽ tạo mới một đối tượng `SubjectSchedule` và lưu vào cơ sở dữ liệu.
+        /// Trả về đối tượng lịch học vừa tạo dưới dạng `SubjectScheduleDTO`.
+        /// </summary>
+        /// <param name="dto">Thông tin lịch học cần tạo mới</param>
+        /// <returns>Đối tượng `Result<SubjectScheduleDTO>` chứa thông tin lịch học vừa tạo hoặc thông báo lỗi</returns>
         public async Task<Result<SubjectScheduleDTO>> CreateScheduleAsync(CreateSubjectScheduleDTO dto)
         {
             try
@@ -46,7 +53,14 @@ namespace EduPlanManager.Services
                 };
             }
         }
-
+        /// <summary>
+        /// Cập nhật lịch học đã tồn tại. 
+        /// Phương thức này kiểm tra xem lịch học có trùng lặp với lịch học đã tồn tại hay không.
+        /// Nếu không, sẽ cập nhật lịch học trong cơ sở dữ liệu.
+        /// Trả về thông tin lịch học đã cập nhật dưới dạng `SubjectScheduleDTO`.
+        /// </summary>
+        /// <param name="dto">Thông tin lịch học cần cập nhật</param>
+        /// <returns>Đối tượng `Result<SubjectScheduleDTO>` chứa thông tin lịch học đã cập nhật hoặc thông báo lỗi</returns>
         public async Task<Result<SubjectScheduleDTO>> UpdateScheduleAsync(UpdateSubjectScheduleDTO dto)
         {
             try
@@ -75,7 +89,12 @@ namespace EduPlanManager.Services
                 };
             }
         }
-
+        /// <summary>
+        /// Xóa một lịch học theo ID.
+        /// Phương thức này sẽ xóa lịch học khỏi cơ sở dữ liệu.
+        /// </summary>
+        /// <param name="id">ID của lịch học cần xóa</param>
+        /// <returns>Đối tượng `Result<bool>` với kết quả thành công hoặc thông báo lỗi</returns>
         public async Task<Result<bool>> DeleteScheduleAsync(Guid id)
         {
             try
@@ -96,6 +115,11 @@ namespace EduPlanManager.Services
                 };
             }
         }
+        /// <summary>
+        /// Lấy danh sách tất cả các lịch học.
+        /// Phương thức này sẽ truy vấn tất cả lịch học từ cơ sở dữ liệu và trả về danh sách các đối tượng `SubjectScheduleDTO`.
+        /// </summary>
+        /// <returns>Danh sách các đối tượng `Result<IEnumerable<SubjectScheduleDTO>>` chứa các lịch học hoặc thông báo lỗi</returns>
         public async Task<Result<IEnumerable<SubjectScheduleDTO>>> GetAllSchedulesAsync()
         {
             try
@@ -117,6 +141,13 @@ namespace EduPlanManager.Services
                 };
             }
         }
+        /// <summary>
+        /// Lấy lịch học theo ID.
+        /// Phương thức này sẽ tìm và trả về thông tin lịch học của môn học theo ID.
+        /// Nếu không tìm thấy lịch học, sẽ ném ra ngoại lệ.
+        /// </summary>
+        /// <param name="id">ID của lịch học cần lấy thông tin</param>
+        /// <returns>Đối tượng `Result<SubjectScheduleDTO>` chứa thông tin lịch học hoặc thông báo lỗi</returns>
         public async Task<Result<SubjectScheduleDTO>> GetScheduleByIdAsync(Guid id)
         {
             try
@@ -139,6 +170,13 @@ namespace EduPlanManager.Services
                 };
             }
         }
+        /// <summary>
+        /// Thêm các môn học vào lịch học. 
+        /// Phương thức này sẽ tìm lịch học theo ID và thêm các môn học vào lịch học này.
+        /// </summary>
+        /// <param name="subjectIds">Danh sách ID các môn học</param>
+        /// <param name="scheduleId">ID của lịch học</param>
+        /// <returns>Trả về true nếu thêm thành công, false nếu không tìm thấy lịch học hoặc môn học</returns>
         public async Task<bool> AddSubjectsToSchedule(List<Guid> subjectIds, Guid scheduleId)
         {
             var shedule = await _unitOfWork.SubjectSchedules.GetScheduleSubjectAsync(scheduleId);
